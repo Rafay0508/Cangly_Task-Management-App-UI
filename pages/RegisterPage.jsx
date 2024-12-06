@@ -18,22 +18,36 @@ import CheckBox from 'react-native-check-box';
 import {useNavigation} from '@react-navigation/native';
 
 const RegisterPage = () => {
+  const {theme} = useTheme();
   const navigation = useNavigation();
+
+  const [fname, setFname] = useState('');
+  const [sname, setSname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [secureText, setSecureText] = useState(false);
   const [checked, setChecked] = useState(false);
-  const {theme} = useTheme();
+
   const toggleSecureText = () => {
     setSecureText(prevState => !prevState);
   };
 
   const handleCheckBoxToggle = () => {
-    setChecked(prevChecked => !prevChecked); // Toggle the checkbox state
+    setChecked(prevChecked => !prevChecked);
   };
 
   const registerHandler = () => {
+    console.log(fname, sname, email, password, confirmPassword);
+    setFname('');
+    setSname('');
+    setEmail('');
+    setPassword('');
+    setConfirmPassword('');
     navigation.navigate('Login');
   };
 
+  // theme toggle
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
   const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e'; // Placeholder color based on theme
 
@@ -62,72 +76,80 @@ const RegisterPage = () => {
           <TextInput
             style={[
               styles.input,
-              {backgroundColor: theme === 'dark' ? '#333' : '#fff'}, // Background based on theme
+              {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
             ]}
             label={'First Name'}
             placeholder="Enter First Name"
-            placeholderTextColor={placeholderColor} // Set placeholder text color
+            placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe', // Border color
-                placeholder: placeholderColor, // Placeholder color
+                primary: '#3085fe',
+                placeholder: placeholderColor,
               },
             }}
-            labelStyle={{color: textColor}} // Label color
-            textColor={textColor} // Explicitly setting text color
+            labelStyle={{color: textColor}}
+            textColor={textColor}
+            value={fname}
+            onChangeText={text => setFname(text)}
           />
           <TextInput
             style={[
               styles.input,
-              {backgroundColor: theme === 'dark' ? '#333' : '#fff'}, // Background based on theme
+              {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
             ]}
             label={'Last Name'}
             placeholder="Enter Last Name"
-            placeholderTextColor={placeholderColor} // Set placeholder text color
+            placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe', // Border color
-                placeholder: placeholderColor, // Placeholder color
+                primary: '#3085fe',
+                placeholder: placeholderColor,
               },
             }}
-            labelStyle={{color: textColor}} // Label color
-            textColor={textColor} // Explicitly setting text color
+            labelStyle={{color: textColor}}
+            textColor={textColor}
+            value={sname}
+            onChangeText={text => setSname(text)}
           />
           <TextInput
             style={[
               styles.input,
-              {backgroundColor: theme === 'dark' ? '#333' : '#fff'}, // Background based on theme
+              {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
             ]}
             label={'Email Address'}
             placeholder="Enter Email Address"
-            placeholderTextColor={placeholderColor} // Set placeholder text color
+            placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe', // Border color
-                placeholder: placeholderColor, // Placeholder color
+                primary: '#3085fe',
+                placeholder: placeholderColor,
               },
             }}
-            labelStyle={{color: textColor}} // Label color
-            textColor={textColor} // Explicitly setting text color
+            labelStyle={{color: textColor}}
+            textColor={textColor}
+            value={email}
+            onChangeText={text => setEmail(text)}
           />
           <View style={styles.passwordContainer}>
             <TextInput
               style={[
                 styles.input,
-                {backgroundColor: theme === 'dark' ? '#333' : '#fff'}, // Background based on theme
+                {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
               ]}
               label="Password"
               placeholder="Enter your password"
-              placeholderTextColor={placeholderColor} // Set placeholder text color
+              placeholderTextColor={placeholderColor}
               secureTextEntry={secureText}
               theme={{
                 colors: {
-                  primary: '#3085fe', // Border color
-                  placeholder: placeholderColor, // Placeholder color
+                  primary: '#3085fe',
+                  placeholder: placeholderColor,
                 },
               }}
-              labelStyle={{color: textColor}} // Label color
-              textColor={textColor} // Explicitly setting text color
+              labelStyle={{color: textColor}}
+              textColor={textColor}
+              value={password}
+              onChangeText={text => setPassword(text)}
             />
             {/* Eye icon outside of TextInput */}
             <TouchableOpacity
@@ -144,20 +166,22 @@ const RegisterPage = () => {
             <TextInput
               style={[
                 styles.input,
-                {backgroundColor: theme === 'dark' ? '#333' : '#fff'}, // Background based on theme
+                {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
               ]}
               label="Confirm Password"
               placeholder="Confirm password"
-              placeholderTextColor={placeholderColor} // Set placeholder text color
+              placeholderTextColor={placeholderColor}
               secureTextEntry={secureText}
               theme={{
                 colors: {
-                  primary: '#3085fe', // Border color
-                  placeholder: placeholderColor, // Placeholder color
+                  primary: '#3085fe',
+                  placeholder: placeholderColor,
                 },
               }}
-              labelStyle={{color: textColor}} // Label color
-              textColor={textColor} // Explicitly setting text color
+              labelStyle={{color: textColor}}
+              textColor={textColor}
+              value={confirmPassword}
+              onChangeText={text => setConfirmPassword(text)}
             />
             {/* Eye icon outside of TextInput */}
             <TouchableOpacity

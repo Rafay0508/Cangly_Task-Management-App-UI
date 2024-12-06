@@ -11,18 +11,24 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 
 const LoginPage = () => {
+  const {theme} = useTheme();
   const navigation = useNavigation();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [secureText, setSecureText] = useState(false);
 
-  const {theme} = useTheme();
   const toggleSecureText = () => {
     setSecureText(prevState => !prevState);
   };
-
   const LoginHandler = () => {
-    navigation.navigate('Home');
+    console.log(email, password);
+    setEmail('');
+    setPassword('');
+    navigation.navigate('HomePage');
   };
 
+  // theme Toggle
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
   const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e'; // Placeholder color based on theme
 
@@ -49,40 +55,44 @@ const LoginPage = () => {
           <TextInput
             style={[
               styles.input,
-              {backgroundColor: theme === 'dark' ? '#333' : '#fff'}, // Background based on theme
+              {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
             ]}
             label={'Email Address'}
             placeholder="Enter your email"
-            placeholderTextColor={placeholderColor} // Set placeholder text color
+            placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe', // Border color
-                placeholder: placeholderColor, // Placeholder color
+                primary: '#3085fe',
+                placeholder: placeholderColor,
               },
             }}
-            labelStyle={{color: textColor}} // Label color
-            textColor={textColor} // Explicitly setting text color
+            labelStyle={{color: textColor}}
+            textColor={textColor}
+            value={email}
+            onChangeText={text => setEmail(text)}
           />
           <View style={styles.passwordContainer}>
             <TextInput
               style={[
                 styles.input,
-                {backgroundColor: theme === 'dark' ? '#333' : '#fff'}, // Background based on theme
+                {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
               ]}
               label="Password"
               placeholder="Enter your password"
-              placeholderTextColor={placeholderColor} // Set placeholder text color
+              placeholderTextColor={placeholderColor}
               secureTextEntry={secureText}
               theme={{
                 colors: {
-                  primary: '#3085fe', // Border color
-                  placeholder: placeholderColor, // Placeholder color
+                  primary: '#3085fe',
+                  placeholder: placeholderColor,
                 },
               }}
-              labelStyle={{color: textColor}} // Label color
-              textColor={textColor} // Explicitly setting text color
+              labelStyle={{color: textColor}}
+              textColor={textColor}
+              value={password}
+              onChangeText={text => setPassword(text)}
             />
-            {/* Eye icon outside of TextInput */}
+
             <TouchableOpacity
               onPress={toggleSecureText}
               style={styles.eyeIconContainer}>

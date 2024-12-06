@@ -14,12 +14,15 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
+import {useTheme} from '../context/ThemeContext';
 
 const {width, height} = Dimensions.get('window');
 
 const Onboarding_1 = () => {
   const navigation = useNavigation();
+  const {theme} = useTheme();
   const swiperRef = useRef(null); // Reference to Swiper
+  const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
 
   const slides = [
     {
@@ -50,9 +53,18 @@ const Onboarding_1 = () => {
       activeDotStyle={styles.activeDot}
       paginationStyle={styles.pagination}>
       {slides.map((slide, index) => (
-        <View key={index} style={styles.slide}>
+        <View
+          key={index}
+          style={[
+            styles.slide,
+            theme === 'dark'
+              ? {backgroundColor: 'black'}
+              : {backgroundColor: 'white'},
+          ]}>
           <View style={styles.subContainer}>
-            <Text style={styles.title}>{slide.title}</Text>
+            <Text style={[styles.title, {color: textColor}]}>
+              {slide.title}
+            </Text>
             <Text style={styles.description}>{slide.description}</Text>
 
             {/* Add "Next" button for the first two slides */}
@@ -100,7 +112,7 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
     paddingVertical: hp(8),
-    backgroundColor: '#fff',
+    borderWidth: 5,
   },
   subContainer: {margin: hp(2)},
   title: {
@@ -123,8 +135,8 @@ const styles = StyleSheet.create({
   },
   image: {
     marginTop: hp(2),
-    width: wp('95%'),
-    height: hp('62%'),
+    width: '90%',
+    height: '85%',
   },
   nextButton: {
     flexDirection: 'row',

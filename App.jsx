@@ -8,13 +8,15 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import HomePage from './pages/HomePage';
 import ForgetPasswordPage from './pages/ForgetPasswordPage';
+import VerificationPage from './pages/VerificationPage';
+import NewPasswordPage from './pages/NewPasswordPage';
 
 const App = () => {
   const Stack = createStackNavigator();
   return (
     <ThemeProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator initialRouteName="HomePage">
           <Stack.Screen
             name="Welcome"
             component={WelcomePage}
@@ -36,13 +38,23 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Home"
+            name="HomePage"
             component={HomePage}
             options={{headerShown: false}}
           />
           <Stack.Screen
             name="ForgetPassword"
             component={ForgetPasswordPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Verification"
+            component={VerificationPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="NewPassword"
+            component={NewPasswordPage}
             options={{headerShown: false}}
           />
         </Stack.Navigator>
