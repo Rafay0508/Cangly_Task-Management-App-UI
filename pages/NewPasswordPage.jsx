@@ -17,6 +17,7 @@ import {useTheme} from '../context/ThemeContext';
 import {useNavigation} from '@react-navigation/native';
 import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 import {TextInput} from 'react-native-paper';
+import {Fonts} from '../utils/fonts';
 
 const NewPasswordPage = () => {
   const {theme} = useTheme();
@@ -153,10 +154,11 @@ const styles = StyleSheet.create({
   },
   subContainer: {flex: 1, padding: hp(2)},
   textContainer: {gap: 10},
-  heading: {fontSize: hp(3), fontWeight: 'bold'},
-  subText: {fontSize: wp(4), color: '#9ca7ba'},
+  heading: {fontSize: hp(3), fontFamily: Fonts.heading},
+  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.subHeading},
   imageContainer: {marginVertical: hp(4)},
   image: {width: 300, height: 300},
+  input: {fontFamily: Fonts.regular},
   passwordsContainer: {gap: hp(2)},
   emailRadio: {
     padding: hp(2),
@@ -187,6 +189,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     color: 'white',
     fontSize: hp(2),
+    fontFamily: Fonts.regular,
   },
   passwordContainer: {
     position: 'relative', // Ensure the icon is placed absolutely in relation to this container

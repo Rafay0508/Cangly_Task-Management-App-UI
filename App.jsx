@@ -1,4 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
+
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import WelcomePage from './pages/WelcomePage';
@@ -10,13 +11,22 @@ import HomePage from './pages/HomePage';
 import ForgetPasswordPage from './pages/ForgetPasswordPage';
 import VerificationPage from './pages/VerificationPage';
 import NewPasswordPage from './pages/NewPasswordPage';
+import MyProjectPage from './pages/MyProjectsPage';
+import TodaysTasks from './pages/TodaysTasks';
+import ProjectDetailPage from './pages/ProjectDetailPage';
+// import './global.css';
+import {View, Text} from 'react-native';
+import {Fonts} from './utils/fonts';
+import Notifications from './pages/Notifications';
+import SearchPage from './pages/SearchPage';
+import Messages from './pages/Messages';
 
 const App = () => {
   const Stack = createStackNavigator();
   return (
     <ThemeProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="HomePage">
+        <Stack.Navigator initialRouteName="NewPassword">
           <Stack.Screen
             name="Welcome"
             component={WelcomePage}
@@ -55,6 +65,36 @@ const App = () => {
           <Stack.Screen
             name="NewPassword"
             component={NewPasswordPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="MyProjects"
+            component={MyProjectPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="TodaysTasks"
+            component={TodaysTasks}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ProjectDetail"
+            component={ProjectDetailPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Notification"
+            component={Notifications}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Search"
+            component={SearchPage}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Messages"
+            component={Messages}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

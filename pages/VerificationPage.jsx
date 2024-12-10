@@ -18,6 +18,7 @@ import {EnvelopeIcon, PhoneIcon} from 'react-native-heroicons/outline';
 import {useTheme} from '../context/ThemeContext';
 import {OtpInput} from 'react-native-otp-entry';
 import {useNavigation} from '@react-navigation/native';
+import {Fonts} from '../utils/fonts';
 const VerificationPage = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
@@ -77,9 +78,21 @@ const VerificationPage = () => {
                 }}
               />
               <View style={styles.resendText}>
-                <Text style={{fontSize: hp(2), color: textColor}}>00:30 </Text>
+                <Text
+                  style={{
+                    fontSize: hp(2),
+                    fontFamily: Fonts.regular,
+                    color: textColor,
+                  }}>
+                  00:30{' '}
+                </Text>
                 <TouchableOpacity>
-                  <Text style={{color: '#3085fe', fontSize: hp(2)}}>
+                  <Text
+                    style={{
+                      color: '#3085fe',
+                      fontSize: hp(2),
+                      fontFamily: Fonts.regular,
+                    }}>
                     Resend it
                   </Text>
                 </TouchableOpacity>
@@ -108,8 +121,8 @@ const styles = StyleSheet.create({
   },
   subContainer: {flex: 1, padding: hp(2)},
   textContainer: {gap: 10},
-  heading: {fontSize: hp(3), fontWeight: 'bold'},
-  subText: {fontSize: wp(4), color: '#9ca7ba'},
+  heading: {fontSize: hp(3), fontFamily: Fonts.heading},
+  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.subHeading},
   imageContainer: {marginVertical: hp(4)},
   image: {width: 300, height: 300},
   otpContainer: {gap: 10},
@@ -124,6 +137,7 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     color: 'white',
     fontSize: hp(2),
+    fontFamily: Fonts.regular,
   },
   resendText: {
     marginTop: hp(2),

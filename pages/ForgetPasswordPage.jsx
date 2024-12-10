@@ -16,6 +16,7 @@ import {EnvelopeIcon, PhoneIcon} from 'react-native-heroicons/outline';
 import {useTheme} from '../context/ThemeContext';
 import {RadioButton} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import {Fonts} from '../utils/fonts';
 const ForgetPasswordPage = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
@@ -66,12 +67,16 @@ const ForgetPasswordPage = () => {
               <View style={{gap: 4, width: '55%'}}>
                 <Text
                   style={[
-                    {fontSize: 18, fontWeight: 'bold'},
+                    {fontSize: 18, fontFamily: Fonts.subHeading},
                     {color: textColor},
                   ]}>
                   Email
                 </Text>
-                <Text style={[{fontSize: 16}, {color: textColor}]}>
+                <Text
+                  style={[
+                    {fontSize: 14, fontFamily: Fonts.regular},
+                    {color: textColor},
+                  ]}>
                   Mike Harley@gmail.com
                 </Text>
               </View>
@@ -98,12 +103,16 @@ const ForgetPasswordPage = () => {
               <View style={{gap: 4, width: '55%'}}>
                 <Text
                   style={[
-                    {fontSize: 18, fontWeight: 'bold'},
+                    {fontSize: 16, fontFamily: Fonts.subHeading},
                     {color: textColor},
                   ]}>
                   Phone Number
                 </Text>
-                <Text style={[{fontSize: 16}, {color: textColor}]}>
+                <Text
+                  style={[
+                    {fontSize: 14, fontFamily: Fonts.regular},
+                    {color: textColor},
+                  ]}>
                   +689 548 89565
                 </Text>
               </View>
@@ -139,8 +148,8 @@ const styles = StyleSheet.create({
   },
   subContainer: {flex: 1, padding: hp(2)},
   textContainer: {gap: 10},
-  heading: {fontSize: hp(3), fontWeight: 'bold'},
-  subText: {fontSize: wp(4), color: '#9ca7ba'},
+  heading: {fontSize: hp(3), fontFamily: Fonts.heading},
+  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.heading},
   imageContainer: {marginVertical: hp(4)},
   image: {width: 300, height: 300},
   radioContainer: {gap: 10},
@@ -173,5 +182,6 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     color: 'white',
     fontSize: hp(2),
+    fontFamily: Fonts.subHeading,
   },
 });

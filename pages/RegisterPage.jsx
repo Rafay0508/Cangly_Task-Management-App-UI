@@ -16,6 +16,7 @@ import {TextInput} from 'react-native-paper';
 import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 import CheckBox from 'react-native-check-box';
 import {useNavigation} from '@react-navigation/native';
+import {Fonts} from '../utils/fonts';
 
 const RegisterPage = () => {
   const {theme} = useTheme();
@@ -206,6 +207,7 @@ const RegisterPage = () => {
                 fontSize: hp(1.7),
                 width: '80%',
                 textAlign: 'left',
+                fontFamily: Fonts.regular,
               }}>
               I agree to the
               <Text style={{color: '#3085fe'}}>
@@ -224,14 +226,18 @@ const RegisterPage = () => {
                 source={require('../assets/social/google.png')}
                 style={{width: 20, height: 20}}
               />
-              <Text style={{color: textColor}}>Google</Text>
+              <Text style={{color: textColor, fontFamily: Fonts.regular}}>
+                Google
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.socialButton}>
               <Image
                 source={require('../assets/social/facebook.png')}
                 style={{width: 20, height: 20}}
               />
-              <Text style={{color: textColor}}>Facebook</Text>
+              <Text style={{color: textColor, fontFamily: Fonts.regular}}>
+                Facebook
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.bottomText}>
@@ -273,8 +279,16 @@ const styles = StyleSheet.create({
   textContainer: {
     flexDirection: 'column',
   },
-  welcomeText: {fontSize: hp(3.5), fontWeight: 'bold'},
-  secondText: {marginTop: hp(1), fontSize: hp(2), color: '#acafb5'},
+  welcomeText: {
+    fontSize: hp(3.5),
+    fontFamily: Fonts.subHeading,
+  },
+  secondText: {
+    marginTop: hp(1),
+    fontSize: hp(2),
+    color: '#acafb5',
+    fontFamily: Fonts.subHeading,
+  },
   formContainer: {
     flex: 1,
     marginTop: hp(3),
@@ -282,6 +296,7 @@ const styles = StyleSheet.create({
     gap: hp(2),
   },
   input: {
+    fontFamily: Fonts.regular,
     borderWidth: 2,
     borderColor: '#3085fe',
     backgroundColor: 'transparent', // Default transparent background to allow for theme adjustment
@@ -304,10 +319,12 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: hp(2),
     color: 'white',
+    fontFamily: Fonts.regular,
   },
   socialText: {
     textAlign: 'center',
     color: '#acafb5',
+    fontFamily: Fonts.regular,
   },
   socialButtonContainer: {
     flexDirection: 'row',
@@ -326,5 +343,6 @@ const styles = StyleSheet.create({
   bottomText: {
     marginVertical: hp(2),
     width: '100%',
+    fontFamily: Fonts.regular,
   },
 });

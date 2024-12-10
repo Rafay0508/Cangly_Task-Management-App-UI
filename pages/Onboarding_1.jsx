@@ -15,6 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../context/ThemeContext';
+import {Fonts} from '../utils/fonts';
 
 const {width, height} = Dimensions.get('window');
 
@@ -116,13 +117,14 @@ const styles = StyleSheet.create({
   },
   subContainer: {margin: hp(2)},
   title: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 28,
+    fontFamily: Fonts.subHeading,
     marginBottom: 10,
   },
   description: {
     fontSize: 16,
     color: '#6c757d',
+    fontFamily: Fonts.regular,
   },
   imageContainer: {
     width: wp('90%'),
@@ -150,7 +152,7 @@ const styles = StyleSheet.create({
   },
   nextButtonText: {
     color: '#fff',
-    fontWeight: 'bold',
+    fontFamily: Fonts.heading,
     fontSize: 16,
   },
 

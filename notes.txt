@@ -1,7 +1,26 @@
-12/5/2024
-1 - 7 comlplete 
 
 
-13/5/2024
-page 8 -10
-complete themeToggle
+12 schedule   
+13 search        ..
+14 my projects(18)
+15 myproject detail(19)
+
+17 message          ..
+18 chat              ..
+
+
+done:
+
+1 splash
+2 onboarding
+3 login
+4 register
+5 forget password
+6 otp
+7 new password
+8 home
+9 my projects
+10 todays tasks
+11 project detail page
+16 notification
+19 profile
