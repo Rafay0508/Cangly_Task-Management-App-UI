@@ -14,16 +14,12 @@ import NewPasswordPage from './pages/NewPasswordPage';
 import MyProjectPage from './pages/MyProjectsPage';
 import TodaysTasks from './pages/TodaysTasks';
 import ProjectDetailPage from './pages/ProjectDetailPage';
-// import './global.css';
-import {View, Text} from 'react-native';
-import {Fonts} from './utils/fonts';
 import Notifications from './pages/Notifications';
 import SearchPage from './pages/SearchPage';
 import Messages from './pages/Messages';
 import Chat from './pages/Chat';
 import ProjectAbout from './pages/ProjectAbout';
 import TeamMemeber from './pages/TeamMemeber';
-import Checking from './extra/Calendar';
 
 const App = () => {
   const Stack = createStackNavigator();

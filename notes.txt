@@ -1,11 +1,7 @@
 
 
 12 schedule   
-14 my projects(18)
 15 myproject detail(19)
-
-
-  
 
 
 done:
@@ -20,13 +16,14 @@ done:
 9 my projects
 10 todays tasks
 11 project detail page
-13 search       
+13 search   
+14 my projects    
 16 notification
-17 message        
-19 profile
-18 chat     
+17 message
+18 chat        
+19 profile     
 20 team member 
 
-https://www.npmjs.com/package/react-native-actions-sheet?activeTab=readme
-react-native-raw-bottom-sheet
+https://gorhom.dev/react-native-bottom-sheet/    .....
+https://github.com/howljs/react-native-calendar-kit   .......
 https://www.npmjs.com/package/react-native-ui-datepicker
