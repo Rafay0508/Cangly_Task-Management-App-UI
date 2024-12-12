@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 35,
     height: 35,
-    marginRight: -15, // Fixed spacing between the images
+    marginRight: -15,
     borderRadius: 25,
   },
 });

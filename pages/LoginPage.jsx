@@ -10,6 +10,7 @@ import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 
 const LoginPage = () => {
   const {theme} = useTheme();
@@ -48,7 +49,7 @@ const LoginPage = () => {
             Welcome Back 👋
           </Text>
           <Text style={[{color: textColor}, styles.welcomeText]}>
-            to <Text style={{color: '#3085fe'}}>CANGLY</Text>
+            to <Text style={{color: Color.firstColor}}>CANGLY</Text>
           </Text>
           <Text style={styles.secondText}>Hello there, login to continue</Text>
         </View>
@@ -63,7 +64,7 @@ const LoginPage = () => {
             placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe',
+                primary: Color.firstColor,
                 placeholder: placeholderColor,
               },
             }}
@@ -84,7 +85,7 @@ const LoginPage = () => {
               secureTextEntry={secureText}
               theme={{
                 colors: {
-                  primary: '#3085fe',
+                  primary: Color.firstColor,
                   placeholder: placeholderColor,
                 },
               }}
@@ -106,7 +107,7 @@ const LoginPage = () => {
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>
-            <Text style={{textAlign: 'right', color: '#3085fe'}}>
+            <Text style={{textAlign: 'right', color: Color.firstColor}}>
               Forget Password?
             </Text>
           </TouchableOpacity>
@@ -146,7 +147,7 @@ const LoginPage = () => {
               ]}>
               Didn't have an account?{' '}
               <Text
-                style={{color: '#3085fe', fontFamily: Fonts.regular}}
+                style={{color: Color.firstColor, fontFamily: Fonts.regular}}
                 onPress={() => navigation.navigate('Register')}>
                 Register
               </Text>
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
   input: {
     fontFamily: Fonts.regular,
     borderWidth: 2,
-    borderColor: '#3085fe',
+    borderColor: Color.firstColor,
     backgroundColor: 'transparent', // Default transparent background to allow for theme adjustment
   },
   passwordContainer: {
@@ -204,7 +205,7 @@ const styles = StyleSheet.create({
     top: 15, // Adjust the position of the icon within the input
   },
   button: {
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
     height: hp(6),
     justifyContent: 'center',
     alignItems: 'center',

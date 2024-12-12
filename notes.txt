@@ -1,16 +1,14 @@
 
 
 12 schedule   
-13 search        ..
 14 my projects(18)
 15 myproject detail(19)
 
-17 message          ..
-18 chat              ..
+
+  
 
 
 done:
-
 1 splash
 2 onboarding
 3 login
@@ -22,5 +20,13 @@ done:
 9 my projects
 10 todays tasks
 11 project detail page
+13 search       
 16 notification
+17 message        
 19 profile
+18 chat     
+20 team member 
+
+https://www.npmjs.com/package/react-native-actions-sheet?activeTab=readme
+react-native-raw-bottom-sheet
+https://www.npmjs.com/package/react-native-ui-datepicker

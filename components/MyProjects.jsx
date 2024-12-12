@@ -13,6 +13,7 @@ import {ProgressBar} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../context/ThemeContext';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 
 const MyProjects = ({isHorizontal, project}) => {
   const navigation = useNavigation();
@@ -22,7 +23,7 @@ const MyProjects = ({isHorizontal, project}) => {
   // const textColor = project.id === 1 ? 'white' : 'black';
 
   // Set progress bar color based on the project ID
-  const progressBarColor = project.id === 1 ? 'white' : '#3085fe';
+  const progressBarColor = project.id === 1 ? 'white' : Color.firstColor;
   const isProject1 = project.id === 1 ? true : false;
 
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
@@ -36,7 +37,7 @@ const MyProjects = ({isHorizontal, project}) => {
         theme == 'dark'
           ? {backgroundColor: '#222320'}
           : {backgroundColor: 'white'},
-        project.id == 1 ? {backgroundColor: '#3085fe'} : {},
+        project.id == 1 ? {backgroundColor: Color.firstColor} : {},
       ]}>
       <View style={styles.topContainer}>
         <View>

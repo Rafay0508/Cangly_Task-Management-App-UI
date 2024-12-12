@@ -1,19 +1,153 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
-import {ChevronLeftIcon} from 'react-native-heroicons/solid';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
+import {
+  AdjustmentsHorizontalIcon,
+  ChevronLeftIcon,
+  MagnifyingGlassIcon,
+} from 'react-native-heroicons/solid';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Fonts} from '../utils/fonts';
 import {useNavigation} from '@react-navigation/native';
-const Messages = () => {
+import {useTheme} from '../context/ThemeContext';
+
+const messages = [
+  {
+    senderId: 1,
+    messageId: 101,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Leslie Alexander',
+    message: 'Arigathanks',
+    timeStamp: '12:40 AM',
+  },
+  {
+    senderId: 2,
+    messageId: 102,
+    image: require('../assets/profile.jpg'),
+    senderName: 'John Doe',
+    message: 'Hey, are you coming to the event tomorrow?',
+    timeStamp: '1:20 AM',
+  },
+  {
+    senderId: 3,
+    messageId: 103,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Jane Smith',
+    message: 'Can you send me the report by EOD?',
+    timeStamp: '2:15 AM',
+  },
+  {
+    senderId: 4,
+    messageId: 104,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Michael Brown',
+    message: 'Good morning! Do you have any updates on the project?',
+    timeStamp: '7:05 AM',
+  },
+  {
+    senderId: 5,
+    messageId: 105,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Sarah Lee',
+    message: 'Happy birthday! 🎉',
+    timeStamp: '8:30 AM',
+  },
+  {
+    senderId: 6,
+    messageId: 106,
+    image: require('../assets/profile.jpg'),
+    senderName: 'David Wilson',
+    message: 'Let’s grab lunch today. How about 12 PM?',
+    timeStamp: '10:10 AM',
+  },
+  {
+    senderId: 7,
+    messageId: 107,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Emily Davis',
+    message: 'Did you get the tickets for the movie?',
+    timeStamp: '11:45 AM',
+  },
+  {
+    senderId: 8,
+    messageId: 108,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Chris Johnson',
+    message:
+      'I will be out of the office next week. Let me know if you need anything.',
+    timeStamp: '12:00 PM',
+  },
+  {
+    senderId: 9,
+    messageId: 109,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Alice White',
+    message: 'Looking forward to the weekend trip!',
+    timeStamp: '2:10 PM',
+  },
+  {
+    senderId: 10,
+    messageId: 110,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Tom Harris',
+    message: 'Can you send me the files for the meeting?',
+    timeStamp: '3:45 PM',
+  },
+  {
+    senderId: 11,
+    messageId: 111,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Rachel Green',
+    message: 'Let’s catch up later this week.',
+    timeStamp: '4:30 PM',
+  },
+  {
+    senderId: 12,
+    messageId: 112,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Joshua King',
+    message: 'Just checking in. Hope all is well!',
+    timeStamp: '6:00 PM',
+  },
+  {
+    senderId: 13,
+    messageId: 113,
+    image: require('../assets/profile.jpg'),
+    senderName: 'Samantha Wright',
+    message: 'I’ll see you at the gym later!',
+    timeStamp: '7:15 PM',
+  },
+];
+
+const Messages = ({placeholder = 'Search'}) => {
+  const {theme} = useTheme();
   const navigation = useNavigation();
+  const [search, setSearch] = useState('');
+
+  const textColor = theme == 'dark' ? 'white' : 'black';
+
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        theme == 'dark'
+          ? {backgroundColor: 'black'}
+          : {backgroundColor: 'white'},
+      ]}>
       <View style={styles.topNavigation}>
         <TouchableOpacity>
           <ChevronLeftIcon
+            color={textColor}
             size={wp(7)}
             onPress={() => navigation.navigate('HomePage')}
           />
@@ -24,11 +158,55 @@ const Messages = () => {
             textAlign: 'center',
             fontFamily: Fonts.subHeading,
             fontSize: wp(5),
+            color: textColor,
           }}>
           Messages
         </Text>
       </View>
-      <View style={styles.messagesContainer}></View>
+      <View style={styles.searchContainer}>
+        <TouchableOpacity>
+          <MagnifyingGlassIcon
+            size={hp(3)}
+            color={textColor}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+        <TextInput
+          style={[styles.input, {color: textColor}]}
+          placeholder={placeholder}
+          placeholderTextColor={textColor}
+          onChangeText={setSearch}
+        />
+        <TouchableOpacity>
+          <AdjustmentsHorizontalIcon
+            size={hp(3)}
+            color={textColor}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView style={styles.messagesContainer}>
+        {messages.map((message, index) => (
+          <TouchableOpacity
+            style={styles.messageBox}
+            key={index}
+            onPress={() => navigation.navigate('Chat', {sender: message})}>
+            <View>
+              <Image source={message.image} style={styles.image} />
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={[styles.senderName, {color: textColor}]}>
+                {message.senderName}
+              </Text>
+              <Text style={styles.messageText}>{message.message}</Text>
+            </View>
+            <View>
+              <Text style={styles.timeStamp}>{message.timeStamp}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 };
@@ -43,5 +221,43 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: hp(4),
   },
-  messagesContainer: {},
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    paddingHorizontal: wp(4),
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  icon: {
+    marginRight: wp(2),
+  },
+  input: {
+    flex: 1,
+    fontSize: hp(2),
+    color: '#000',
+  },
+  messagesContainer: {
+    marginVertical: hp(2),
+  },
+  messageBox: {
+    flexDirection: 'row',
+    gap: wp(3),
+    borderBottomWidth: 1,
+    borderColor: '#e7eae3',
+    paddingVertical: hp(1.5),
+  },
+  image: {width: hp(5), height: hp(5), borderRadius: 25},
+  textContainer: {width: '65%'},
+  senderName: {fontFamily: Fonts.heading},
+  messageText: {
+    fontFamily: Fonts.regular,
+    color: 'gray',
+    marginVertical: hp(0.5),
+  },
+  timeStamp: {fontSize: hp(1.5), color: 'gray', fontFamily: Fonts.regular},
 });

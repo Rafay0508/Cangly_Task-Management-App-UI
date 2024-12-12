@@ -6,6 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 import Animated, {FlipInYLeft} from 'react-native-reanimated';
 import {useNavigation} from '@react-navigation/native';
+import {Color} from '../utils/colors';
 const WelcomePage = () => {
   const navigation = useNavigation();
   setTimeout(() => {
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
   },
   image: {width: wp(40), height: hp(40)},
 });

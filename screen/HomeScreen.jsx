@@ -20,6 +20,7 @@ import {
 } from 'react-native-responsive-screen';
 import SearchBar from '../components/SearchBar';
 import {ChatBubbleLeftEllipsisIcon} from 'react-native-heroicons/solid';
+import {Color} from '../utils/colors';
 const HomeScreen = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
@@ -130,7 +131,7 @@ const HomeScreen = () => {
             My Projects
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('MyProjects')}>
-            <Text style={{color: '#3085fe', fontFamily: Fonts.heading}}>
+            <Text style={{color: Color.firstColor, fontFamily: Fonts.heading}}>
               View All
             </Text>
           </TouchableOpacity>
@@ -155,7 +156,7 @@ const HomeScreen = () => {
           Todays Tasks
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('TodaysTasks')}>
-          <Text style={{color: '#3085fe', fontFamily: Fonts.heading}}>
+          <Text style={{color: Color.firstColor, fontFamily: Fonts.heading}}>
             View All
           </Text>
         </TouchableOpacity>

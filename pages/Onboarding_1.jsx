@@ -16,6 +16,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../context/ThemeContext';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 
 const {width, height} = Dimensions.get('window');
 
@@ -113,7 +114,6 @@ const styles = StyleSheet.create({
   slide: {
     flex: 1,
     paddingVertical: hp(8),
-    borderWidth: 5,
   },
   subContainer: {margin: hp(2)},
   title: {
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     flexDirection: 'row',
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
     marginTop: hp(2),
     justifyContent: 'center',
     alignItems: 'center',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
 
   getStartedButton: {
     flexDirection: 'row',
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
     marginTop: hp(2),
     justifyContent: 'center',
     alignItems: 'center',

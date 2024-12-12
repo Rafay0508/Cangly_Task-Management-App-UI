@@ -14,6 +14,7 @@ import {
 import {useTheme} from '../context/ThemeContext'; // Import theme context
 import {Switch} from 'react-native-paper';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 
 const ProfileScreen = () => {
   const {theme, toggleTheme} = useTheme(); // Get theme and toggleTheme from context
@@ -48,7 +49,7 @@ const ProfileScreen = () => {
         <Switch
           value={isSwitchOn}
           onValueChange={onToggleSwitch}
-          trackColor={{false: '#3085fe', true: '#3085fe'}} // Track color for off (blue) and on (white)
+          trackColor={{false: Color.firstColor, true: Color.firstColor}} // Track color for off (blue) and on (white)
           thumbColor={isSwitchOn ? 'white' : 'blue'} // Thumb color for on (white) and off (blue)
         />
       </View>
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
   },
   editContainer: {
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
     width: '90%',
     height: '15%',
     justifyContent: 'center',

@@ -20,13 +20,17 @@ import {Fonts} from './utils/fonts';
 import Notifications from './pages/Notifications';
 import SearchPage from './pages/SearchPage';
 import Messages from './pages/Messages';
+import Chat from './pages/Chat';
+import ProjectAbout from './pages/ProjectAbout';
+import TeamMemeber from './pages/TeamMemeber';
+import Checking from './extra/Calendar';
 
 const App = () => {
   const Stack = createStackNavigator();
   return (
     <ThemeProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="NewPassword">
+        <Stack.Navigator initialRouteName="HomePage">
           <Stack.Screen
             name="Welcome"
             component={WelcomePage}
@@ -95,6 +99,21 @@ const App = () => {
           <Stack.Screen
             name="Messages"
             component={Messages}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Chat"
+            component={Chat}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ProjectAbout"
+            component={ProjectAbout}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="TeamMember"
+            component={TeamMemeber}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

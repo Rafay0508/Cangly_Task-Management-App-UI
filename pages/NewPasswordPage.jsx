@@ -1,6 +1,8 @@
 import {
   Image,
   KeyboardAvoidingView,
+  Modal,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 import {TextInput} from 'react-native-paper';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 
 const NewPasswordPage = () => {
   const {theme} = useTheme();
@@ -26,21 +29,21 @@ const NewPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [secureText, setSecureText] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const updateHandler = () => {
-    console.log(password, confirmPassword);
     setPassword('');
     setConfirmPassword('');
-    navigation.navigate('Login');
+    setModalVisible(true);
   };
 
   const toggleSecureText = () => {
     setSecureText(prevState => !prevState);
   };
 
-  // theme Toggle
-  const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
-  const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e'; // Placeholder color based on theme
+  const textColor = theme === 'dark' ? 'white' : 'black';
+  const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e';
+
   return (
     <KeyboardAvoidingView
       style={[
@@ -49,96 +52,120 @@ const NewPasswordPage = () => {
           : {backgroundColor: 'white'},
         styles.container,
       ]}>
-      <ScrollView>
-        <View style={styles.backNavigateBtn}>
-          <TouchableOpacity onPress={() => navigation.navigate('Verification')}>
-            <ChevronLeftIcon size={hp(4)} color={textColor} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.subContainer}>
-          <View style={styles.textContainer}>
-            <Text style={[styles.heading, {color: textColor}]}>
-              Enter New Password
+      <View style={{flex: 1, opacity: modalVisible ? 0.5 : 1}}>
+        <ScrollView>
+          <View style={styles.backNavigateBtn}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Verification')}>
+              <ChevronLeftIcon size={hp(4)} color={textColor} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.subContainer}>
+            <View style={styles.textContainer}>
+              <Text style={[styles.heading, {color: textColor}]}>
+                Enter New Password
+              </Text>
+              <Text style={[styles.subText, {color: placeholderColor}]}>
+                Please enter your new password
+              </Text>
+            </View>
+            <View style={styles.imageContainer}>
+              <Image
+                source={require('../assets/new-password.png')}
+                style={styles.image}
+              />
+            </View>
+            <View style={styles.passwordsContainer}>
+              <View style={styles.passwordContainer}>
+                <TextInput
+                  style={[
+                    styles.input,
+                    {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
+                  ]}
+                  label="Password"
+                  placeholder="Enter your password"
+                  placeholderTextColor={placeholderColor}
+                  secureTextEntry={secureText}
+                  theme={{
+                    colors: {
+                      primary: Color.firstColor,
+                      placeholder: placeholderColor,
+                    },
+                  }}
+                  textColor={textColor}
+                  value={password}
+                  onChangeText={text => setPassword(text)}
+                />
+                <TouchableOpacity
+                  onPress={toggleSecureText}
+                  style={styles.eyeIconContainer}>
+                  {secureText ? (
+                    <EyeSlashIcon color={textColor} />
+                  ) : (
+                    <EyeIcon color={textColor} />
+                  )}
+                </TouchableOpacity>
+              </View>
+              <View style={styles.passwordContainer}>
+                <TextInput
+                  style={[
+                    styles.input,
+                    {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
+                  ]}
+                  label="Confirm Password"
+                  placeholder="Confirm password"
+                  placeholderTextColor={placeholderColor}
+                  secureTextEntry={secureText}
+                  theme={{
+                    colors: {
+                      primary: Color.firstColor,
+                      placeholder: placeholderColor,
+                    },
+                  }}
+                  textColor={textColor}
+                  value={confirmPassword}
+                  onChangeText={text => setConfirmPassword(text)}
+                />
+                <TouchableOpacity
+                  onPress={toggleSecureText}
+                  style={styles.eyeIconContainer}>
+                  {secureText ? (
+                    <EyeSlashIcon color={textColor} />
+                  ) : (
+                    <EyeIcon color={textColor} />
+                  )}
+                </TouchableOpacity>
+              </View>
+            </View>
+            <TouchableOpacity style={styles.updateBtn} onPress={updateHandler}>
+              <Text style={styles.btnText}>Update Password</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Image source={require('../assets/thankyou.png')} />
+            <Text style={styles.modalText}>Congratulations 🎉</Text>
+            <Text style={styles.modalSubText}>
+              Your account is ready to use
             </Text>
-            <Text style={styles.subText}>Please enter your new password</Text>
+            <TouchableOpacity
+              style={styles.modalButton}
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate('HomePage');
+              }}>
+              <Text style={styles.modalButtonText}>Back to Home</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.imageContainer}>
-            <Image
-              source={require('../assets/new-password.png')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.passwordsContainer}>
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={[
-                  styles.input,
-                  {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
-                ]}
-                label="Password"
-                placeholder="Enter your password"
-                placeholderTextColor={placeholderColor}
-                secureTextEntry={secureText}
-                theme={{
-                  colors: {
-                    primary: '#3085fe',
-                    placeholder: placeholderColor,
-                  },
-                }}
-                labelStyle={{color: textColor}}
-                textColor={textColor}
-                value={password}
-                onChangeText={text => setPassword(text)}
-              />
-              {/* Eye icon outside of TextInput */}
-              <TouchableOpacity
-                onPress={toggleSecureText}
-                style={styles.eyeIconContainer}>
-                {secureText ? (
-                  <EyeSlashIcon color={textColor} />
-                ) : (
-                  <EyeIcon color={textColor} />
-                )}
-              </TouchableOpacity>
-            </View>
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={[
-                  styles.input,
-                  {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
-                ]}
-                label="Confirm Password"
-                placeholder="Confirm password"
-                placeholderTextColor={placeholderColor}
-                secureTextEntry={secureText}
-                theme={{
-                  colors: {
-                    primary: '#3085fe',
-                    placeholder: placeholderColor,
-                  },
-                }}
-                labelStyle={{color: textColor}}
-                textColor={textColor}
-                value={confirmPassword}
-                onChangeText={text => setConfirmPassword(text)}
-              />
-
-              <TouchableOpacity
-                onPress={toggleSecureText}
-                style={styles.eyeIconContainer}>
-                {secureText ? (
-                  <EyeSlashIcon color={textColor} />
-                ) : (
-                  <EyeIcon color={textColor} />
-                )}
-              </TouchableOpacity>
-            </View>
-          </View>
-          <TouchableOpacity style={styles.updateBtn} onPress={updateHandler}>
-            <Text style={styles.btnText}>Update Password</Text>
-          </TouchableOpacity>
         </View>
-      </ScrollView>
+      </Modal>
     </KeyboardAvoidingView>
   );
 };
@@ -155,34 +182,31 @@ const styles = StyleSheet.create({
   subContainer: {flex: 1, padding: hp(2)},
   textContainer: {gap: 10},
   heading: {fontSize: hp(3), fontFamily: Fonts.heading},
-  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.subHeading},
+  subText: {fontSize: wp(4), fontFamily: Fonts.subHeading},
   imageContainer: {marginVertical: hp(4)},
   image: {width: 300, height: 300},
-  input: {fontFamily: Fonts.regular},
   passwordsContainer: {gap: hp(2)},
-  emailRadio: {
-    padding: hp(2),
-    alignItems: 'center',
+  passwordContainer: {
+    position: 'relative',
     borderWidth: 1,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    borderColor: '#d0d0e0',
+    borderColor: Color.firstColor,
+    borderRadius: 5,
   },
-  emailIcon: {backgroundColor: '#f7f7f8', padding: wp(3)},
-  phoneRadio: {
-    padding: hp(2),
-    alignItems: 'center',
-    borderWidth: 1,
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    borderColor: '#d0d0e0',
+  input: {
+    fontFamily: Fonts.regular,
+    padding: hp(0.5),
+    fontSize: hp(2),
+  },
+  eyeIconContainer: {
+    position: 'absolute',
+    right: wp(4),
+    top: hp(2),
   },
   updateBtn: {
     marginVertical: 20,
     justifyContent: 'center',
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
+    borderRadius: 5,
   },
   btnText: {
     textAlign: 'center',
@@ -191,14 +215,49 @@ const styles = StyleSheet.create({
     fontSize: hp(2),
     fontFamily: Fonts.regular,
   },
-  passwordContainer: {
-    position: 'relative', // Ensure the icon is placed absolutely in relation to this container
-    borderWidth: 1,
-    borderColor: '#3085fe',
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
-  eyeIconContainer: {
-    position: 'absolute',
-    right: 10,
-    top: 15, // Adjust the position of the icon within the input
+  modalView: {
+    width: '90%',
+    backgroundColor: 'white',
+    padding: 35,
+    alignItems: 'center',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: hp(1),
+    textAlign: 'center',
+    fontSize: hp(3),
+    fontFamily: Fonts.heading,
+  },
+  modalSubText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: hp(2),
+    fontFamily: Fonts.regular,
+  },
+  modalButton: {
+    backgroundColor: Color.firstColor,
+    padding: hp(2),
+    width: '100%',
+    borderRadius: 5,
+  },
+  modalButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: hp(2),
+    fontFamily: Fonts.regular,
   },
 });

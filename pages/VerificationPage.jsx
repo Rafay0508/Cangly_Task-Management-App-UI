@@ -19,6 +19,7 @@ import {useTheme} from '../context/ThemeContext';
 import {OtpInput} from 'react-native-otp-entry';
 import {useNavigation} from '@react-navigation/native';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 const VerificationPage = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
@@ -72,7 +73,7 @@ const VerificationPage = () => {
                     height: wp(20),
                     borderRadius: 0,
                   },
-                  pinCodeTextStyle: {color: '#3085fe'},
+                  pinCodeTextStyle: {color: Color.firstColor},
                   focusStickStyle: {},
                   focusedPinCodeContainerStyle: {},
                 }}
@@ -89,7 +90,7 @@ const VerificationPage = () => {
                 <TouchableOpacity>
                   <Text
                     style={{
-                      color: '#3085fe',
+                      color: Color.firstColor,
                       fontSize: hp(2),
                       fontFamily: Fonts.regular,
                     }}>
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   verifyBtn: {
     marginVertical: hp(4),
     justifyContent: 'center',
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
   },
   btnText: {
     textAlign: 'center',

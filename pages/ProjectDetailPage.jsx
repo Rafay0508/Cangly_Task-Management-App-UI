@@ -21,6 +21,7 @@ import {ProgressBar} from 'react-native-paper';
 import CheckBox from 'react-native-check-box';
 import {Fonts} from '../utils/fonts';
 import {useTheme} from '../context/ThemeContext';
+import {Color} from '../utils/colors';
 
 const ProjectDetailPage = ({route}) => {
   const {theme} = useTheme();
@@ -182,7 +183,7 @@ const ProjectDetailPage = ({route}) => {
                 <CheckBox
                   isChecked={true}
                   onClick={() => console.log('task checked')}
-                  checkBoxColor="#3085fe"
+                  checkBoxColor={Color.firstColor}
                 />
                 <View>
                   <Text style={[styles.taskName, {color: textColor}]}>
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f2f2f2',
   },
   productDetail: {
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
     paddingHorizontal: wp(4),
     paddingVertical: 10,
   },

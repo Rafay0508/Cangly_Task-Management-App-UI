@@ -17,6 +17,7 @@ import {EyeIcon, EyeSlashIcon} from 'react-native-heroicons/outline';
 import CheckBox from 'react-native-check-box';
 import {useNavigation} from '@react-navigation/native';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 
 const RegisterPage = () => {
   const {theme} = useTheme();
@@ -67,7 +68,7 @@ const RegisterPage = () => {
             Register Account
           </Text>
           <Text style={[{color: textColor}, styles.welcomeText]}>
-            to <Text style={{color: '#3085fe'}}>CANGLY</Text>
+            to <Text style={{color: Color.firstColor}}>CANGLY</Text>
           </Text>
           <Text style={styles.secondText}>
             Hello there, register to continue
@@ -84,7 +85,7 @@ const RegisterPage = () => {
             placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe',
+                primary: Color.firstColor,
                 placeholder: placeholderColor,
               },
             }}
@@ -103,7 +104,7 @@ const RegisterPage = () => {
             placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe',
+                primary: Color.firstColor,
                 placeholder: placeholderColor,
               },
             }}
@@ -122,7 +123,7 @@ const RegisterPage = () => {
             placeholderTextColor={placeholderColor}
             theme={{
               colors: {
-                primary: '#3085fe',
+                primary: Color.firstColor,
                 placeholder: placeholderColor,
               },
             }}
@@ -143,7 +144,7 @@ const RegisterPage = () => {
               secureTextEntry={secureText}
               theme={{
                 colors: {
-                  primary: '#3085fe',
+                  primary: Color.firstColor,
                   placeholder: placeholderColor,
                 },
               }}
@@ -175,7 +176,7 @@ const RegisterPage = () => {
               secureTextEntry={secureText}
               theme={{
                 colors: {
-                  primary: '#3085fe',
+                  primary: Color.firstColor,
                   placeholder: placeholderColor,
                 },
               }}
@@ -197,7 +198,7 @@ const RegisterPage = () => {
           </View>
           <View style={{flexDirection: 'row', gap: hp(1.5)}}>
             <CheckBox
-              checkBoxColor={'#3085fe'}
+              checkBoxColor={Color.firstColor}
               onClick={handleCheckBoxToggle} // Correctly bind the checkbox toggle
               isChecked={checked} // Bind the checkbox state
             />
@@ -210,7 +211,7 @@ const RegisterPage = () => {
                 fontFamily: Fonts.regular,
               }}>
               I agree to the
-              <Text style={{color: '#3085fe'}}>
+              <Text style={{color: Color.firstColor}}>
                 Term & Condition & Privacy Policy
               </Text>
               set out by this site.
@@ -248,7 +249,7 @@ const RegisterPage = () => {
               ]}>
               Already have an account?{' '}
               <Text
-                style={{color: '#3085fe'}}
+                style={{color: Color.firstColor}}
                 onPress={() => navigation.navigate('Login')}>
                 Login
               </Text>
@@ -298,7 +299,7 @@ const styles = StyleSheet.create({
   input: {
     fontFamily: Fonts.regular,
     borderWidth: 2,
-    borderColor: '#3085fe',
+    borderColor: Color.firstColor,
     backgroundColor: 'transparent', // Default transparent background to allow for theme adjustment
   },
   passwordContainer: {
@@ -310,7 +311,7 @@ const styles = StyleSheet.create({
     top: 15, // Adjust the position of the icon within the input
   },
   button: {
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
     height: hp(6),
     justifyContent: 'center',
     alignItems: 'center',

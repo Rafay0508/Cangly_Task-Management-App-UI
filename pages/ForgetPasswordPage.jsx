@@ -17,6 +17,7 @@ import {useTheme} from '../context/ThemeContext';
 import {RadioButton} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {Fonts} from '../utils/fonts';
+import {Color} from '../utils/colors';
 const ForgetPasswordPage = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
@@ -57,7 +58,9 @@ const ForgetPasswordPage = () => {
               <View
                 style={[
                   styles.emailIcon,
-                  checked === 'first' ? {backgroundColor: '#3085fe'} : {},
+                  checked === 'first'
+                    ? {backgroundColor: Color.firstColor}
+                    : {},
                 ]}>
                 <EnvelopeIcon
                   size={hp(3)}
@@ -85,7 +88,7 @@ const ForgetPasswordPage = () => {
                   value="first"
                   status={checked === 'first' ? 'checked' : 'unchecked'}
                   onPress={() => setChecked('first')}
-                  color="#3085fe"
+                  color={Color.firstColor}
                 />
               </View>
             </View>
@@ -93,7 +96,9 @@ const ForgetPasswordPage = () => {
               <View
                 style={[
                   styles.emailIcon,
-                  checked === 'second' ? {backgroundColor: '#3085fe'} : {},
+                  checked === 'second'
+                    ? {backgroundColor: Color.firstColor}
+                    : {},
                 ]}>
                 <PhoneIcon
                   size={hp(3)}
@@ -121,7 +126,7 @@ const ForgetPasswordPage = () => {
                   value="second"
                   status={checked === 'second' ? 'checked' : 'unchecked'}
                   onPress={() => setChecked('second')}
-                  color="#3085fe"
+                  color={Color.firstColor}
                 />
               </View>
             </View>
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
   continueBtn: {
     marginVertical: 20,
     justifyContent: 'center',
-    backgroundColor: '#3085fe',
+    backgroundColor: Color.firstColor,
   },
   btnText: {
     textAlign: 'center',
