@@ -161,8 +161,8 @@ const Chat = ({route}) => {
                 {textAlign: chat.senderId === 1 ? 'right' : 'left'},
                 {
                   backgroundColor:
-                    chat.senderId === 1 ? Color.firstColor : '#222320',
-                  color: chat.senderId === 1 ? 'white' : 'white',
+                    chat.senderId === 1 ? Color.firstColor : 'white',
+                  color: chat.senderId === 1 ? 'white' : 'black',
                 },
               ]}>
               {chat.message}
@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   lightContainer: {
-    backgroundColor: 'white',
+    backgroundColor: 'f8fbff',
   },
   topContainer: {
     flexDirection: 'row',
