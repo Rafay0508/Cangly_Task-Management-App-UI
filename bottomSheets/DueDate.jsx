@@ -1,55 +1,47 @@
-import React, {useCallback, useState, forwardRef} from 'react';
+import React, {forwardRef, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {BottomSheetView} from '@gorhom/bottom-sheet';
-import BottomSheet from '@gorhom/bottom-sheet';
-import {XCircleIcon} from 'react-native-heroicons/outline';
-import DateTimePicker from 'react-native-ui-datepicker';
-import dayjs from 'dayjs';
+import ActionSheet from 'react-native-actions-sheet';
 import {useTheme} from '../context/ThemeContext';
+import {XCircleIcon} from 'react-native-heroicons/outline';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
+import DateTimePicker from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
 
-const DueDate = forwardRef(({snapPoints = ['35%']}, ref) => {
-  const {theme} = useTheme(); // Access the theme context
+// Forward the ref directly to ActionSheet component
+const DueDate = forwardRef((props, ref) => {
+  const {theme} = useTheme();
   const [date, setDate] = useState(dayjs());
-
-  const handleSheetChanges = useCallback(index => {
-    console.log('Bottom Sheet Index:', index);
-  }, []);
-
-  const styles = createStyles(theme); // Generate styles based on theme
   const textColor = theme == 'dark' ? 'white' : 'black';
   return (
-    <BottomSheet
+    <ActionSheet
       ref={ref}
-      onChange={handleSheetChanges}
-      snapPoints={snapPoints}
-      enablePanDownToClose={true}
-      index={-1}
-      backgroundStyle={{
-        backgroundColor: theme === 'dark' ? '#222320' : '#fff',
-      }}>
-      <BottomSheetView style={styles.contentContainer}>
+      closable={false}
+      onClose={props.onClose}
+      backgroundInteractionEnabled={false}
+      isModal={false}>
+      <View style={theme == 'dark' ? {backgroundColor: 'rgb(30,40,43)'} : {}}>
         {/* Header Section */}
         <View style={styles.headerContainer}>
-          <Text style={styles.headerText}>Due Date</Text>
+          <Text style={[styles.headerText, {color: textColor}]}>Due Date</Text>
+
           <XCircleIcon
-            onPress={() => ref.current?.close()}
+            onPress={() => ref.current?.hide()}
             style={styles.icon}
             size={hp(3)}
+            color={textColor}
           />
         </View>
-        {/* Date Picker Section */}
         <View style={styles.listContainer}>
           <DateTimePicker
             mode="single"
             date={date}
             onChange={params => setDate(params.date)}
-            headerButtonColor={textColor}
+            headerButtonColor={'white'}
             headerButtonStyle={{backgroundColor: Color.firstColor}}
             weekDaysTextStyle={{color: textColor}}
             calendarTextStyle={{color: textColor}}
@@ -61,41 +53,43 @@ const DueDate = forwardRef(({snapPoints = ['35%']}, ref) => {
             }}
           />
         </View>
-      </BottomSheetView>
-    </BottomSheet>
+      </View>
+    </ActionSheet>
   );
 });
 
-// Dynamic styles based on the theme
-const createStyles = theme =>
-  StyleSheet.create({
-    contentContainer: {
-      flex: 1,
-      justifyContent: 'flex-start',
-      alignItems: 'flex-start',
-      backgroundColor: theme === 'dark' ? '#222320' : '#fff', // Dark/Light background
-    },
-    headerContainer: {
-      width: '100%',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingHorizontal: 20,
-      paddingVertical: hp(1),
-    },
-    headerText: {
-      fontSize: hp(2.5),
-      color: theme === 'dark' ? '#fff' : '#000', // Dark/Light text color
-    },
-    icon: {
-      width: 24,
-      height: 24,
-      color: theme === 'dark' ? '#fff' : '#333', // Dark/Light icon color
-    },
-    listContainer: {
-      width: '100%',
-      paddingHorizontal: 10,
-    },
-  });
+const styles = StyleSheet.create({
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+  },
+  headerContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+
+    marginTop: hp(3),
+  },
+  headerText: {
+    fontSize: hp(2.5),
+    fontFamily: Fonts.heading,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+  },
+  listContainer: {
+    width: '100%',
+    paddingHorizontal: 10,
+    marginTop: hp(3),
+  },
+});
 
 export default DueDate;
+
+//  {
+//    /* Date Picker Section */
+//  }

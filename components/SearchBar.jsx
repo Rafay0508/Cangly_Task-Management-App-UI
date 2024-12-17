@@ -15,10 +15,16 @@ const SearchBar = ({placeholder = 'Search'}) => {
   const textColor = theme == 'dark' ? 'white' : 'black';
 
   return (
-    <View style={[styles.container]}>
+    <View
+      style={[
+        styles.container,
+        theme == 'dark'
+          ? {backgroundColor: 'black'}
+          : {backgroundColor: 'white'},
+      ]}>
       <TouchableOpacity onPress={() => navigation.navigate('Search')}>
         <MagnifyingGlassIcon
-          size={hp(3.5)}
+          size={hp(3)}
           color={textColor}
           style={styles.icon}
         />
@@ -26,7 +32,7 @@ const SearchBar = ({placeholder = 'Search'}) => {
       <TextInput
         style={[styles.input, {color: textColor}]}
         placeholder={placeholder}
-        placeholderTextColor={textColor}
+        placeholderTextColor={'#bbbfb5'}
         onChangeText={setSearch}
       />
     </View>
@@ -42,7 +48,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#e0e0e0',
     paddingHorizontal: wp(4),
-    // backgroundColor: 'white',
+    borderWidth: 0,
+
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,

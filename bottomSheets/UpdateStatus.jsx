@@ -1,19 +1,22 @@
-import React, {useCallback, useState, forwardRef} from 'react';
+import React, {forwardRef, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {BottomSheetView} from '@gorhom/bottom-sheet';
-import BottomSheet from '@gorhom/bottom-sheet';
+import ActionSheet from 'react-native-actions-sheet';
+import {useTheme} from '../context/ThemeContext';
 import {XCircleIcon} from 'react-native-heroicons/outline';
-import CheckBox from 'react-native-check-box';
-import {Fonts} from '../utils/fonts';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import CheckBox from 'react-native-check-box';
+import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
-import {useTheme} from '../context/ThemeContext';
+import DateTimePicker from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
 
-const UpdateStatus = forwardRef(({snapPoints = ['35%']}, ref) => {
+// Forward the ref directly to ActionSheet component
+const DueDate = forwardRef((props, ref) => {
   const {theme} = useTheme();
+  const [date, setDate] = useState(dayjs());
   const [statuses, setStatuses] = useState({
     todo: false,
     inProgress: false,
@@ -21,40 +24,27 @@ const UpdateStatus = forwardRef(({snapPoints = ['35%']}, ref) => {
     completed: false,
   });
 
-  const handleSheetChanges = useCallback(index => {
-    console.log('Bottom Sheet Index:', index);
-  }, []);
-
-  const toggleCheckbox = status => {
-    setStatuses(prevState => ({
-      ...prevState,
-      [status]: !prevState[status],
-    }));
-  };
-
   const textColor = theme == 'dark' ? 'white' : 'black';
-
   return (
-    <BottomSheet
+    <ActionSheet
       ref={ref}
-      onChange={handleSheetChanges}
-      snapPoints={snapPoints}
-      enablePanDownToClose={true}
-      index={-1}
-      backgroundStyle={{
-        backgroundColor: theme === 'dark' ? '#222320' : '#fff',
-      }}>
-      <BottomSheetView style={styles.contentContainer}>
+      closable={false}
+      onClose={props.onClose}
+      backgroundInteractionEnabled={false}
+      isModal={false}>
+      <View style={theme == 'dark' ? {backgroundColor: 'rgb(30,40,43)'} : {}}>
         {/* Header Section */}
         <View style={styles.headerContainer}>
           <Text style={[styles.headerText, {color: textColor}]}>Status</Text>
+
           <XCircleIcon
-            onPress={() => ref.current?.close()}
+            onPress={() => ref.current?.hide()}
             style={styles.icon}
             size={hp(3)}
             color={textColor}
           />
         </View>
+
         {/* To Do Section */}
         <View style={styles.listContainer}>
           <View style={styles.listItem}>
@@ -92,8 +82,8 @@ const UpdateStatus = forwardRef(({snapPoints = ['35%']}, ref) => {
             />
           </View>
         </View>
-      </BottomSheetView>
-    </BottomSheet>
+      </View>
+    </ActionSheet>
   );
 });
 
@@ -109,7 +99,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: hp(1),
+
+    marginTop: hp(3),
   },
   headerText: {
     fontSize: hp(2.5),
@@ -122,6 +113,7 @@ const styles = StyleSheet.create({
   listContainer: {
     width: '100%',
     paddingHorizontal: 10,
+    marginVertical: hp(3),
   },
   listItem: {
     flexDirection: 'row',
@@ -138,4 +130,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UpdateStatus;
+export default DueDate;

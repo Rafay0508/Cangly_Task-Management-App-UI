@@ -1,4 +1,6 @@
 
+remove all reanimted and gorhom bottom sheet
+
 
 12 schedule   
 15 myproject detail(19)

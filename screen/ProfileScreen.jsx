@@ -76,13 +76,19 @@ const ProfileScreen = () => {
 
       {/* Action buttons */}
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.linkBox}>
+        <TouchableOpacity
+          style={[
+            styles.linkBox,
+            theme == 'dark'
+              ? {borderColor: '#2b2a2a'}
+              : {borderColor: '#f7efef'},
+          ]}>
           <Text
             style={{
               fontSize: hp(2),
               padding: hp(1),
               borderRadius: 100,
-              backgroundColor: '#f7f2f2',
+              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
             }}>
             💎
           </Text>
@@ -97,14 +103,23 @@ const ProfileScreen = () => {
           </Text>
           <ChevronRightIcon color={textColor} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.linkBox}>
+        <TouchableOpacity
+          style={[
+            styles.linkBox,
+            theme == 'dark'
+              ? {borderColor: '#2b2a2a'}
+              : {borderColor: '#f7efef'},
+          ]}>
           <Text
             style={{
               padding: hp(1),
               borderRadius: 100,
-              backgroundColor: '#f7f2f2',
+              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
             }}>
-            <ChatBubbleLeftEllipsisIcon size={hp(2.5)} />
+            <ChatBubbleLeftEllipsisIcon
+              size={hp(2.5)}
+              color={theme == 'dark' ? 'white' : 'black'}
+            />
           </Text>
           <Text
             style={{
@@ -117,14 +132,20 @@ const ProfileScreen = () => {
           </Text>
           <ChevronRightIcon color={textColor} size={hp(2.5)} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.linkBox}>
+        <TouchableOpacity
+          style={[
+            styles.linkBox,
+            theme == 'dark'
+              ? {borderColor: '#2b2a2a'}
+              : {borderColor: '#f7efef'},
+          ]}>
           <Text
             style={{
               padding: hp(1),
               borderRadius: 100,
-              backgroundColor: '#f7f2f2',
+              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
             }}>
-            <StarIcon />
+            <StarIcon color={theme == 'dark' ? 'white' : 'black'} />
           </Text>
           <Text
             style={{
@@ -137,14 +158,20 @@ const ProfileScreen = () => {
           </Text>
           <ChevronRightIcon color={textColor} size={hp(2.5)} />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.linkBox}>
+        <TouchableOpacity
+          style={[
+            styles.linkBox,
+            theme == 'dark'
+              ? {borderColor: '#2b2a2a'}
+              : {borderColor: '#f7efef'},
+          ]}>
           <Text
             style={{
               padding: hp(1),
               borderRadius: 100,
-              backgroundColor: '#f7f2f2',
+              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
             }}>
-            <EyeIcon />
+            <EyeIcon color={theme == 'dark' ? 'white' : 'black'} />
           </Text>
           <Text
             style={{
@@ -162,7 +189,7 @@ const ProfileScreen = () => {
             style={{
               padding: hp(1),
               borderRadius: 100,
-              backgroundColor: '#f7f2f2',
+              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
             }}>
             <ArrowLeftStartOnRectangleIcon color={'#ef4c4c'} size={hp(2.5)} />
           </Text>
@@ -242,6 +269,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     paddingVertical: hp(1.5),
-    borderColor: '#e1e1ed',
   },
 });

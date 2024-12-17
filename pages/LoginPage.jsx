@@ -107,7 +107,12 @@ const LoginPage = () => {
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>
-            <Text style={{textAlign: 'right', color: Color.firstColor}}>
+            <Text
+              style={{
+                textAlign: 'right',
+                fontSize: wp(4),
+                color: Color.firstColor,
+              }}>
               Forget Password?
             </Text>
           </TouchableOpacity>
@@ -121,7 +126,12 @@ const LoginPage = () => {
                 source={require('../assets/social/google.png')}
                 style={{width: 20, height: 20}}
               />
-              <Text style={{color: textColor, fontFamily: Fonts.regular}}>
+              <Text
+                style={{
+                  color: textColor,
+                  fontSize: wp(4),
+                  fontFamily: Fonts.regular,
+                }}>
                 Google
               </Text>
             </TouchableOpacity>
@@ -130,7 +140,12 @@ const LoginPage = () => {
                 source={require('../assets/social/facebook.png')}
                 style={{width: 20, height: 20}}
               />
-              <Text style={{color: textColor, fontFamily: Fonts.regular}}>
+              <Text
+                style={{
+                  color: textColor,
+                  fontSize: wp(4),
+                  fontFamily: Fonts.regular,
+                }}>
                 Facebook
               </Text>
             </TouchableOpacity>
@@ -140,7 +155,7 @@ const LoginPage = () => {
               style={[
                 {color: textColor},
                 {
-                  fontSize: hp(1.5),
+                  fontSize: hp(2),
                   textAlign: 'center',
                   fontFamily: Fonts.regular,
                 },
@@ -182,7 +197,7 @@ const styles = StyleSheet.create({
     marginTop: hp(1),
     fontSize: hp(2),
     color: '#acafb5',
-    fontFamily: Fonts.subHeading,
+    fontFamily: Fonts.regular,
   },
   formContainer: {
     flex: 1,
@@ -220,6 +235,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#acafb5',
     fontFamily: Fonts.regular,
+    fontSize: wp(4),
   },
   socialButtonContainer: {
     flexDirection: 'row',
@@ -229,7 +245,7 @@ const styles = StyleSheet.create({
   socialButton: {
     flexDirection: 'row',
     gap: wp(4),
-    paddingHorizontal: wp(10),
+    paddingHorizontal: wp(8),
     borderWidth: 1,
     borderColor: '#e6eaf2',
     padding: hp(2),

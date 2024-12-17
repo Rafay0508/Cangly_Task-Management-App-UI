@@ -108,10 +108,12 @@ const MyProjects = ({isHorizontal, project}) => {
         </View>
         {/* Progress Bar */}
         <ProgressBar
-          progress={project.progress / 100} // Convert percentage to fraction (0 to 1)
-          color={progressBarColor} // Dynamically set color based on project.id
-          style={styles.progressBar}
+          progress={project.progress / 100} // Convert percentage to fraction (0 - 1)
+          color={progressBarColor} // Dynamically set color
+          style={styles.progressBar} // Outer bar style
+          fillStyle={styles.fillStyle} // Style for the filled progress
         />
+
         <View style={styles.bottomTextContainer}>
           <View style={{width: '50%', flexDirection: 'row', gap: wp(2)}}>
             <ChatBubbleLeftEllipsisIcon

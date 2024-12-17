@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: '95%',
-    borderRadius: 10,
+
     padding: hp(2),
     paddingTop: hp(1),
     backgroundColor: 'white',
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(1.5),
     borderBottomWidth: 1,
     paddingVertical: hp(1),
-    borderColor: '#d6dbd0',
+    borderColor: '#ecefe8',
   },
   taskTitle: {
     fontFamily: Fonts.subHeading,

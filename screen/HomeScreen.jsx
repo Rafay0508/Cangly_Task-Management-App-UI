@@ -124,7 +124,7 @@ const HomeScreen = () => {
           }}>
           <Text
             style={{
-              fontSize: wp(5),
+              fontSize: wp(4.5),
               color: textColor,
               fontFamily: Fonts.heading,
             }}>
@@ -149,7 +149,7 @@ const HomeScreen = () => {
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <Text
           style={{
-            fontSize: wp(5),
+            fontSize: wp(4.5),
             color: textColor,
             fontFamily: Fonts.heading,
           }}>
@@ -172,6 +172,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: hp(2),
+    paddingTop: hp(3),
     gap: hp(2),
   },
   topContainer: {
@@ -180,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 4,
   },
-  ProfileImage: {width: 50, height: 50, borderRadius: 100},
+  ProfileImage: {width: hp(6), height: hp(6), borderRadius: 100},
   textContainer: {width: '50%'},
   heyText: {fontSize: wp(4), fontFamily: Fonts.heading},
   usernameText: {fontSize: wp(5), fontFamily: Fonts.subHeading},

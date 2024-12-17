@@ -82,8 +82,8 @@ const NewPasswordPage = () => {
                     styles.input,
                     {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
                   ]}
-                  label="Password"
-                  placeholder="Enter your password"
+                  label="Enter New Password"
+                  placeholder="Enter New Password"
                   placeholderTextColor={placeholderColor}
                   secureTextEntry={secureText}
                   theme={{
@@ -112,8 +112,8 @@ const NewPasswordPage = () => {
                     styles.input,
                     {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
                   ]}
-                  label="Confirm Password"
-                  placeholder="Confirm password"
+                  label="Re-Enter Password"
+                  placeholder="Re-Enter Password"
                   placeholderTextColor={placeholderColor}
                   secureTextEntry={secureText}
                   theme={{
@@ -181,10 +181,14 @@ const styles = StyleSheet.create({
   },
   subContainer: {flex: 1, padding: hp(2)},
   textContainer: {gap: 10},
-  heading: {fontSize: hp(3), fontFamily: Fonts.heading},
-  subText: {fontSize: wp(4), fontFamily: Fonts.subHeading},
-  imageContainer: {marginVertical: hp(4)},
-  image: {width: 300, height: 300},
+  heading: {fontSize: hp(3.5), fontFamily: Fonts.heading},
+  subText: {fontSize: wp(4), fontFamily: Fonts.regular},
+  imageContainer: {
+    marginVertical: hp(2),
+    width: '100%',
+    height: '100%',
+  },
+  image: {width: '100%', height: '100%', objectFit: 'contain'},
   passwordsContainer: {gap: hp(2)},
   passwordContainer: {
     position: 'relative',
@@ -206,7 +210,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     justifyContent: 'center',
     backgroundColor: Color.firstColor,
-    borderRadius: 5,
   },
   btnText: {
     textAlign: 'center',
@@ -223,10 +226,10 @@ const styles = StyleSheet.create({
   },
   modalView: {
     width: '90%',
+    gap: hp(1),
     backgroundColor: 'white',
     padding: 35,
     alignItems: 'center',
-    borderRadius: 10,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -241,6 +244,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: hp(3),
     fontFamily: Fonts.heading,
+    color: Color.firstColor,
   },
   modalSubText: {
     marginBottom: 15,
@@ -252,7 +256,6 @@ const styles = StyleSheet.create({
     backgroundColor: Color.firstColor,
     padding: hp(2),
     width: '100%',
-    borderRadius: 5,
   },
   modalButtonText: {
     color: 'white',

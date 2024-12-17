@@ -37,7 +37,7 @@ const SearchPage = () => {
             width: '80%',
             textAlign: 'center',
             fontFamily: Fonts.subHeading,
-            fontSize: wp(5),
+            fontSize: wp(4.5),
             color: textColor,
           }}>
           Search
@@ -127,14 +127,14 @@ const styles = StyleSheet.create({
   },
   suggestionText: {
     marginVertical: hp(2),
-    fontFamily: Fonts.heading,
-    fontSize: hp(2.5),
-    color: 'gray',
+    fontFamily: Fonts.regular,
+    fontSize: hp(2),
+    color: '#bbbfb5',
   },
   suggestionContainer: {gap: hp(2)},
   iconBox: {
     padding: hp(1),
-    // backgroundColor: '#272a2e',
+    backgroundColor: 'rgb(242, 243, 241)',
     borderRadius: 25,
   },
   suggestionBox: {

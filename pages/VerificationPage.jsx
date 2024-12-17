@@ -14,7 +14,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {ChevronLeftIcon} from 'react-native-heroicons/solid';
-import {EnvelopeIcon, PhoneIcon} from 'react-native-heroicons/outline';
 import {useTheme} from '../context/ThemeContext';
 import {OtpInput} from 'react-native-otp-entry';
 import {useNavigation} from '@react-navigation/native';
@@ -70,7 +69,7 @@ const VerificationPage = () => {
                   containerStyle: {},
                   pinCodeContainerStyle: {
                     width: wp(20),
-                    height: wp(20),
+                    height: wp(17),
                     borderRadius: 0,
                   },
                   pinCodeTextStyle: {color: Color.firstColor},
@@ -123,10 +122,14 @@ const styles = StyleSheet.create({
   subContainer: {flex: 1, padding: hp(2)},
   textContainer: {gap: 10},
   heading: {fontSize: hp(3), fontFamily: Fonts.heading},
-  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.subHeading},
-  imageContainer: {marginVertical: hp(4)},
-  image: {width: 300, height: 300},
-  otpContainer: {gap: 10},
+  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.regular},
+  imageContainer: {
+    marginVertical: hp(2),
+    width: '100%',
+    height: '100%',
+  },
+  image: {width: '100%', height: '100%', objectFit: 'contain'},
+  otpContainer: {marginVertical: hp(1), gap: 10},
 
   verifyBtn: {
     marginVertical: hp(4),
@@ -141,7 +144,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
   },
   resendText: {
-    marginTop: hp(2),
+    marginTop: hp(1),
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'flex-end',

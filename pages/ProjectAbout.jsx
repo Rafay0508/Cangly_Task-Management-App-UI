@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {useTheme} from '../context/ThemeContext';
 import {
   ChevronLeftIcon,
@@ -36,30 +36,33 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import UpdateStatus from '../bottomSheets/UpdateStatus';
 import FileAttach from '../bottomSheets/FileAttach';
 import DueDate from '../bottomSheets/DueDate';
-
+import {BlurView} from '@react-native-community/blur';
 const ProjectAbout = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {project} = route.params;
+  const [isSheetOpen, setIsSheetOpen] = useState(false); // State to track if sheet is open
 
   const textColor = theme == 'dark' ? 'white' : 'black';
-  const statusBottomSheetRef = useRef(null);
-  const fileAttachBottomSheetRef = useRef(null);
-  const dueDateBottomSheetRef = useRef(null);
-  const openStatusBottomSheet = () => {
-    dueDateBottomSheetRef.current?.close();
-    fileAttachBottomSheetRef.current?.close();
-    statusBottomSheetRef.current?.expand();
+
+  const updateStatusActionSheetRef = useRef(null);
+  const fileAttachActionSheetRef = useRef(null);
+  const dueDateActionSheetRef = useRef(null);
+
+  const openUpdateStatusActionSheet = () => {
+    setIsSheetOpen(true);
+    updateStatusActionSheetRef.current?.show();
   };
-  const openFileAttachBottomSheet = () => {
-    statusBottomSheetRef.current?.close();
-    dueDateBottomSheetRef.current?.close();
-    fileAttachBottomSheetRef.current?.expand();
+  const openFileAttachActionSheet = () => {
+    setIsSheetOpen(true);
+    fileAttachActionSheetRef.current?.show();
   };
-  const dueDateAttachBottomSheet = () => {
-    statusBottomSheetRef.current?.close();
-    fileAttachBottomSheetRef.current?.close();
-    dueDateBottomSheetRef.current?.expand();
+  const openDueDateActionSheet = () => {
+    setIsSheetOpen(true);
+    dueDateActionSheetRef.current?.show();
+  };
+  const closeSheets = () => {
+    setIsSheetOpen(false);
   };
   return (
     <GestureHandlerRootView>
@@ -100,7 +103,7 @@ const ProjectAbout = ({route}) => {
                 <UserGroupIcon size={30} color={textColor} />
                 <Text style={[styles.text, {color: textColor}]}>Team</Text>
               </View>
-              <TouchableOpacity style={styles.teamImagesContainer}>
+              <View style={styles.teamImagesContainer}>
                 {project.teamMembers.map((member, memberIndex) => (
                   <Image
                     key={memberIndex}
@@ -108,7 +111,7 @@ const ProjectAbout = ({route}) => {
                     style={styles.teamMemberImage}
                   />
                 ))}
-              </TouchableOpacity>
+              </View>
             </View>
             <View style={styles.rowContainer}>
               <View style={styles.info}>
@@ -131,7 +134,7 @@ const ProjectAbout = ({route}) => {
               <View style={styles.teamImagesContainer}>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={openStatusBottomSheet}>
+                  onPress={openUpdateStatusActionSheet}>
                   <Text
                     style={{
                       fontFamily: Fonts.regular,
@@ -150,7 +153,7 @@ const ProjectAbout = ({route}) => {
               </View>
               <TouchableOpacity
                 style={styles.teamImagesContainer}
-                onPress={dueDateAttachBottomSheet}>
+                onPress={openDueDateActionSheet}>
                 <Text style={{fontFamily: Fonts.regular, color: textColor}}>
                   17 Jan, 2023
                 </Text>
@@ -166,11 +169,12 @@ const ProjectAbout = ({route}) => {
               <View style={styles.teamImagesContainer}>
                 <TouchableOpacity
                   style={styles.button}
-                  onPress={openFileAttachBottomSheet}>
+                  onPress={openFileAttachActionSheet}>
                   <Text
                     style={{
                       fontFamily: Fonts.regular,
                       fontSize: wp(3),
+
                       color: 'white',
                     }}>
                     + Add
@@ -182,10 +186,11 @@ const ProjectAbout = ({route}) => {
           <TouchableOpacity
             style={{
               width: '100%',
-              borderWidth: 1,
+              borderWidth: 0.5,
               padding: hp(2),
               marginVertical: hp(2),
-              borderColor: 'gray',
+              borderColor: Color.firstColor,
+              backgroundColor: 'rgb(246, 249, 253)',
             }}>
             <Text
               style={{
@@ -490,10 +495,22 @@ const ProjectAbout = ({route}) => {
             <PaperAirplaneIcon color={'white'} />
           </TouchableOpacity>
         </View>
+        {isSheetOpen ? (
+          <BlurView
+            style={styles.absolute}
+            blurType="light"
+            blurAmount={3}
+            reducedTransparencyFallbackColor="white"
+          />
+        ) : (
+          <></>
+        )}
       </SafeAreaView>
-      <UpdateStatus ref={statusBottomSheetRef} snapPoints={['40%']} />
-      <FileAttach ref={fileAttachBottomSheetRef} snapPoints={['25%']} />
-      <DueDate ref={dueDateBottomSheetRef} snapPoints={['42%']} />
+
+      {/* <UpdateStatus ref={statusBottomSheetRef} snapPoints={['40%']} /> */}
+      <UpdateStatus ref={updateStatusActionSheetRef} onClose={closeSheets} />
+      <FileAttach ref={fileAttachActionSheetRef} onClose={closeSheets} />
+      <DueDate ref={dueDateActionSheetRef} onClose={closeSheets} />
     </GestureHandlerRootView>
   );
 };
@@ -508,7 +525,7 @@ const styles = StyleSheet.create({
     marginBottom: hp(4),
   },
   projectTitle: {
-    width: '80%',
+    width: '75%',
     textAlign: 'center',
     fontFamily: Fonts.subHeading,
     fontSize: wp(5),
@@ -525,6 +542,7 @@ const styles = StyleSheet.create({
   rowContainer: {
     marginVertical: hp(0.8),
     flexDirection: 'row',
+    alignItems: 'center',
     gap: wp(15),
   },
   info: {
@@ -547,7 +565,12 @@ const styles = StyleSheet.create({
     marginRight: -wp(2),
   },
   PMContainer: {flexDirection: 'row', gap: wp(4), fontFamily: Fonts.regular},
-  button: {backgroundColor: Color.firstColor, padding: hp(0.5)},
+  button: {
+    backgroundColor: Color.firstColor,
+    padding: wp(2),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   commentSection: {
     position: 'absolute',
     bottom: 0,
@@ -559,5 +582,12 @@ const styles = StyleSheet.create({
   },
   commentInput: {
     width: '100%',
+  },
+  absolute: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
   },
 });

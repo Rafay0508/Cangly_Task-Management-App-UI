@@ -29,6 +29,7 @@ const messages = [
     senderName: 'Leslie Alexander',
     message: 'Arigathanks',
     timeStamp: '12:40 AM',
+    online: true,
   },
   {
     senderId: 2,
@@ -37,6 +38,7 @@ const messages = [
     senderName: 'John Doe',
     message: 'Hey, are you coming to the event tomorrow?',
     timeStamp: '1:20 AM',
+    online: true,
   },
   {
     senderId: 3,
@@ -45,6 +47,7 @@ const messages = [
     senderName: 'Jane Smith',
     message: 'Can you send me the report by EOD?',
     timeStamp: '2:15 AM',
+    online: false,
   },
   {
     senderId: 4,
@@ -53,6 +56,7 @@ const messages = [
     senderName: 'Michael Brown',
     message: 'Good morning! Do you have any updates on the project?',
     timeStamp: '7:05 AM',
+    online: true,
   },
   {
     senderId: 5,
@@ -61,6 +65,7 @@ const messages = [
     senderName: 'Sarah Lee',
     message: 'Happy birthday! 🎉',
     timeStamp: '8:30 AM',
+    online: true,
   },
   {
     senderId: 6,
@@ -69,6 +74,7 @@ const messages = [
     senderName: 'David Wilson',
     message: 'Let’s grab lunch today. How about 12 PM?',
     timeStamp: '10:10 AM',
+    online: true,
   },
   {
     senderId: 7,
@@ -77,6 +83,7 @@ const messages = [
     senderName: 'Emily Davis',
     message: 'Did you get the tickets for the movie?',
     timeStamp: '11:45 AM',
+    online: true,
   },
   {
     senderId: 8,
@@ -86,6 +93,7 @@ const messages = [
     message:
       'I will be out of the office next week. Let me know if you need anything.',
     timeStamp: '12:00 PM',
+    online: true,
   },
   {
     senderId: 9,
@@ -94,6 +102,7 @@ const messages = [
     senderName: 'Alice White',
     message: 'Looking forward to the weekend trip!',
     timeStamp: '2:10 PM',
+    online: true,
   },
   {
     senderId: 10,
@@ -102,6 +111,7 @@ const messages = [
     senderName: 'Tom Harris',
     message: 'Can you send me the files for the meeting?',
     timeStamp: '3:45 PM',
+    online: true,
   },
   {
     senderId: 11,
@@ -110,6 +120,7 @@ const messages = [
     senderName: 'Rachel Green',
     message: 'Let’s catch up later this week.',
     timeStamp: '4:30 PM',
+    online: true,
   },
   {
     senderId: 12,
@@ -118,6 +129,7 @@ const messages = [
     senderName: 'Joshua King',
     message: 'Just checking in. Hope all is well!',
     timeStamp: '6:00 PM',
+    online: true,
   },
   {
     senderId: 13,
@@ -126,6 +138,7 @@ const messages = [
     senderName: 'Samantha Wright',
     message: 'I’ll see you at the gym later!',
     timeStamp: '7:15 PM',
+    online: true,
   },
 ];
 
@@ -194,6 +207,31 @@ const Messages = ({placeholder = 'Search'}) => {
             onPress={() => navigation.navigate('Chat', {sender: message})}>
             <View>
               <Image source={message.image} style={styles.image} />
+              {message.online ? (
+                <View
+                  style={{
+                    position: 'absolute',
+                    left: hp(4),
+                    top: hp(1),
+                    borderRadius: 100,
+                    width: hp(1.5),
+                    height: hp(1.5),
+                    backgroundColor: 'rgb(255, 255, 255)',
+                  }}>
+                  <View
+                    style={{
+                      position: 'absolute',
+                      left: hp(0.2),
+                      top: hp(0.3),
+                      borderRadius: 100,
+                      width: hp(1),
+                      height: hp(1),
+                      backgroundColor: 'rgb(76,217,100)',
+                    }}></View>
+                </View>
+              ) : (
+                <></>
+              )}
             </View>
             <View style={styles.textContainer}>
               <Text style={[styles.senderName, {color: textColor}]}>

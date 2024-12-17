@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import Animated, {FlipInYLeft} from 'react-native-reanimated';
+
 import {useNavigation} from '@react-navigation/native';
 import {Color} from '../utils/colors';
 const WelcomePage = () => {
@@ -14,8 +14,7 @@ const WelcomePage = () => {
   }, 1500);
   return (
     <View style={styles.container}>
-      <Animated.Image
-        entering={FlipInYLeft.delay(400).duration(800)}
+      <Image
         source={require('../assets/logo-white.png')}
         style={styles.image}
       />

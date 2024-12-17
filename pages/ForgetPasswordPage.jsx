@@ -70,16 +70,12 @@ const ForgetPasswordPage = () => {
               <View style={{gap: 4, width: '55%'}}>
                 <Text
                   style={[
-                    {fontSize: 18, fontFamily: Fonts.subHeading},
+                    {fontSize: wp(4), fontFamily: Fonts.regular},
                     {color: textColor},
                   ]}>
                   Email
                 </Text>
-                <Text
-                  style={[
-                    {fontSize: 14, fontFamily: Fonts.regular},
-                    {color: textColor},
-                  ]}>
+                <Text style={[{fontSize: wp(3.5)}, {color: textColor}]}>
                   Mike Harley@gmail.com
                 </Text>
               </View>
@@ -108,16 +104,12 @@ const ForgetPasswordPage = () => {
               <View style={{gap: 4, width: '55%'}}>
                 <Text
                   style={[
-                    {fontSize: 16, fontFamily: Fonts.subHeading},
+                    {fontSize: wp(4), fontFamily: Fonts.regular},
                     {color: textColor},
                   ]}>
                   Phone Number
                 </Text>
-                <Text
-                  style={[
-                    {fontSize: 14, fontFamily: Fonts.regular},
-                    {color: textColor},
-                  ]}>
+                <Text style={[{fontSize: wp(3.5)}, {color: textColor}]}>
                   +689 548 89565
                 </Text>
               </View>
@@ -154,9 +146,13 @@ const styles = StyleSheet.create({
   subContainer: {flex: 1, padding: hp(2)},
   textContainer: {gap: 10},
   heading: {fontSize: hp(3), fontFamily: Fonts.heading},
-  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.heading},
-  imageContainer: {marginVertical: hp(4)},
-  image: {width: 300, height: 300},
+  subText: {fontSize: wp(4), color: '#9ca7ba', fontFamily: Fonts.regular},
+  imageContainer: {
+    marginBottom: hp(1),
+    width: '100%',
+    height: '100%',
+  },
+  image: {width: '100%', height: '100%', objectFit: 'contain'},
   radioContainer: {gap: 10},
   emailRadio: {
     padding: hp(2),
@@ -187,6 +183,6 @@ const styles = StyleSheet.create({
     paddingVertical: hp(2),
     color: 'white',
     fontSize: hp(2),
-    fontFamily: Fonts.subHeading,
+    fontFamily: Fonts.regular,
   },
 });

@@ -19,7 +19,7 @@ import {
   ChatBubbleLeftEllipsisIcon,
   ClockIcon,
   EllipsisVerticalIcon,
-} from 'react-native-heroicons/solid';
+} from 'react-native-heroicons/outline';
 import {Fonts} from '../utils/fonts';
 import {ProgressBar} from 'react-native-paper';
 import {Color} from '../utils/colors';
@@ -221,8 +221,11 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderWidth: 1,
     borderColor: '#e0e0e0',
     paddingHorizontal: wp(4),
+    borderWidth: 0,
+    backgroundColor: 'white',
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -27,7 +27,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Color} from '../utils/colors';
 import {format} from 'date-fns';
 import {useTheme} from '../context/ThemeContext';
-
+import DocumentPicker from 'react-native-document-picker';
 const chatData = [
   {senderId: 1, message: 'Hi there!', timestamp: '2024-12-12T09:00:00Z'},
   {
@@ -91,6 +91,7 @@ const Chat = ({route}) => {
   const {theme} = useTheme();
   const {sender} = route.params;
   const scrollViewRef = useRef(null); // reference for ScrollView
+  const [file, setFile] = useState(null);
   console.log(theme);
   // Scroll to the end when the page is loaded
   useEffect(() => {
@@ -105,6 +106,22 @@ const Chat = ({route}) => {
   }, []); // Empty dependency array means it runs once when the component mounts
 
   const textColor = theme == 'dark' ? 'white' : 'black';
+
+  const pickDocument = async () => {
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.pdf, DocumentPicker.types.plainText],
+      });
+      setFile(res);
+      console.log('Picked document: ', res);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('User canceled the picker');
+      } else {
+        console.log('Error picking document: ', err);
+      }
+    }
+  };
 
   return (
     <View
@@ -123,6 +140,31 @@ const Chat = ({route}) => {
             source={require('../assets/profile.jpg')}
             style={styles.profileImage}
           />
+          {sender.online ? (
+            <View
+              style={{
+                position: 'absolute',
+                left: hp(4.3),
+                top: hp(1),
+                borderRadius: 100,
+                width: hp(1.5),
+                height: hp(1.5),
+                backgroundColor: 'rgb(255, 255, 255)',
+              }}>
+              <View
+                style={{
+                  position: 'absolute',
+                  left: hp(0.2),
+                  top: hp(0.3),
+                  borderRadius: 100,
+                  width: hp(1),
+                  height: hp(1),
+                  backgroundColor: 'rgb(76,217,100)',
+                }}></View>
+            </View>
+          ) : (
+            <></>
+          )}
           <View>
             <Text style={[styles.senderName, {color: textColor}]}>
               {sender.senderName}
@@ -143,7 +185,10 @@ const Chat = ({route}) => {
       {/* Messages Container */}
       <ScrollView
         ref={scrollViewRef}
-        style={styles.messagesContainer}
+        style={[
+          styles.messagesContainer,
+          {backgroundColor: theme == 'dark' ? 'black' : 'rgb(249, 252, 253)'},
+        ]}
         contentContainerStyle={styles.scrollViewContentContainer}>
         {chatData.map((chat, index) => (
           <View
@@ -161,8 +206,22 @@ const Chat = ({route}) => {
                 {textAlign: chat.senderId === 1 ? 'right' : 'left'},
                 {
                   backgroundColor:
-                    chat.senderId === 1 ? Color.firstColor : 'white',
-                  color: chat.senderId === 1 ? 'white' : 'black',
+                    theme == 'dark'
+                      ? chat.senderId === 1
+                        ? Color.firstColor
+                        : '#222320'
+                      : chat.senderId === 1
+                      ? Color.firstColor
+                      : 'white',
+
+                  color:
+                    theme == 'dark'
+                      ? chat.senderId === 1
+                        ? 'black'
+                        : 'white'
+                      : chat.senderId === 1
+                      ? 'white'
+                      : 'black',
                 },
               ]}>
               {chat.message}
@@ -172,9 +231,17 @@ const Chat = ({route}) => {
       </ScrollView>
 
       {/* Message Input Container */}
-      <View style={styles.inputContainer}>
+      <View
+        style={[
+          styles.inputContainer,
+          theme == 'dark'
+            ? {backgroundColor: '#222320'}
+            : {backgroundColor: 'white'},
+        ]}>
         <View style={styles.iconContainer}>
-          <PlusIcon color={textColor} />
+          <TouchableOpacity onPress={pickDocument}>
+            <PlusIcon color={textColor} />
+          </TouchableOpacity>
           <LinkIcon color={textColor} />
         </View>
         <View style={styles.inputWrapper}>
@@ -199,7 +266,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   lightContainer: {
-    backgroundColor: 'f8fbff',
+    backgroundColor: 'white',
   },
   topContainer: {
     flexDirection: 'row',
@@ -214,8 +281,8 @@ const styles = StyleSheet.create({
     gap: wp(2),
   },
   profileImage: {
-    width: 50,
-    height: 50,
+    width: hp(5),
+    height: hp(5),
     borderRadius: 25,
   },
   senderName: {
@@ -223,7 +290,7 @@ const styles = StyleSheet.create({
   },
   status: {
     fontFamily: Fonts.regular,
-    color: 'green',
+    color: Color.firstColor,
   },
   third: {
     flexDirection: 'row',
@@ -236,9 +303,10 @@ const styles = StyleSheet.create({
   },
   scrollViewContentContainer: {
     paddingBottom: 20, // Add padding to avoid the last message being cut off
+    // backgroundColor: 'rgb(246, 251, 252)',
   },
   messageContainer: {
-    marginBottom: 8,
+    paddingBottom: 8,
   },
   timestamp: {
     textAlign: 'right',

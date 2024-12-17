@@ -245,7 +245,7 @@ const RegisterPage = () => {
             <Text
               style={[
                 {color: textColor},
-                {fontSize: hp(1.5), textAlign: 'center'},
+                {fontSize: hp(2), textAlign: 'center'},
               ]}>
               Already have an account?{' '}
               <Text
@@ -288,7 +288,7 @@ const styles = StyleSheet.create({
     marginTop: hp(1),
     fontSize: hp(2),
     color: '#acafb5',
-    fontFamily: Fonts.subHeading,
+    fontFamily: Fonts.regular,
   },
   formContainer: {
     flex: 1,
@@ -326,23 +326,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#acafb5',
     fontFamily: Fonts.regular,
+    fontSize: wp(4),
   },
   socialButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
-    marginTop: hp(1),
+    marginTop: hp(2),
   },
   socialButton: {
     flexDirection: 'row',
     gap: wp(4),
-    paddingHorizontal: wp(10),
+    paddingHorizontal: wp(8),
     borderWidth: 1,
     borderColor: '#e6eaf2',
     padding: hp(2),
     borderRadius: 10,
   },
   bottomText: {
-    marginVertical: hp(2),
+    marginBottom: hp(3),
     width: '100%',
     fontFamily: Fonts.regular,
   },
