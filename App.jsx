@@ -26,7 +26,7 @@ const App = () => {
   return (
     <ThemeProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Welcome">
+        <Stack.Navigator initialRouteName="HomePage">
           <Stack.Screen
             name="Welcome"
             component={WelcomePage}
