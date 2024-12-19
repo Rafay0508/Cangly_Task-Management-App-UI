@@ -18,8 +18,6 @@ import {useTheme} from '../context/ThemeContext';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
 
-const {width, height} = Dimensions.get('window');
-
 const Onboarding_1 = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();

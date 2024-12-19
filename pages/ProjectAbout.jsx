@@ -190,7 +190,8 @@ const ProjectAbout = ({route}) => {
               padding: hp(2),
               marginVertical: hp(2),
               borderColor: Color.firstColor,
-              backgroundColor: 'rgb(246, 249, 253)',
+              backgroundColor:
+                theme == 'dark' ? '#222320' : 'rgb(246, 249, 253)',
             }}>
             <Text
               style={{
@@ -507,7 +508,6 @@ const ProjectAbout = ({route}) => {
         )}
       </SafeAreaView>
 
-      {/* <UpdateStatus ref={statusBottomSheetRef} snapPoints={['40%']} /> */}
       <UpdateStatus ref={updateStatusActionSheetRef} onClose={closeSheets} />
       <FileAttach ref={fileAttachActionSheetRef} onClose={closeSheets} />
       <DueDate ref={dueDateActionSheetRef} onClose={closeSheets} />

@@ -1,10 +1,4 @@
 
-remove all reanimted and gorhom bottom sheet
-
-
-12 schedule   
-15 myproject detail(19)
-
 
 done:
 1 splash
@@ -25,7 +19,8 @@ done:
 18 chat        
 19 profile     
 20 team member 
-
+12 schedule 
+15 myproject detail(19)
 https://gorhom.dev/react-native-bottom-sheet/    .....
 https://github.com/howljs/react-native-calendar-kit   .......
 https://www.npmjs.com/package/react-native-ui-datepicker

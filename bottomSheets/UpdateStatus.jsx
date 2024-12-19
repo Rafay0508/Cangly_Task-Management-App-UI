@@ -10,7 +10,6 @@ import {
 import CheckBox from 'react-native-check-box';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
-import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
 
 // Forward the ref directly to ActionSheet component
@@ -25,6 +24,19 @@ const DueDate = forwardRef((props, ref) => {
   });
 
   const textColor = theme == 'dark' ? 'white' : 'black';
+
+  // Toggle function to select only one checkbox at a time and close the ActionSheet
+  const toggleCheckbox = status => {
+    setStatuses({
+      todo: false,
+      inProgress: false,
+      revision: false,
+      completed: false,
+      [status]: true, // Select the clicked status
+    });
+    ref.current?.hide(); // Close the ActionSheet after selecting the checkbox
+  };
+
   return (
     <ActionSheet
       ref={ref}
@@ -45,7 +57,7 @@ const DueDate = forwardRef((props, ref) => {
           />
         </View>
 
-        {/* To Do Section */}
+        {/* Status Section */}
         <View style={styles.listContainer}>
           <View style={styles.listItem}>
             <Text style={[styles.listText, {color: textColor}]}>To Do</Text>

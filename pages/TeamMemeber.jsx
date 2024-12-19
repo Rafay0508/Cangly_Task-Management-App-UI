@@ -66,7 +66,14 @@ const TeamMember = () => {
       </View>
       <ScrollView style={styles.teamContainer}>
         {/* delete extra button */}
-        <View style={styles.teamBox}>
+        <View
+          style={[
+            styles.teamBox,
+            {
+              borderColor:
+                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
+            },
+          ]}>
           <View>
             <Image
               source={require('../assets/profile.jpg')}
@@ -86,7 +93,14 @@ const TeamMember = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.teamBox}>
+        <View
+          style={[
+            styles.teamBox,
+            {
+              borderColor:
+                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
+            },
+          ]}>
           <View>
             <Image
               source={require('../assets/profile.jpg')}
@@ -106,7 +120,14 @@ const TeamMember = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.teamBox}>
+        <View
+          style={[
+            styles.teamBox,
+            {
+              borderColor:
+                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
+            },
+          ]}>
           <View>
             <Image
               source={require('../assets/profile.jpg')}
@@ -126,7 +147,14 @@ const TeamMember = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.teamBox}>
+        <View
+          style={[
+            styles.teamBox,
+            {
+              borderColor:
+                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
+            },
+          ]}>
           <View>
             <Image
               source={require('../assets/profile.jpg')}
@@ -146,7 +174,14 @@ const TeamMember = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.teamBox}>
+        <View
+          style={[
+            styles.teamBox,
+            {
+              borderColor:
+                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
+            },
+          ]}>
           <View>
             <Image
               source={require('../assets/profile.jpg')}
@@ -166,7 +201,14 @@ const TeamMember = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={styles.teamBox}>
+        <View
+          style={[
+            styles.teamBox,
+            {
+              borderColor:
+                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
+            },
+          ]}>
           <View>
             <Image
               source={require('../assets/profile.jpg')}
@@ -218,7 +260,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    backgroundColor: 'white',
     borderWidth: 0,
     paddingHorizontal: wp(4),
     // shadowColor: '#000',
@@ -242,7 +283,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     paddingVertical: hp(2),
-    borderColor: Color.borderBottomColor,
   },
   image: {width: hp(5), height: hp(5), borderRadius: 25},
   textContainer: {width: '70%', paddingHorizontal: wp(3)},

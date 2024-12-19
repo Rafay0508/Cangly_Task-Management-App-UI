@@ -1,0 +1,18 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Users\AA\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js
+1 info using npm@10.9.0
+2 info using node@v22.11.0
+3 silly config load:file:C:\Users\AA\AppData\Roaming\npm\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\AA\Desktop\code\CANGLY_TaskManagement\.npmrc
+5 silly config load:file:C:\Users\AA\.npmrc
+6 silly config load:file:C:\Users\AA\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm exec react-native run-android
+8 verbose argv "exec" "--" "react-native" "run-android"
+9 verbose logfile logs-max:10 dir:C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T11_08_40_330Z-
+10 verbose logfile C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T11_08_40_330Z-debug-0.log
+11 silly logfile done cleaning log files
+12 verbose cwd C:\Users\AA\Desktop\code\CANGLY_TaskManagement
+13 verbose os Windows_NT 10.0.19045
+14 verbose node v22.11.0
+15 verbose npm  v10.9.0
+16 verbose exit 0
+17 info ok

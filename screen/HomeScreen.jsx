@@ -10,7 +10,6 @@ import React from 'react';
 import {useTheme} from '../context/ThemeContext';
 import {BellAlertIcon} from 'react-native-heroicons/outline';
 import MyProjects from '../components/MyProjects';
-import {ProgressBar} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import TodaysTasks from '../components/TodaysTasksComp';
 import {Fonts} from '../utils/fonts';

@@ -17,7 +17,6 @@ import {
   UserIcon,
 } from 'react-native-heroicons/outline';
 import {useTheme} from '../context/ThemeContext';
-// import BottomSheet from '@gorhom/bottom-sheet';
 import UpdateStatus from '../bottomSheets/UpdateStatus';
 import CreateProject from '../bottomSheets/CreateProject';
 import {Color} from '../utils/colors';

@@ -97,7 +97,7 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
             ? {backgroundColor: '#222320'}
             : {backgroundColor: 'white'},
         ]}>
-        <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+        <TouchableOpacity>
           <MagnifyingGlassIcon
             size={hp(3.5)}
             color={textColor}

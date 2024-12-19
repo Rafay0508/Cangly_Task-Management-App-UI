@@ -1,10 +1,11 @@
-import React, {forwardRef} from 'react';
+import React, {forwardRef, useState} from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView,
 } from 'react-native';
 import ActionSheet from 'react-native-actions-sheet';
 import {useTheme} from '../context/ThemeContext';
@@ -16,11 +17,12 @@ import {
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
 import {useNavigation} from '@react-navigation/native';
+import {Picker} from '@react-native-picker/picker';
 
-// Forward the ref directly to ActionSheet component
 const CreateProject = forwardRef((props, ref) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
+  const [selectedLanguage, setSelectedLanguage] = useState();
   const textColor = theme == 'dark' ? 'white' : 'black';
 
   return (
@@ -29,8 +31,9 @@ const CreateProject = forwardRef((props, ref) => {
       closable={false}
       onClose={props.onClose}
       backgroundInteractionEnabled={false}
-      isModal={false}>
-      <View style={theme == 'dark' ? {backgroundColor: 'rgb(30,40,43)'} : {}}>
+      isModal={true}>
+      <KeyboardAvoidingView
+        style={[theme == 'dark' ? {backgroundColor: 'rgb(30,40,43)'} : {}]}>
         {/* Header Section */}
 
         <View style={styles.headerContainer}>
@@ -56,17 +59,30 @@ const CreateProject = forwardRef((props, ref) => {
               fontSize: wp(4),
             }}
           />
-          <TextInput
-            placeholder="Select Visibility"
-            placeholderTextColor="gray"
+          <View
             style={{
               color: textColor,
               borderWidth: 1,
               borderColor: Color.borderBottomColor,
-              padding: wp(3),
+              // padding: wp(3),
               fontSize: wp(4),
-            }}
-          />
+            }}>
+            <Picker
+              selectedValue={selectedLanguage}
+              style={{
+                color: 'gray',
+              }}
+              placeholder="Select Visibility"
+              dropdownIconColor={textColor}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedLanguage(itemValue)
+              }>
+              <Picker.Item label="Select Visibility" value="" enabled={false} />
+              <Picker.Item label="Public" value="Public" />
+              <Picker.Item label="Private" value="Private" />
+            </Picker>
+          </View>
+
           <TouchableOpacity
             style={{
               backgroundColor: theme == 'dark' ? '#222320' : 'white',
@@ -111,7 +127,7 @@ const CreateProject = forwardRef((props, ref) => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     </ActionSheet>
   );
 });
@@ -119,8 +135,8 @@ const CreateProject = forwardRef((props, ref) => {
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    // justifyContent: 'flex-start',
+    // alignItems: 'flex-start',
   },
   headerContainer: {
     width: '100%',

@@ -19,9 +19,6 @@ const MyProjects = ({isHorizontal, project}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
 
-  // Define text color based on the project background color
-  // const textColor = project.id === 1 ? 'white' : 'black';
-
   // Set progress bar color based on the project ID
   const progressBarColor = project.id === 1 ? 'white' : Color.firstColor;
   const isProject1 = project.id === 1 ? true : false;

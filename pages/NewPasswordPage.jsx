@@ -2,7 +2,6 @@ import {
   Image,
   KeyboardAvoidingView,
   Modal,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
