@@ -28,6 +28,7 @@
     "react-native-element-dropdown": "^2.12.2",
     "react-native-gesture-handler": "^2.21.2",
     "react-native-heroicons": "^4.0.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-modal": "^13.0.1",
     "react-native-otp-entry": "^1.7.3",
     "react-native-paper": "^5.12.5",

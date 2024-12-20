@@ -1,47 +1,62 @@
-import React, {forwardRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
+  StyleSheet,
   TextInput,
   KeyboardAvoidingView,
 } from 'react-native';
-import ActionSheet from 'react-native-actions-sheet';
-import {useTheme} from '../context/ThemeContext';
+import Modal from 'react-native-modal';
 import {PlusCircleIcon, XCircleIcon} from 'react-native-heroicons/outline';
+import {useTheme} from '../context/ThemeContext';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
-import {useNavigation} from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
-
-const CreateProject = forwardRef((props, ref) => {
-  const navigation = useNavigation();
+import {useNavigation} from '@react-navigation/native';
+const CreateProjectModal = ({isModalOpen, onClose}) => {
   const {theme} = useTheme();
+  const navigation = useNavigation();
+  const [isModalVisible, setModalVisible] = useState(isModalOpen);
   const [selectedLanguage, setSelectedLanguage] = useState();
-  const textColor = theme == 'dark' ? 'white' : 'black';
 
+  // Sync the modal state with the prop `isModalOpen`
+  useEffect(() => {
+    setModalVisible(isModalOpen);
+  }, [isModalOpen]);
+
+  const bgColor = theme === 'dark' ? 'black' : 'white';
+  const textColor = theme === 'dark' ? 'white' : 'black';
+  const toggleModal = () => {
+    setModalVisible(prev => !prev); // Toggle the modal state
+  };
   return (
-    <ActionSheet
-      ref={ref}
-      closable={false}
-      onClose={props.onClose}
-      backgroundInteractionEnabled={false}>
+    <Modal
+      isVisible={isModalVisible}
+      onBackdropPress={null}
+      onBackButtonPress={onClose}
+      style={styles.modal}
+      swipeDirection="down"
+      swipeThreshold={200}
+      animationIn="slideInUp"
+      animationOut="slideOutDown">
       <KeyboardAvoidingView
-        style={[theme == 'dark' ? {backgroundColor: 'rgb(30,40,43)'} : {}]}>
+        style={[
+          theme == 'dark'
+            ? {backgroundColor: 'rgb(30,40,43)'}
+            : {backgroundColor: 'white'},
+        ]}>
         {/* Header Section */}
 
         <View style={styles.headerContainer}>
           <Text style={[styles.headerText, {color: textColor}]} disabled>
             Create New Project
           </Text>
-          <TouchableOpacity
-            style={{padding: 10}}
-            onPress={() => ref.current?.hide()}>
+          <TouchableOpacity style={{padding: 10}} onPress={onClose}>
             <XCircleIcon style={styles.icon} size={hp(3)} color={textColor} />
           </TouchableOpacity>
         </View>
@@ -127,15 +142,14 @@ const CreateProject = forwardRef((props, ref) => {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </ActionSheet>
+    </Modal>
   );
-});
+};
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    // justifyContent: 'flex-start',
-    // alignItems: 'flex-start',
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
   },
   headerContainer: {
     width: '100%',
@@ -174,4 +188,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateProject;
+export default CreateProjectModal;

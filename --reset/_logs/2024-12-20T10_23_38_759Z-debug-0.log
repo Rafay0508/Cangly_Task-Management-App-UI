@@ -5,12 +5,12 @@
 4 silly config load:file:C:\Users\AA\Desktop\code\CANGLY_TaskManagement\.npmrc
 5 silly config load:file:C:\Users\AA\.npmrc
 6 silly config load:file:C:\Users\AA\AppData\Roaming\npm\etc\npmrc
-7 verbose title npm exec @react-native-community/cli config
-8 verbose argv "exec" "--" "@react-native-community/cli" "config"
-9 verbose logfile logs-max:10 dir:C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T09_27_53_886Z-
-10 verbose logfile C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T09_27_53_886Z-debug-0.log
-11 silly logfile done cleaning log files
-12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+7 verbose title npm start
+8 verbose argv "start" "--cache" "--reset"
+9 verbose logfile logs-max:10 dir:C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-20T10_23_38_759Z-
+10 verbose logfile C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-20T10_23_38_759Z-debug-0.log
+11 silly logfile start cleaning logs, removing 1 files
+12 silly logfile done cleaning log files
 13 verbose cwd C:\Users\AA\Desktop\code\CANGLY_TaskManagement
 14 verbose os Windows_NT 10.0.19045
 15 verbose node v22.11.0

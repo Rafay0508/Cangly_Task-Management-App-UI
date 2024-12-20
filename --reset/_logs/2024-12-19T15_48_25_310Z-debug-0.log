@@ -7,8 +7,8 @@
 6 silly config load:file:C:\Users\AA\AppData\Roaming\npm\etc\npmrc
 7 verbose title npm exec react-native run-android
 8 verbose argv "exec" "--" "react-native" "run-android"
-9 verbose logfile logs-max:10 dir:C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T09_27_49_032Z-
-10 verbose logfile C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T09_27_49_032Z-debug-0.log
+9 verbose logfile logs-max:10 dir:C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T15_48_25_310Z-
+10 verbose logfile C:\Users\AA\Desktop\code\CANGLY_TaskManagement\--reset\_logs\2024-12-19T15_48_25_310Z-debug-0.log
 11 silly logfile done cleaning log files
 12 verbose cwd C:\Users\AA\Desktop\code\CANGLY_TaskManagement
 13 verbose os Windows_NT 10.0.19045

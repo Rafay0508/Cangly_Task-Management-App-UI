@@ -6,8 +6,9 @@ import {
   TextInput,
   Image,
   ScrollView,
+  BackHandler,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from '../context/ThemeContext';
 import {
   ChevronLeftIcon,
@@ -34,6 +35,7 @@ const TeamMember = () => {
   const [search, setSearch] = useState('');
 
   const textColor = theme == 'dark' ? 'white' : 'black';
+
   return (
     <View
       style={[
