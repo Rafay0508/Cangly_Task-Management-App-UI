@@ -28,6 +28,7 @@ import {Color} from '../utils/colors';
 import {format} from 'date-fns';
 import {useTheme} from '../context/ThemeContext';
 import DocumentPicker from 'react-native-document-picker';
+
 const chatData = [
   {senderId: 1, message: 'Hi there!', timestamp: '2024-12-12T09:00:00Z'},
   {
@@ -90,22 +91,20 @@ const Chat = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {sender} = route.params;
-  const scrollViewRef = useRef(null); // reference for ScrollView
+  const scrollViewRef = useRef(null);
   const [file, setFile] = useState(null);
-  console.log(theme);
+  const textColor = theme === 'dark' ? 'white' : 'black';
+
   // Scroll to the end when the page is loaded
   useEffect(() => {
-    // Delaying the scroll to ensure the scroll view is fully rendered
     const timer = setTimeout(() => {
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollToEnd({animated: true});
       }
-    }, 300); // delay in milliseconds (adjust this as necessary)
+    }, 300);
 
-    return () => clearTimeout(timer); // Cleanup on unmount
-  }, []); // Empty dependency array means it runs once when the component mounts
-
-  const textColor = theme == 'dark' ? 'white' : 'black';
+    return () => clearTimeout(timer);
+  }, []);
 
   const pickDocument = async () => {
     try {
@@ -140,30 +139,10 @@ const Chat = ({route}) => {
             source={require('../assets/profile.jpg')}
             style={styles.profileImage}
           />
-          {sender.online ? (
-            <View
-              style={{
-                position: 'absolute',
-                left: hp(4.3),
-                top: hp(1),
-                borderRadius: 100,
-                width: hp(1.5),
-                height: hp(1.5),
-                backgroundColor: 'rgb(255, 255, 255)',
-              }}>
-              <View
-                style={{
-                  position: 'absolute',
-                  left: hp(0.2),
-                  top: hp(0.3),
-                  borderRadius: 100,
-                  width: hp(1),
-                  height: hp(1),
-                  backgroundColor: 'rgb(76,217,100)',
-                }}></View>
+          {sender.online && (
+            <View style={styles.onlineStatus}>
+              <View style={styles.onlineIndicator}></View>
             </View>
-          ) : (
-            <></>
           )}
           <View>
             <Text style={[styles.senderName, {color: textColor}]}>
@@ -182,12 +161,12 @@ const Chat = ({route}) => {
         </View>
       </View>
 
-      {/* Messages Container */}
       <ScrollView
         ref={scrollViewRef}
         style={[
           styles.messagesContainer,
-          {backgroundColor: theme == 'dark' ? 'black' : 'rgb(249, 252, 253)'},
+
+          {backgroundColor: theme === 'dark' ? 'black' : 'rgb(249, 252, 253)'},
         ]}
         contentContainerStyle={styles.scrollViewContentContainer}>
         {chatData.map((chat, index) => (
@@ -206,16 +185,15 @@ const Chat = ({route}) => {
                 {textAlign: chat.senderId === 1 ? 'right' : 'left'},
                 {
                   backgroundColor:
-                    theme == 'dark'
+                    theme === 'dark'
                       ? chat.senderId === 1
                         ? Color.firstColor
                         : '#222320'
                       : chat.senderId === 1
                       ? Color.firstColor
                       : 'white',
-
                   color:
-                    theme == 'dark'
+                    theme === 'dark'
                       ? chat.senderId === 1
                         ? 'black'
                         : 'white'
@@ -230,11 +208,10 @@ const Chat = ({route}) => {
         ))}
       </ScrollView>
 
-      {/* Message Input Container */}
       <View
         style={[
           styles.inputContainer,
-          theme == 'dark'
+          theme === 'dark'
             ? {backgroundColor: '#222320'}
             : {backgroundColor: 'white'},
         ]}>
@@ -247,7 +224,7 @@ const Chat = ({route}) => {
         <View style={styles.inputWrapper}>
           <TextInput
             placeholder="Type message..."
-            placeholderTextColor={'gray'}
+            placeholderTextColor="gray"
             style={[styles.inputField, {color: textColor}]}
           />
         </View>
@@ -298,12 +275,10 @@ const styles = StyleSheet.create({
   },
   messagesContainer: {
     flex: 1,
-
     padding: 10,
   },
   scrollViewContentContainer: {
-    paddingBottom: 20, // Add padding to avoid the last message being cut off
-    // backgroundColor: 'rgb(246, 251, 252)',
+    paddingBottom: 20,
   },
   messageContainer: {
     paddingBottom: 8,
@@ -338,7 +313,24 @@ const styles = StyleSheet.create({
   inputField: {
     fontFamily: Fonts.regular,
     color: 'gray',
-
     paddingLeft: 10,
+  },
+  onlineStatus: {
+    position: 'absolute',
+    left: hp(4.3),
+    top: hp(1),
+    borderRadius: 100,
+    width: hp(1.5),
+    height: hp(1.5),
+    backgroundColor: 'rgb(255, 255, 255)',
+  },
+  onlineIndicator: {
+    position: 'absolute',
+    left: hp(0.2),
+    top: hp(0.3),
+    borderRadius: 100,
+    width: hp(1),
+    height: hp(1),
+    backgroundColor: 'rgb(76,217,100)',
   },
 });

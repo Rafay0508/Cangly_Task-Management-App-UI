@@ -1,201 +1,197 @@
-import React, {useState, useEffect} from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   FlatList,
+  Modal,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-  Alert,
+  View,
 } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import React, {useEffect, useState} from 'react';
+import {Calendar} from 'react-native-calendars';
+import {ChevronDownIcon} from 'react-native-heroicons/solid';
+import {Fonts} from '../utils/fonts';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Color} from '../utils/colors';
-import {Fonts} from '../utils/fonts';
 import {useTheme} from '../context/ThemeContext';
 import {useDate} from '../context/DateContext';
+import {useTaskLength} from '../context/TaskLengthContext';
 
 const TopCalendar = () => {
   const {theme} = useTheme();
-  const {setSelectedDate} = useDate();
-  const [currentDate, setCurrentDate] = useState(new Date()); // Today's date
+  const {todayTaskLength} = useTaskLength();
+  const {selectedDated, setSelectedDated} = useDate();
+  const date = new Date();
+  const currentDate = date.toISOString().split('T')[0]; // Get the current date in 'YYYY-MM-DD' format
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(currentDate);
+  const [startWeekDay, setStartWeekDay] = useState('');
   const [weekDays, setWeekDays] = useState([]);
-  const [selectedWeek, setSelectedWeek] = useState(); // Selected week range
-  const [weekOptions, setWeekOptions] = useState([]); // Dropdown week options
-  const [selectedDay, setSelectedDay] = useState(''); // Track selected day
 
-  useEffect(() => {
-    setSelectedDate(selectedDay);
-  }, [selectedDay]);
+  useEffect(() => setSelectedDated(selectedDate), [selectedDate]);
 
-  // Function to format date as 'Dec 19, 2024'
-  const formatDate = date => {
+  const showModal = () => {
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
+  const handleDateSelect = date => {
+    const startOfWeek = getStartOfWeek(date.dateString);
+    setStartWeekDay(startOfWeek);
+    setSelectedDate(date.dateString);
+    closeModal();
+  };
+
+  // Function for formatting the date (e.g., 'Dec 25, 2024')
+  const formatDate = dateString => {
+    const date = new Date(dateString);
     const options = {year: 'numeric', month: 'short', day: 'numeric'};
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
-  // Function to calculate Monday-to-Sunday week ranges
-  const getWeekRange = date => {
-    const startOfWeek = new Date(date);
-    const day = date.getDay();
-    const offset = day === 0 ? -6 : 1 - day; // Adjust to Monday
-    startOfWeek.setDate(date.getDate() + offset);
-
-    const endOfWeek = new Date(startOfWeek);
-    endOfWeek.setDate(startOfWeek.getDate() + 6); // End of the week (Sunday)
-
-    return {
-      startOfWeek,
-      range: `${
-        startOfWeek.getMonth() + 1
-      }/${startOfWeek.getDate()}/${startOfWeek.getFullYear()} - ${
-        endOfWeek.getMonth() + 1
-      }/${endOfWeek.getDate()}/${endOfWeek.getFullYear()}`,
-    };
+  // Function to get the first day of the week (Monday)
+  const getStartOfWeek = dateString => {
+    const date = new Date(dateString);
+    const dayOfWeek = date.getDay();
+    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If Sunday (0), subtract 6 days, else subtract (dayOfWeek - 1)
+    date.setDate(date.getDate() - daysToSubtract); // Set to the Monday of the week
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is 0-indexed
+    const day = String(date.getDate()).padStart(2, '0'); // Pad day with zero if it's less than 10
+    return `${year}-${month}-${day}`; // Return the formatted start date of the week
   };
 
-  // Generate weeks starting from the current week to the end of the next month
-  const generateWeekOptions = currentDate => {
-    const options = [];
-    const nextMonth = new Date(
-      currentDate.getFullYear(),
-      currentDate.getMonth() + 2,
-      0,
-    ); // End of next month
+  // Function to generate weekdays (Monday to Sunday) with their corresponding dates
+  const generateWeekDays = dateString => {
+    const date = new Date(dateString);
+    const dayOfWeek = date.getDay();
+    const daysToSubtract = dayOfWeek === 0 ? 6 : dayOfWeek - 1; // If Sunday (0), subtract 6 days, else subtract (dayOfWeek - 1)
+    date.setDate(date.getDate() - daysToSubtract); // Set to the Monday of the week
 
-    let current = new Date(currentDate); // Start from the current week
-    current.setHours(0, 0, 0, 0);
+    const weekDays = [];
+    const weekDayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-    while (current <= nextMonth) {
-      const {startOfWeek, range} = getWeekRange(current);
-      const formattedStartDate = formatDate(startOfWeek); // Format the start of the week
-      options.push({
-        label: formattedStartDate,
-        value: startOfWeek.toISOString(),
-      });
-      current.setDate(current.getDate() + 7); // Move to the next week
-    }
-    return options;
-  };
-
-  // Function to calculate days in the selected week
-  const getWeekDays = dateString => {
-    const startOfWeek = new Date(dateString);
-    const days = [];
+    // Iterate over the 7 days to generate the day names and dates
     for (let i = 0; i < 7; i++) {
-      const day = new Date(startOfWeek);
-      day.setDate(startOfWeek.getDate() + i);
-      days.push({
-        day: day.toLocaleDateString('en-US', {weekday: 'short'}),
-        date: day.getDate(),
-        fullDate: day.toDateString(),
+      const currentDay = new Date(date);
+      currentDay.setDate(date.getDate() + i); // Move to the next day in the week
+      const formattedDate = currentDay.toISOString().split('T')[0]; // Only take the date in 'YYYY-MM-DD' format
+
+      weekDays.push({
+        day: weekDayNames[i], // Day name (Monday, Tuesday, etc.)
+        date: formattedDate, // Corresponding date in 'YYYY-MM-DD' format
       });
     }
-    return days;
+
+    return weekDays;
   };
-
-  // Update weekDays whenever the selected week changes
-  useEffect(() => {
-    if (selectedWeek) {
-      setWeekDays(getWeekDays(selectedWeek));
-      // If the selected week is the current week, set the selected day to today
-      const currentWeekStart = getWeekRange(
-        new Date(),
-      ).startOfWeek.toDateString();
-      if (new Date(selectedWeek).toDateString() === currentWeekStart) {
-        setSelectedDay(new Date().toDateString()); // Set to today if the week is the current week
-      } else {
-        // Set to Monday of the selected week
-        const firstDayOfWeek = getWeekDays(selectedWeek)[0].fullDate;
-        setSelectedDay(firstDayOfWeek);
-      }
-    }
-  }, [selectedWeek]);
-
-  // Generate dropdown options on initial render
-  useEffect(() => {
-    const options = generateWeekOptions(currentDate);
-    setWeekOptions(options);
-    setSelectedWeek(options[0]?.value); // Default to the first week
-
-    // Automatically set the current date as the selected day
-    setSelectedDay(new Date().toDateString());
-  }, []);
 
   // Function to handle day selection
   const handleDaySelect = day => {
-    setSelectedDay(day.fullDate); // Update selected day to the clicked day
+    setSelectedDate(day); // Set the selected day
   };
 
-  // Function to check if a date is the current date
-  const isCurrentDate = dayFullDate => {
-    return new Date(dayFullDate).toDateString() === new Date().toDateString();
-  };
+  const bgColor = theme === 'dark' ? 'black' : 'white';
+  const textColor = theme === 'dark' ? 'white' : 'black';
 
-  const bgColor = theme == 'dark' ? 'black' : 'white';
-  const textColor = theme == 'dark' ? 'white' : 'black';
+  useEffect(() => {
+    const weekDates = generateWeekDays(selectedDate);
+    setWeekDays(weekDates);
+  }, [selectedDate]);
 
   return (
-    <View style={[styles.container, {backgroundColor: bgColor}]}>
-      {/* Top Section: Week Selector Dropdown */}
-      <View style={styles.dropdownContainer}>
-        <Picker
-          selectedValue={selectedWeek}
-          onValueChange={itemValue => setSelectedWeek(itemValue)}
-          dropdownIconColor={textColor}
-          style={[styles.picker]}>
-          {weekOptions.map((option, index) => (
-            <Picker.Item
-              key={index}
-              label={option.label}
-              value={option.value}
-              style={{
-                fontSize: hp(2.5),
-                fontFamily: Fonts.heading,
-                color: textColor,
-                backgroundColor: bgColor,
+    <View style={styles.container}>
+      <TouchableOpacity
+        style={{flexDirection: 'row', alignItems: 'center', gap: wp(3)}}
+        onPress={showModal}>
+        <Text
+          style={{
+            fontFamily: Fonts.subHeading,
+            fontSize: hp(2.5),
+            color: textColor,
+          }}>
+          {formatDate(getStartOfWeek(selectedDate))}
+        </Text>
+        <ChevronDownIcon color={textColor} />
+      </TouchableOpacity>
+
+      <Modal animationType="fade" transparent={true} visible={modalVisible}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Calendar
+              markedDates={{
+                [selectedDate]: {
+                  selected: true,
+                  selectedColor: Color.firstColor,
+                  selectedTextColor: 'white',
+                },
+              }}
+              onDayPress={handleDateSelect} // Handle date selection
+              theme={{
+                calendarBackground: bgColor, // Set calendar background color
+                todayTextColor: Color.firstColor, // Set color for today's date
+                arrowColor: Color.firstColor, // Set color of arrows
+                monthTextColor: textColor, // Set color of month text
+                textSectionTitleColor: Color.firstColor, // Set color for the section title (Mon, Tue, etc.)
+                dayTextColor: textColor, // Set color for the day text
+                textDisabledColor: 'gray', // Set color for disabled days
+                selectedDayBackgroundColor: 'green', // Set selected day background color
+                selectedDayTextColor: 'white', // Set selected day text color
               }}
             />
-          ))}
-        </Picker>
+          </View>
+        </View>
+      </Modal>
+
+      <View style={{marginVertical: hp(2)}}>
+        <Text
+          style={{
+            fontFamily: Fonts.regular,
+            fontSize: hp(2),
+            color: textColor,
+          }}>
+          You have total
+          <Text style={{color: Color.firstColor}}> {todayTaskLength}</Text>{' '}
+          tasks today
+        </Text>
       </View>
 
-      {/* Middle Section: Tasks Display */}
-      <Text style={[styles.taskText, {color: textColor}]}>
-        You have total 3 tasks today
-      </Text>
-
-      {/* Bottom Scrollable Week Calendar */}
       <FlatList
         horizontal
         showsHorizontalScrollIndicator={false}
         data={weekDays}
-        keyExtractor={item => item.fullDate}
+        keyExtractor={item => item.date}
         renderItem={({item}) => (
           <TouchableOpacity
+            key={item.date}
             style={[
               styles.dayItem,
-              item.fullDate === selectedDay ? styles.selectedDay : null, // Highlight selected day
+              item.date === selectedDate ? styles.selectedDay : null, // Highlight selected day
             ]}
-            onPress={() => handleDaySelect(item)} // Handle day selection
+            onPress={() => {
+              console.log(item.date);
+              handleDaySelect(item.date);
+            }} // Handle day selection
           >
             <Text
               style={[
                 styles.dateText,
                 {color: textColor},
-                isCurrentDate(item.fullDate) ? styles.currentDay : null,
-                item.fullDate === selectedDay ? {color: 'white'} : null,
+                currentDate === item.date ? styles.currentDay : null,
+                item.date === selectedDate ? {color: 'white'} : null,
               ]}>
-              {item.date}
+              {item.date.slice(8, 10)} {/* Day of the month */}
             </Text>
             <Text
               style={[
                 styles.dayText,
-                {color: textColor},
-                isCurrentDate(item.fullDate) ? styles.currentDay : null,
-                item.fullDate === selectedDay ? {color: 'white'} : null,
+                currentDate === item.date ? styles.currentDay : null,
+                item.date === selectedDate ? {color: 'white'} : null,
               ]}>
               {item.day}
             </Text>
@@ -209,27 +205,12 @@ const TopCalendar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: wp(4),
+    // paddingHorizontal: wp(4),
+    padding: hp(2),
     justifyContent: 'center',
   },
-  dropdownContainer: {
-    // marginBottom: 20,
-    width: hp(25),
-    // borderWidth: 1,
-    borderColor: 'none',
-    marginLeft: hp(-1),
-    // backgroundColor: '#f9f9f9',
-    // borderWidth: 1,
-  },
-  picker: {
-    // height: 50,
-    // width: '100%',
-  },
-  taskText: {
-    fontSize: hp(1.8),
-    marginBottom: 20,
-
-    fontFamily: Fonts.regular,
+  modalContainer: {
+    flex: 1,
   },
   flatListContainer: {
     height: hp(8),
@@ -249,12 +230,12 @@ const styles = StyleSheet.create({
     color: Color.firstColor, // Highlight current day with a different color
   },
   dayText: {
-    fontSize: 14,
-    color: '#000',
+    fontSize: hp(2),
+    color: 'gray',
     fontFamily: Fonts.regular,
   },
   dateText: {
-    fontSize: 14,
+    fontSize: hp(2),
     fontWeight: 'bold',
     color: '#000',
   },

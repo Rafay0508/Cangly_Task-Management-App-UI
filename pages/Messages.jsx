@@ -148,6 +148,7 @@ const Messages = ({placeholder = 'Search'}) => {
   const [search, setSearch] = useState('');
 
   const textColor = theme == 'dark' ? 'white' : 'black';
+  const borderColor = theme === 'dark' ? '#2b2a2a' : '#f7efef'; // Border color based on theme
 
   return (
     <View
@@ -202,7 +203,7 @@ const Messages = ({placeholder = 'Search'}) => {
       <ScrollView style={styles.messagesContainer}>
         {messages.map((message, index) => (
           <TouchableOpacity
-            style={styles.messageBox}
+            style={[styles.messageBox, {borderColor: borderColor}]}
             key={index}
             onPress={() => navigation.navigate('Chat', {sender: message})}>
             <View>
@@ -286,7 +287,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: wp(3),
     borderBottomWidth: 1,
-    borderColor: '#e7eae3',
+    borderColor: 'pink',
     paddingVertical: hp(1.5),
   },
   image: {width: hp(5), height: hp(5), borderRadius: 25},

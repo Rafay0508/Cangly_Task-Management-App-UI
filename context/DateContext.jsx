@@ -7,10 +7,10 @@ const DateContext = createContext();
 export const useDate = () => useContext(DateContext);
 
 export const DateProvider = ({children}) => {
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDated, setSelectedDated] = useState('');
 
   return (
-    <DateContext.Provider value={{selectedDate, setSelectedDate}}>
+    <DateContext.Provider value={{selectedDated, setSelectedDated}}>
       {children}
     </DateContext.Provider>
   );

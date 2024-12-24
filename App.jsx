@@ -21,6 +21,7 @@ import Chat from './pages/Chat';
 import ProjectAbout from './pages/ProjectAbout';
 import TeamMemeber from './pages/TeamMemeber';
 import {DateProvider} from './context/DateContext';
+import {TaskLengthProvider} from './context/TaskLengthContext';
 
 const App = () => {
   const Stack = createStackNavigator();
@@ -28,95 +29,97 @@ const App = () => {
   return (
     <ThemeProvider>
       <DateProvider>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Welcome">
-            <Stack.Screen
-              name="Welcome"
-              component={WelcomePage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Onboarding_1"
-              component={Onboarding_1}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Login"
-              component={LoginPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Register"
-              component={RegisterPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="HomePage"
-              component={HomePage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="ForgetPassword"
-              component={ForgetPasswordPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Verification"
-              component={VerificationPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="NewPassword"
-              component={NewPasswordPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="MyProjects"
-              component={MyProjectPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="TodaysTasks"
-              component={TodaysTasks}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="ProjectDetail"
-              component={ProjectDetailPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Notification"
-              component={Notifications}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Search"
-              component={SearchPage}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Messages"
-              component={Messages}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="Chat"
-              component={Chat}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="ProjectAbout"
-              component={ProjectAbout}
-              options={{headerShown: false}}
-            />
-            <Stack.Screen
-              name="TeamMember"
-              component={TeamMemeber}
-              options={{headerShown: false}}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <TaskLengthProvider>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Welcome">
+              <Stack.Screen
+                name="Welcome"
+                component={WelcomePage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Onboarding_1"
+                component={Onboarding_1}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Login"
+                component={LoginPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Register"
+                component={RegisterPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="HomePage"
+                component={HomePage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ForgetPassword"
+                component={ForgetPasswordPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Verification"
+                component={VerificationPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="NewPassword"
+                component={NewPasswordPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="MyProjects"
+                component={MyProjectPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="TodaysTasks"
+                component={TodaysTasks}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ProjectDetail"
+                component={ProjectDetailPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Notification"
+                component={Notifications}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Search"
+                component={SearchPage}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Messages"
+                component={Messages}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="Chat"
+                component={Chat}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="ProjectAbout"
+                component={ProjectAbout}
+                options={{headerShown: false}}
+              />
+              <Stack.Screen
+                name="TeamMember"
+                component={TeamMemeber}
+                options={{headerShown: false}}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </TaskLengthProvider>
       </DateProvider>
     </ThemeProvider>
   );

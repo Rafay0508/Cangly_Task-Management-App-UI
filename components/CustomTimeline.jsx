@@ -14,84 +14,73 @@ import {
 } from 'react-native-responsive-screen';
 import {useTheme} from '../context/ThemeContext';
 import {useDate} from '../context/DateContext';
+import {useTaskLength} from '../context/TaskLengthContext';
 
 const CustomTimeline = ({currentDate}) => {
   const tasks = [
-    // Tasks for 2024-12-19 (Today)
+    // Tasks for 2024-12-24 (Today)
     {
       task_id: 1,
       task_name: 'Daily Standup Meeting',
       tasksNo: 1,
-      start_time: '9:00 AM',
-      end_time: '9:30 AM',
+      start_time: '12:00 AM',
+      end_time: '1:00 AM',
       location: 'Meeting Room A',
       priority: 'High',
       description: 'Discussing daily progress and blockers.',
-      date: '2024-12-19',
+      date: '2024-12-24',
       bgColor: '#87ceeb',
     },
     {
       task_id: 2,
       task_name: 'Code Review - Module A',
       tasksNo: 2,
-      start_time: '10:00 AM',
-      end_time: '11:00 AM',
+      start_time: '2:00 AM',
+      end_time: '3:00 AM',
       location: 'Online',
       priority: 'High',
       description: 'Reviewing code for the new module implementation.',
-      date: '2024-12-19',
+      date: '2024-12-24',
       bgColor: '#ff7e67',
     },
     {
       task_id: 3,
       task_name: 'Client Feedback Session',
       tasksNo: 1,
-      start_time: '11:30 AM',
-      end_time: '12:30 PM',
+      start_time: '11:00 AM',
+      end_time: '12:00 PM',
       location: 'Zoom',
       priority: 'High',
       description: 'Discussing feedback on the current deliverables.',
-      date: '2024-12-19',
+      date: '2024-12-24',
       bgColor: '#ffa07a',
     },
     {
       task_id: 4,
       task_name: 'Lunch Break',
       tasksNo: 1,
-      start_time: '1:00 PM',
-      end_time: '2:00 PM',
+      start_time: '12:00 PM',
+      end_time: '1:00 PM',
       location: 'Cafeteria',
       priority: 'Low',
       description: 'Lunch break.',
-      date: '2024-12-19',
+      date: '2024-12-24',
       bgColor: '#f0e68c',
-    },
-    {
-      task_id: 5,
-      task_name: 'Feature Testing - Bug Fixes',
-      tasksNo: 3,
-      start_time: '12:00 AM',
-      end_time: '1:00 AM',
-      location: 'Office',
-      priority: 'Medium',
-      description: 'Testing the bug fixes from the last sprint.',
-      date: '2024-12-19',
-      bgColor: '#90ee90',
     },
     {
       task_id: 6,
       task_name: 'Brainstorming Session - New Features',
       tasksNo: 2,
-      start_time: '2:00 AM',
-      end_time: '3:00 AM',
+      start_time: '2:00 PM',
+      end_time: '3:00 PM',
       location: 'Conference Room B',
       priority: 'Medium',
       description: 'Brainstorming ideas for upcoming features.',
-      date: '2024-12-19',
+      date: '2024-12-24',
       bgColor: '#d8bfd8',
     },
 
-    // Tasks for 2024-12-20
+    // Tasks for 2024-12-25
     {
       task_id: 7,
       task_name: 'Morning Sync - Project Updates',
@@ -101,31 +90,31 @@ const CustomTimeline = ({currentDate}) => {
       location: 'Meeting Room C',
       priority: 'Medium',
       description: 'Updating the team on project progress.',
-      date: '2024-12-20',
+      date: '2024-12-25',
       bgColor: '#87b1a3',
     },
     {
       task_id: 8,
       task_name: 'Work on Feature X',
       tasksNo: 3,
-      start_time: '2:00 AM',
-      end_time: '3:00 AM',
+      start_time: '1:00 AM',
+      end_time: '2:00 AM',
       location: 'Office',
       priority: 'Medium',
       description: 'Developing the new feature X.',
-      date: '2024-12-20',
+      date: '2024-12-25',
       bgColor: '#aadf94',
     },
     {
       task_id: 9,
       task_name: 'Team Lunch',
       tasksNo: 1,
-      start_time: '1:00 PM',
-      end_time: '2:00 PM',
+      start_time: '12:00 PM',
+      end_time: '1:00 PM',
       location: 'Cafeteria',
       priority: 'Low',
       description: 'Lunch with the team.',
-      date: '2024-12-20',
+      date: '2024-12-25',
       bgColor: '#ffdb58',
     },
     {
@@ -137,11 +126,11 @@ const CustomTimeline = ({currentDate}) => {
       location: 'Online',
       priority: 'High',
       description: 'Reflecting on the completed sprint.',
-      date: '2024-12-20',
+      date: '2024-12-25',
       bgColor: '#f4a460',
     },
 
-    // Tasks for 2024-12-21
+    // Tasks for 2024-12-26
     {
       task_id: 11,
       task_name: 'Weekly Planning',
@@ -151,7 +140,7 @@ const CustomTimeline = ({currentDate}) => {
       location: 'Conference Room A',
       priority: 'High',
       description: 'Planning tasks for the upcoming week.',
-      date: '2024-12-21',
+      date: '2024-12-26',
       bgColor: '#4682b4',
     },
     {
@@ -163,23 +152,23 @@ const CustomTimeline = ({currentDate}) => {
       location: 'Zoom',
       priority: 'Medium',
       description: 'Gathering requirements for the new project.',
-      date: '2024-12-21',
+      date: '2024-12-26',
       bgColor: '#9370db',
     },
     {
       task_id: 13,
       task_name: 'Feature Deployment',
       tasksNo: 2,
-      start_time: '2:00 PM',
-      end_time: '3:00 PM',
+      start_time: '1:00 PM',
+      end_time: '2:00 PM',
       location: 'Office',
       priority: 'High',
       description: 'Deploying the new feature to production.',
-      date: '2024-12-21',
+      date: '2024-12-26',
       bgColor: '#f08080',
     },
 
-    // Tasks for 2024-12-22
+    // Tasks for 2024-12-27
     {
       task_id: 14,
       task_name: 'Morning Standup',
@@ -189,7 +178,7 @@ const CustomTimeline = ({currentDate}) => {
       location: 'Meeting Room D',
       priority: 'Low',
       description: 'Daily team sync.',
-      date: '2024-12-22',
+      date: '2024-12-27',
       bgColor: '#b0c4de',
     },
     {
@@ -201,59 +190,64 @@ const CustomTimeline = ({currentDate}) => {
       location: 'Office',
       priority: 'High',
       description: 'Testing features before client review.',
-      date: '2024-12-22',
+      date: '2024-12-27',
       bgColor: '#6b8e23',
     },
     {
       task_id: 16,
       task_name: 'Documentation Review',
       tasksNo: 1,
-      start_time: '2:00 PM',
-      end_time: '3:00 PM',
+      start_time: '1:00 PM',
+      end_time: '2:00 PM',
       location: 'Office',
       priority: 'Medium',
       description: 'Reviewing project documentation.',
-      date: '2024-12-22',
+      date: '2024-12-27',
       bgColor: '#8fbc8f',
     },
 
-    // Tasks for 2024-12-23
+    // Tasks for 2024-12-28
     {
       task_id: 17,
       task_name: 'End of Year Review',
       tasksNo: 2,
-      start_time: '12:00 AM',
-      end_time: '1:00 AM',
+      start_time: '9:00 AM',
+      end_time: '10:00 AM',
       location: 'Conference Room B',
       priority: 'High',
       description: 'Reviewing the team’s annual performance.',
-      date: '2024-12-23',
+      date: '2024-12-28',
       bgColor: '#d3d3d3',
     },
     {
       task_id: 18,
       task_name: 'Prepare Presentation for New Year',
       tasksNo: 3,
-      start_time: '2:00 AM',
-      end_time: '3:00 AM',
+      start_time: '10:00 AM',
+      end_time: '11:00 AM',
       location: 'Office',
       priority: 'Medium',
       description: 'Preparing slides for the upcoming year’s roadmap.',
-      date: '2024-12-23',
+      date: '2024-12-28',
       bgColor: '#ffa500',
     },
   ];
 
-  const {selectedDate} = useDate();
+  const {selectedDated} = useDate();
+  const {setTodayTaskLength} = useTaskLength();
 
   const scrollViewRef = useRef(null);
 
-  // Scroll to top when selectedDate changes
+  useEffect(() => {
+    setTodayTaskLength(filteredTasks.length);
+  }, [selectedDated]);
+
+  // Scroll to top when selectedDatedd changes
   useEffect(() => {
     if (scrollViewRef.current) {
       scrollViewRef.current.scrollTo({y: 0, animated: true});
     }
-  }, [selectedDate]);
+  }, [selectedDated]);
 
   // Get current date in yyyy-mm-dd format for comparison
   const today = new Date().toLocaleDateString('en-CA'); // '2024-12-18'
@@ -261,13 +255,13 @@ const CustomTimeline = ({currentDate}) => {
   // Filter tasks based on selected date, ensuring no past tasks if not today
   const filteredTasks = tasks.filter(task => {
     const taskDate = new Date(task.date).toLocaleDateString('en-CA');
-    const currentDateObj = new Date(selectedDate).toLocaleDateString('en-CA');
+    const currentDateObj = new Date(selectedDated).toLocaleDateString('en-CA');
     return taskDate === currentDateObj;
   });
 
   // Generate time slots starting from 12:00 AM if selected date is not today
   const generateTimeSlots = () => {
-    const isToday = selectedDate === today;
+    const isToday = selectedDated === today;
     const currentHour = new Date().getHours(); // Get current hour
     const startHour = isToday ? currentHour : 0; // Start from current hour if today, else from 12:00 AM
     const slots = [];
@@ -429,12 +423,17 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.regular,
   },
   taskBox: {
-    marginTop: hp(0.2),
-    paddingVertical: hp(0.5),
+    // marginTop: hp(0.2),
+    paddingVertical: hp(2),
     paddingHorizontal: wp(2),
-    marginHorizontal: wp(4),
-    width: '80%',
-    gap: hp(0.5),
+    // marginHorizontal: wp(4),
+    width: '72%',
+
+    gap: hp(1),
+    left: '30%',
+    top: hp(5.5),
+
+    position: 'absolute',
   },
   taskText: {
     fontSize: hp(1.6),

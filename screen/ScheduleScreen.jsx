@@ -1,13 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, LogBox} from 'react-native';
+import {SafeAreaView, StyleSheet, LogBox, Text} from 'react-native';
 import CustomTimeline from '../components/CustomTimeline';
 import {useTheme} from '../context/ThemeContext';
 import TopCalendar from '../components/TopCalendar';
 
 const ScheduleScreen = () => {
   const {theme} = useTheme();
-  const currentDate = new Date().toISOString().split('T')[0];
-  const [selectedDate, setSelectedDate] = useState(currentDate);
 
   // Suppress specific warning
   useEffect(() => {
@@ -29,7 +27,7 @@ const ScheduleScreen = () => {
         },
       ]}>
       <TopCalendar />
-      <CustomTimeline currentDate={selectedDate} />
+      <CustomTimeline />
     </SafeAreaView>
   );
 };

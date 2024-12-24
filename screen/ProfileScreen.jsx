@@ -27,30 +27,25 @@ const ProfileScreen = () => {
   };
 
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
+  const borderColor = theme === 'dark' ? '#2b2a2a' : '#f7efef'; // Border color based on theme
+  const buttonBackgroundColor = theme === 'dark' ? '#222320' : '#f7f2f2'; // Button background color based on theme
+  const switchTrackColor = {false: Color.firstColor, true: Color.firstColor}; // Track color for off (blue) and on (white)
+  const switchThumbColor = isSwitchOn ? 'white' : 'blue'; // Thumb color for switch
 
   return (
     <View
       style={[
         styles.container,
-        theme === 'dark'
-          ? {backgroundColor: 'black'}
-          : {backgroundColor: 'white'},
+        theme === 'dark' ? styles.darkBackground : styles.lightBackground,
       ]}>
       {/* Theme toggle section */}
       <View style={styles.toggleThemeContainer}>
-        <Text
-          style={{
-            color: textColor,
-            fontSize: 16,
-            fontFamily: Fonts.subHeading,
-          }}>
-          Dark Theme:
-        </Text>
+        <Text style={[styles.themeText, {color: textColor}]}>Dark Theme:</Text>
         <Switch
           value={isSwitchOn}
           onValueChange={onToggleSwitch}
-          trackColor={{false: Color.firstColor, true: Color.firstColor}} // Track color for off (blue) and on (white)
-          thumbColor={isSwitchOn ? 'white' : 'blue'} // Thumb color for on (white) and off (blue)
+          trackColor={switchTrackColor} // Track color for off (blue) and on (white)
+          thumbColor={switchThumbColor} // Thumb color for on (white) and off (blue)
         />
       </View>
 
@@ -76,132 +71,53 @@ const ProfileScreen = () => {
 
       {/* Action buttons */}
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity
-          style={[
-            styles.linkBox,
-            theme == 'dark'
-              ? {borderColor: '#2b2a2a'}
-              : {borderColor: '#f7efef'},
-          ]}>
+        <TouchableOpacity style={[styles.linkBox, {borderColor: borderColor}]}>
           <Text
-            style={{
-              fontSize: hp(2),
-              padding: hp(1),
-              borderRadius: 100,
-              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
-            }}>
+            style={[styles.iconText, {backgroundColor: buttonBackgroundColor}]}>
             💎
           </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              width: '60%',
-              color: textColor,
-              fontFamily: Fonts.regular,
-            }}>
+          <Text style={[styles.linkText, {color: textColor}]}>
             Upgrade to Premium
           </Text>
           <ChevronRightIcon color={textColor} />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.linkBox,
-            theme == 'dark'
-              ? {borderColor: '#2b2a2a'}
-              : {borderColor: '#f7efef'},
-          ]}>
+        <TouchableOpacity style={[styles.linkBox, {borderColor: borderColor}]}>
           <Text
-            style={{
-              padding: hp(1),
-              borderRadius: 100,
-              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
-            }}>
+            style={[styles.iconText, {backgroundColor: buttonBackgroundColor}]}>
             <ChatBubbleLeftEllipsisIcon
               size={hp(2.5)}
-              color={theme == 'dark' ? 'white' : 'black'}
+              color={theme === 'dark' ? 'white' : 'black'}
             />
           </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              width: '60%',
-              color: textColor,
-              fontFamily: Fonts.regular,
-            }}>
-            Help Center
-          </Text>
+          <Text style={[styles.linkText, {color: textColor}]}>Help Center</Text>
           <ChevronRightIcon color={textColor} size={hp(2.5)} />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.linkBox,
-            theme == 'dark'
-              ? {borderColor: '#2b2a2a'}
-              : {borderColor: '#f7efef'},
-          ]}>
+        <TouchableOpacity style={[styles.linkBox, {borderColor: borderColor}]}>
           <Text
-            style={{
-              padding: hp(1),
-              borderRadius: 100,
-              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
-            }}>
-            <StarIcon color={theme == 'dark' ? 'white' : 'black'} />
+            style={[styles.iconText, {backgroundColor: buttonBackgroundColor}]}>
+            <StarIcon color={theme === 'dark' ? 'white' : 'black'} />
           </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              width: '60%',
-              color: textColor,
-              fontFamily: Fonts.regular,
-            }}>
+          <Text style={[styles.linkText, {color: textColor}]}>
             Rate the App
           </Text>
           <ChevronRightIcon color={textColor} size={hp(2.5)} />
         </TouchableOpacity>
-        <TouchableOpacity
-          style={[
-            styles.linkBox,
-            theme == 'dark'
-              ? {borderColor: '#2b2a2a'}
-              : {borderColor: '#f7efef'},
-          ]}>
+        <TouchableOpacity style={[styles.linkBox, {borderColor: borderColor}]}>
           <Text
-            style={{
-              padding: hp(1),
-              borderRadius: 100,
-              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
-            }}>
-            <EyeIcon color={theme == 'dark' ? 'white' : 'black'} />
+            style={[styles.iconText, {backgroundColor: buttonBackgroundColor}]}>
+            <EyeIcon color={theme === 'dark' ? 'white' : 'black'} />
           </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              width: '60%',
-              color: textColor,
-              fontFamily: Fonts.regular,
-            }}>
+          <Text style={[styles.linkText, {color: textColor}]}>
             Privacy Policy
           </Text>
           <ChevronRightIcon color={textColor} size={hp(2.5)} />
         </TouchableOpacity>
         <TouchableOpacity style={[styles.linkBox, {borderBottomWidth: 0}]}>
           <Text
-            style={{
-              padding: hp(1),
-              borderRadius: 100,
-              backgroundColor: theme == 'dark' ? '#222320' : '#f7f2f2',
-            }}>
+            style={[styles.iconText, {backgroundColor: buttonBackgroundColor}]}>
             <ArrowLeftStartOnRectangleIcon color={'#ef4c4c'} size={hp(2.5)} />
           </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              width: '60%',
-              color: '#ef4c4c',
-              fontFamily: Fonts.regular,
-            }}>
-            Log out
-          </Text>
+          <Text style={[styles.linkText, {color: '#ef4c4c'}]}>Log out</Text>
           <ChevronRightIcon color={textColor} />
         </TouchableOpacity>
       </View>
@@ -213,12 +129,21 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {flex: 1},
+  darkBackground: {
+    backgroundColor: 'black',
+  },
+  lightBackground: {
+    backgroundColor: 'white',
+  },
   toggleThemeContainer: {
-    // backgroundColor: '#f7f2f2',
     flexDirection: 'row',
     justifyContent: 'flex-end',
     paddingTop: 10,
     alignItems: 'center',
+  },
+  themeText: {
+    fontSize: 16,
+    fontFamily: Fonts.subHeading,
   },
   detailContainer: {
     flex: 1,
@@ -237,7 +162,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   textContainer: {},
-  name: {textAlign: 'center', fontSize: hp(2.5), fontFamily: Fonts.heading},
+  name: {
+    textAlign: 'center',
+    fontSize: hp(2.5),
+    fontFamily: Fonts.heading,
+  },
   email: {
     textAlign: 'center',
     fontSize: hp(1.8),
@@ -258,7 +187,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: Fonts.subHeading,
   },
-
   buttonsContainer: {
     flex: 1,
     top: -hp(3),
@@ -269,5 +197,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     paddingVertical: hp(1.5),
+  },
+  iconText: {
+    padding: hp(1),
+    borderRadius: 100,
+  },
+  linkText: {
+    fontSize: 16,
+    width: '60%',
+    fontFamily: Fonts.regular,
   },
 });

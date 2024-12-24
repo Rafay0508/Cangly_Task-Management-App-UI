@@ -80,22 +80,20 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
 
-  const textColor = theme == 'dark' ? 'white' : 'black';
+  const textColor = theme === 'dark' ? 'white' : 'black';
 
   return (
     <View
       style={[
         styles.container,
-        theme == 'dark'
-          ? {backgroundColor: 'black'}
-          : {backgroundColor: 'white'},
+        theme === 'dark' ? styles.darkBackground : styles.lightBackground,
       ]}>
       <View
         style={[
           styles.searchContainer,
-          theme == 'dark'
-            ? {backgroundColor: '#222320'}
-            : {backgroundColor: 'white'},
+          theme === 'dark'
+            ? styles.darkSearchBackground
+            : styles.lightSearchBackground,
         ]}>
         <TouchableOpacity>
           <MagnifyingGlassIcon
@@ -111,6 +109,7 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
           onChangeText={setSearch}
         />
       </View>
+
       <ScrollView style={styles.projectContainer}>
         {projects.map((project, index) => {
           const progress = Number(project.progress) / 100; // Ensure it's a number (0 to 1)
@@ -119,9 +118,9 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
               key={index}
               style={[
                 styles.projectBox,
-                theme == 'dark'
-                  ? {backgroundColor: '#222320'}
-                  : {backgroundColor: 'white'},
+                theme === 'dark'
+                  ? styles.darkProjectBox
+                  : styles.lightProjectBox,
               ]}>
               <View style={styles.topContainer}>
                 <View>
@@ -144,44 +143,26 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
                 </TouchableOpacity>
               </View>
 
-              <Text
-                style={[
-                  {
-                    marginVertical: hp(2),
-                    fontFamily: Fonts.regular,
-                  },
-                  {color: textColor},
-                ]}>
+              <Text style={[styles.projectDescription, {color: textColor}]}>
                 {project.description}
               </Text>
 
               <View style={styles.bottomContainer}>
                 <View style={styles.topTextContainer}>
-                  <Text
-                    style={[
-                      {width: '50%', fontFamily: Fonts.regular},
-                      {color: textColor},
-                    ]}>
+                  <Text style={[styles.progressLabel, {color: textColor}]}>
                     Progress
                   </Text>
-                  <Text
-                    style={[
-                      {
-                        width: '50%',
-                        textAlign: 'right',
-                        fontFamily: Fonts.regular,
-                      },
-                      {color: textColor},
-                    ]}>
+                  <Text style={[styles.progressValue, {color: textColor}]}>
                     {project.progress}%
                   </Text>
                 </View>
-                {/* Progress Bar */}
+
                 <ProgressBar
-                  progress={progress} // Convert percentage to fraction (0 to 1)
+                  progress={progress}
                   color={Color.firstColor}
                   style={styles.progressBar}
                 />
+
                 <View style={styles.bottomTextContainer}>
                   <View style={styles.imageContainer}>
                     {project.teamMembers.map((member, index) => (
@@ -192,15 +173,13 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
                       />
                     ))}
                   </View>
-                  <View
-                    style={{width: '20%', flexDirection: 'row', gap: wp(2)}}>
+                  <View style={styles.commentContainer}>
                     <ChatBubbleLeftEllipsisIcon color={textColor} />
                     <Text style={{color: textColor}}>{project.comments}</Text>
                   </View>
-                  <View style={{width: '50%', flexDirection: 'row', gap: 4}}>
+                  <View style={styles.timeContainer}>
                     <ClockIcon color={textColor} />
-                    <Text
-                      style={[{fontFamily: Fonts.regular}, {color: textColor}]}>
+                    <Text style={[styles.timeText, {color: textColor}]}>
                       {project.timeAgo}
                     </Text>
                   </View>
@@ -217,20 +196,32 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
 export default MyProjectsScreen;
 
 const styles = StyleSheet.create({
-  container: {flex: 1, padding: hp(2)},
+  container: {
+    flex: 1,
+    padding: hp(2),
+  },
+  darkBackground: {
+    backgroundColor: 'black',
+  },
+  lightBackground: {
+    backgroundColor: 'white',
+  },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
     paddingHorizontal: wp(4),
     borderWidth: 0,
-    backgroundColor: 'white',
+    elevation: 2,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
+  },
+  darkSearchBackground: {
+    backgroundColor: '#222320',
+  },
+  lightSearchBackground: {
+    backgroundColor: 'white',
   },
   icon: {
     marginRight: wp(2),
@@ -238,17 +229,24 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: hp(2),
-    color: '#000',
   },
-  projectContainer: {flex: 1, marginVertical: hp(2)},
+  projectContainer: {
+    flex: 1,
+    marginVertical: hp(2),
+  },
   projectBox: {
     marginVertical: hp(1),
     padding: hp(2),
-    backgroundColor: '#fff',
     elevation: 2,
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    width: '97%', // Default width for vertical layout
+    width: '97%',
+  },
+  darkProjectBox: {
+    backgroundColor: '#222320',
+  },
+  lightProjectBox: {
+    backgroundColor: 'white',
   },
   topContainer: {
     flexDirection: 'row',
@@ -264,6 +262,36 @@ const styles = StyleSheet.create({
     color: 'gray',
     fontSize: wp(3),
   },
+  projectDescription: {
+    marginVertical: hp(2),
+    fontFamily: Fonts.regular,
+  },
+  bottomContainer: {},
+  topTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  progressLabel: {
+    width: '50%',
+    fontFamily: Fonts.regular,
+  },
+  progressValue: {
+    width: '50%',
+    textAlign: 'right',
+    fontFamily: Fonts.regular,
+  },
+  progressBar: {
+    marginVertical: hp(2),
+    height: hp(1),
+    borderRadius: 5,
+    backgroundColor: '#dde0d7',
+  },
+  bottomTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
   imageContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -275,21 +303,20 @@ const styles = StyleSheet.create({
     marginRight: -15,
     borderRadius: 25,
   },
-  bottomContainer: {},
-  topTextContainer: {
+  commentContainer: {
+    width: '20%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: wp(2),
   },
-  bottomTextContainer: {
+  timeContainer: {
+    width: '50%',
     flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
+    gap: 4,
   },
-  progressBar: {
-    marginVertical: hp(2),
-    height: hp(1),
-    borderRadius: 5,
-    backgroundColor: '#dde0d7',
+  timeText: {
+    fontFamily: Fonts.regular,
+  },
+  ellipsisIcon: {
+    paddingLeft: wp(2),
   },
 });

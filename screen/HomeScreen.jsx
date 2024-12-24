@@ -20,6 +20,7 @@ import {
 import SearchBar from '../components/SearchBar';
 import {ChatBubbleLeftEllipsisIcon} from 'react-native-heroicons/solid';
 import {Color} from '../utils/colors';
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
@@ -82,9 +83,7 @@ const HomeScreen = () => {
     <View
       style={[
         styles.container,
-        theme === 'dark'
-          ? {backgroundColor: 'black'}
-          : {backgroundColor: 'white'},
+        theme === 'dark' ? styles.darkBackground : styles.lightBackground,
       ]}>
       {/* Top header section */}
       <View style={styles.topContainer}>
@@ -109,28 +108,20 @@ const HomeScreen = () => {
           <BellAlertIcon size={25} color={textColor} />
         </TouchableOpacity>
       </View>
+
       {/* Search Bar Section */}
       <View style={styles.searchContainer}>
         <SearchBar />
       </View>
+
       {/* Projects Section (Horizontal Scroll) */}
       <View style={styles.projectsContainer}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: hp(1),
-          }}>
-          <Text
-            style={{
-              fontSize: wp(4.5),
-              color: textColor,
-              fontFamily: Fonts.heading,
-            }}>
+        <View style={styles.projectsHeader}>
+          <Text style={[styles.projectsTitle, {color: textColor}]}>
             My Projects
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('MyProjects')}>
-            <Text style={{color: Color.firstColor, fontFamily: Fonts.heading}}>
+            <Text style={[styles.viewAll, {color: Color.firstColor}]}>
               View All
             </Text>
           </TouchableOpacity>
@@ -144,18 +135,13 @@ const HomeScreen = () => {
         </ScrollView>
       </View>
 
-      {/* todays Task Section */}
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text
-          style={{
-            fontSize: wp(4.5),
-            color: textColor,
-            fontFamily: Fonts.heading,
-          }}>
-          Todays Tasks
+      {/* Today's Task Section */}
+      <View style={styles.todayTasksHeader}>
+        <Text style={[styles.projectsTitle, {color: textColor}]}>
+          Today's Tasks
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('TodaysTasks')}>
-          <Text style={{color: Color.firstColor, fontFamily: Fonts.heading}}>
+          <Text style={[styles.viewAll, {color: Color.firstColor}]}>
             View All
           </Text>
         </TouchableOpacity>
@@ -174,16 +160,34 @@ const styles = StyleSheet.create({
     paddingTop: hp(3),
     gap: hp(2),
   },
+  darkBackground: {
+    backgroundColor: 'black',
+  },
+  lightBackground: {
+    backgroundColor: 'white',
+  },
   topContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: 4,
   },
-  ProfileImage: {width: hp(6), height: hp(6), borderRadius: 100},
-  textContainer: {width: '50%'},
-  heyText: {fontSize: wp(4), fontFamily: Fonts.heading},
-  usernameText: {fontSize: wp(5), fontFamily: Fonts.subHeading},
+  ProfileImage: {
+    width: hp(6),
+    height: hp(6),
+    borderRadius: 100,
+  },
+  textContainer: {
+    width: '50%',
+  },
+  heyText: {
+    fontSize: wp(4),
+    fontFamily: Fonts.heading,
+  },
+  usernameText: {
+    fontSize: wp(5),
+    fontFamily: Fonts.subHeading,
+  },
   notificationContainer: {
     padding: wp(2),
     borderRadius: '100%',
@@ -192,4 +196,20 @@ const styles = StyleSheet.create({
   },
   searchContainer: {},
   projectsContainer: {},
+  projectsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: hp(1),
+  },
+  projectsTitle: {
+    fontSize: wp(4.5),
+    fontFamily: Fonts.heading,
+  },
+  viewAll: {
+    fontFamily: Fonts.heading,
+  },
+  todayTasksHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
 });

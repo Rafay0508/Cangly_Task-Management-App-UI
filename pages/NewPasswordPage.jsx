@@ -174,7 +174,7 @@ export default NewPasswordPage;
 const styles = StyleSheet.create({
   container: {flex: 1},
   backNavigateBtn: {
-    height: hp(8),
+    height: hp(6),
     justifyContent: 'center',
     paddingHorizontal: wp(4),
   },
