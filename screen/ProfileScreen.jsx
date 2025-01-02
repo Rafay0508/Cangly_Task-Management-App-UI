@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,8 +22,12 @@ import {useTheme} from '../context/ThemeContext'; // Import theme context
 import {Switch} from 'react-native-paper';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
+import {useAuth} from '../context/AuthContext';
+import {useNavigation} from '@react-navigation/native';
 
 const ProfileScreen = () => {
+  const {user, userDetails, logOut} = useAuth();
+  const navigation = useNavigation();
   const {theme, toggleTheme} = useTheme(); // Get theme and toggleTheme from context
   const [isSwitchOn, setIsSwitchOn] = useState(theme === 'dark'); // Sync switch state with current theme
 
@@ -24,6 +35,17 @@ const ProfileScreen = () => {
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn); // Local state change
     toggleTheme(); // Update theme in context
+  };
+
+  const handleLogout = async () => {
+    console.log('click');
+    try {
+      await logOut();
+      Alert.alert('Logout Sucess');
+      navigation.navigate('Login');
+    } catch (error) {
+      Alert.alert('Logout Failed', 'somethin went wrong');
+    }
   };
 
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
@@ -53,15 +75,21 @@ const ProfileScreen = () => {
       <View style={styles.detailContainer}>
         <View style={styles.imageContainer}>
           <Image
-            source={require('../assets/profile.jpg')}
+            source={
+              userDetails
+                ? {uri: userDetails.photoURL}
+                : {uri: 'https://shorturl.at/UD9Ft'}
+            }
             style={styles.image}
             resizeMode="cover" // Ensures the image covers the container area
           />
         </View>
         <View style={styles.textContainer}>
-          <Text style={[styles.name, {color: textColor}]}>Shane Watson</Text>
+          <Text style={[styles.name, {color: textColor}]}>
+            {userDetails ? userDetails.fullName : 'unknown'}
+          </Text>
           <Text style={[styles.email, {color: textColor}]}>
-            beandemo@gmail.com
+            {userDetails ? userDetails.email : 'unknown'}
           </Text>
         </View>
         <TouchableOpacity style={styles.editContainer}>
@@ -112,7 +140,9 @@ const ProfileScreen = () => {
           </Text>
           <ChevronRightIcon color={textColor} size={hp(2.5)} />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.linkBox, {borderBottomWidth: 0}]}>
+        <TouchableOpacity
+          style={[styles.linkBox, {borderBottomWidth: 0}]}
+          onPress={handleLogout}>
           <Text
             style={[styles.iconText, {backgroundColor: buttonBackgroundColor}]}>
             <ArrowLeftStartOnRectangleIcon color={'#ef4c4c'} size={hp(2.5)} />

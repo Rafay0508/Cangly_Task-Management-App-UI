@@ -20,10 +20,12 @@ import {
 import SearchBar from '../components/SearchBar';
 import {ChatBubbleLeftEllipsisIcon} from 'react-native-heroicons/solid';
 import {Color} from '../utils/colors';
+import {useAuth} from '../context/AuthContext';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
+  const {user, userDetails} = useAuth();
 
   // Array of project data
   const projects = [
@@ -88,13 +90,18 @@ const HomeScreen = () => {
       {/* Top header section */}
       <View style={styles.topContainer}>
         <Image
-          source={require('../assets/profile.jpg')}
+          // source={require('../assets/profile.jpg')}
+          source={
+            userDetails
+              ? {uri: userDetails.photoURL}
+              : {uri: 'https://shorturl.at/UD9Ft'}
+          }
           style={styles.ProfileImage}
         />
         <View style={styles.textContainer}>
           <Text style={[styles.heyText, {color: textColor}]}>Hey👋</Text>
           <Text style={[styles.usernameText, {color: textColor}]}>
-            Shane Watson
+            {userDetails ? userDetails.fullName : 'unknown'}
           </Text>
         </View>
         <TouchableOpacity

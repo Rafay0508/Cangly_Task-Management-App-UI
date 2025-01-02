@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -18,35 +19,83 @@ import CheckBox from 'react-native-check-box';
 import {useNavigation} from '@react-navigation/native';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
+import {useAuth} from '../context/AuthContext';
 
 const RegisterPage = () => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-
+  const {user, signUp, signInWithGoogle} = useAuth();
   const [fname, setFname] = useState('');
   const [sname, setSname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmCondition, setConfirmCondition] = useState(false);
   const [secureText, setSecureText] = useState(false);
-  const [checked, setChecked] = useState(false);
 
   const toggleSecureText = () => {
     setSecureText(prevState => !prevState);
   };
 
   const handleCheckBoxToggle = () => {
-    setChecked(prevChecked => !prevChecked);
+    setConfirmCondition(prevChecked => !prevChecked);
   };
 
-  const registerHandler = () => {
-    console.log(fname, sname, email, password, confirmPassword);
+  const registerHandler = async () => {
+    if ((fname, sname, email, password, confirmPassword)) {
+      if (password !== confirmPassword) {
+        Alert.alert('Error', "Passwords don't match!");
+        return;
+      }
+
+      if (!confirmCondition) {
+        Alert.alert('Warning!', 'You must agree to the terms and conditions');
+        return;
+      }
+      try {
+        await signUp(fname, sname, email, password);
+        navigation.navigate('Login');
+        Alert.alert('signup successfull');
+      } catch (error) {
+        if (error.message.slice(0, 27) === '[auth/email-already-in-use]') {
+          Alert.alert(
+            'SignUp Failed',
+            error.message.slice(28, error.message.length),
+          );
+        } else {
+          Alert.alert(
+            'Login Failed',
+            error.message.slice(21, error.message.length),
+          );
+        }
+      }
+    } else {
+      Alert.alert('Login Failed', 'All Field Required');
+    }
+
+    // Clear inputs after registration
     setFname('');
     setSname('');
     setEmail('');
     setPassword('');
     setConfirmPassword('');
-    navigation.navigate('Login');
+  };
+
+  const handleSigninWithGoogle = async () => {
+    if (confirmCondition) {
+      try {
+        await signInWithGoogle();
+
+        if (user) {
+          Alert.alert('Login Successful', 'Welcome back!');
+        }
+        navigation.navigate('HomePage');
+      } catch (error) {
+        Alert.alert('SiginError', error.message);
+      }
+    } else {
+      Alert.alert('Warning!', 'You must agree to the terms and conditions');
+    }
   };
 
   // theme toggle
@@ -84,6 +133,7 @@ const RegisterPage = () => {
             placeholder="Enter First Name"
             placeholderTextColor={placeholderColor}
             theme={{
+              roundness: 0,
               colors: {
                 primary: Color.firstColor,
                 placeholder: placeholderColor,
@@ -103,6 +153,7 @@ const RegisterPage = () => {
             placeholder="Enter Last Name"
             placeholderTextColor={placeholderColor}
             theme={{
+              roundness: 0,
               colors: {
                 primary: Color.firstColor,
                 placeholder: placeholderColor,
@@ -122,6 +173,7 @@ const RegisterPage = () => {
             placeholder="Enter Email Address"
             placeholderTextColor={placeholderColor}
             theme={{
+              roundness: 0,
               colors: {
                 primary: Color.firstColor,
                 placeholder: placeholderColor,
@@ -143,6 +195,7 @@ const RegisterPage = () => {
               placeholderTextColor={placeholderColor}
               secureTextEntry={secureText}
               theme={{
+                roundness: 0,
                 colors: {
                   primary: Color.firstColor,
                   placeholder: placeholderColor,
@@ -175,6 +228,7 @@ const RegisterPage = () => {
               placeholderTextColor={placeholderColor}
               secureTextEntry={secureText}
               theme={{
+                roundness: 0,
                 colors: {
                   primary: Color.firstColor,
                   placeholder: placeholderColor,
@@ -200,7 +254,7 @@ const RegisterPage = () => {
             <CheckBox
               checkBoxColor={Color.firstColor}
               onClick={handleCheckBoxToggle} // Correctly bind the checkbox toggle
-              isChecked={checked} // Bind the checkbox state
+              isChecked={confirmCondition} // Bind the checkbox state
             />
             <Text
               style={{
@@ -222,7 +276,9 @@ const RegisterPage = () => {
           </TouchableOpacity>
           <Text style={styles.socialText}>Or continue with social account</Text>
           <View style={styles.socialButtonContainer}>
-            <TouchableOpacity style={styles.socialButton}>
+            <TouchableOpacity
+              style={styles.socialButton}
+              onPress={handleSigninWithGoogle}>
               <Image
                 source={require('../assets/social/google.png')}
                 style={{width: 20, height: 20}}

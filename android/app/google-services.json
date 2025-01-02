@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "538825766481",
+    "firebase_url": "https://cangly-taskmanagement-default-rtdb.firebaseio.com",
+    "project_id": "cangly-taskmanagement",
+    "storage_bucket": "cangly-taskmanagement.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538825766481:android:f3f943c96d87c5e72d6a70",
+        "android_client_info": {
+          "package_name": "com.cangly_taskmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538825766481-30i6nrqpg554ic9s1jbug5lkhkan2jkg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cangly_taskmanagement",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "538825766481-e74doh2qha5o0ttk3f4m28kb7lgfmk8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdi-zjZkAp20UKpADa9AKhmdIHj3qcsi0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "538825766481-1pmesbst3b2dml4q3o6ao0739d3mvepn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

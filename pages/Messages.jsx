@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   AdjustmentsHorizontalIcon,
   ChevronLeftIcon,
@@ -20,6 +20,8 @@ import {
 import {Fonts} from '../utils/fonts';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../context/ThemeContext';
+import {useUsersData} from '../context/UsersData';
+import {useAuth} from '../context/AuthContext';
 
 const messages = [
   {
@@ -146,7 +148,8 @@ const Messages = ({placeholder = 'Search'}) => {
   const {theme} = useTheme();
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
-
+  const {userDetails} = useAuth();
+  const {usersData} = useUsersData();
   const textColor = theme == 'dark' ? 'white' : 'black';
   const borderColor = theme === 'dark' ? '#2b2a2a' : '#f7efef'; // Border color based on theme
 
@@ -201,50 +204,59 @@ const Messages = ({placeholder = 'Search'}) => {
       </View>
 
       <ScrollView style={styles.messagesContainer}>
-        {messages.map((message, index) => (
-          <TouchableOpacity
-            style={[styles.messageBox, {borderColor: borderColor}]}
-            key={index}
-            onPress={() => navigation.navigate('Chat', {sender: message})}>
-            <View>
-              <Image source={message.image} style={styles.image} />
-              {message.online ? (
-                <View
-                  style={{
-                    position: 'absolute',
-                    left: hp(4),
-                    top: hp(1),
-                    borderRadius: 100,
-                    width: hp(1.5),
-                    height: hp(1.5),
-                    backgroundColor: 'rgb(255, 255, 255)',
-                  }}>
+        {usersData ? (
+          usersData.map((user, index) => (
+            <TouchableOpacity
+              style={[styles.messageBox, {borderColor: borderColor}]}
+              key={index}
+              onPress={() =>
+                navigation.navigate('Chat', {
+                  reciever: user,
+                  sender: userDetails,
+                })
+              }>
+              <View>
+                <Image source={{uri: user.photoURL}} style={styles.image} />
+                {!user.online ? (
                   <View
                     style={{
                       position: 'absolute',
-                      left: hp(0.2),
-                      top: hp(0.3),
+                      left: hp(4),
+                      top: hp(1),
                       borderRadius: 100,
-                      width: hp(1),
-                      height: hp(1),
-                      backgroundColor: 'rgb(76,217,100)',
-                    }}></View>
-                </View>
-              ) : (
-                <></>
-              )}
-            </View>
-            <View style={styles.textContainer}>
-              <Text style={[styles.senderName, {color: textColor}]}>
-                {message.senderName}
-              </Text>
-              <Text style={styles.messageText}>{message.message}</Text>
-            </View>
-            <View>
-              <Text style={styles.timeStamp}>{message.timeStamp}</Text>
-            </View>
-          </TouchableOpacity>
-        ))}
+                      width: hp(1.5),
+                      height: hp(1.5),
+                      backgroundColor: 'rgb(255, 255, 255)',
+                    }}>
+                    <View
+                      style={{
+                        position: 'absolute',
+                        left: hp(0.2),
+                        top: hp(0.3),
+                        borderRadius: 100,
+                        width: hp(1),
+                        height: hp(1),
+                        backgroundColor: 'rgb(76,217,100)',
+                      }}></View>
+                  </View>
+                ) : (
+                  <></>
+                )}
+              </View>
+              <View style={styles.textContainer}>
+                <Text style={[styles.senderName, {color: textColor}]}>
+                  {user.fullName}
+                </Text>
+                <Text style={styles.messageText}>click to view chat</Text>
+              </View>
+              <View>
+                <Text style={styles.timeStamp}>00:00 AM</Text>
+              </View>
+            </TouchableOpacity>
+          ))
+        ) : (
+          <Text>no chats avaiable</Text>
+        )}
       </ScrollView>
     </View>
   );
@@ -285,7 +297,7 @@ const styles = StyleSheet.create({
   },
   messageBox: {
     flexDirection: 'row',
-    gap: wp(3),
+    gap: wp(2.6),
     borderBottomWidth: 1,
     borderColor: 'pink',
     paddingVertical: hp(1.5),
