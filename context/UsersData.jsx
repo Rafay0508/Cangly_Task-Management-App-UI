@@ -43,17 +43,20 @@ export const UsersDataProvider = ({children}) => {
           const chatData = snapshot.val();
 
           if (chatData) {
-            console.log(chatData);
-            const chatDataArray = Object.values(Object.values(chatData));
+            // console.log(chatData);
+            const filteredData = Object.keys(chatData)
+              .filter(key => {
+                return (
+                  key === `${senderUID}__${recieverUID}` ||
+                  key === `${recieverUID}__${senderUID}`
+                );
+              })
+              .map(key => chatData[key]);
+            // console.log(filteredData);
 
-            const filteredData = chatDataArray.filter(
-              item =>
-                (item.user1UID === recieverUID ||
-                  item.user1UID === senderUID) &&
-                (item.user2UID === recieverUID || item.user2UID === senderUID),
-            );
             if (filteredData.length > 0) {
-              setChats(filteredData[0].messages);
+              // Assuming each entry in filteredData has messages
+              setChats(filteredData[0]); // Adjust this based on your data structure
             } else {
               setChats([]); // No chat found, set empty array
             }
@@ -62,34 +65,51 @@ export const UsersDataProvider = ({children}) => {
     } catch (error) {}
   };
 
-  const createMessage = async (sender, receiver, content) => {
-    const senderUID = sender.uid;
-    const receiverUID = receiver.uid;
+  const createMessage = async (
+    sender,
+    receiver,
+    content,
+    imageUrl = null,
+    fileUrl = null,
+  ) => {
+    const senderUID = sender.uid; // Assuming sender is an object with a uid property
+    const receiverUID = receiver.uid; // Assuming receiver is an object with a uid property
 
     try {
-      // Generate the chat key to identify the chat
       const chatKey =
         senderUID < receiverUID
           ? `${senderUID}__${receiverUID}`
           : `${receiverUID}__${senderUID}`;
 
-      const chatRef = database().ref(`/chats/${chatKey}/messages`);
+      const chatRef = database().ref(`/chats/${chatKey}`);
+
+      // Fetch existing messages to determine the next index
+      const snapshot = await chatRef.once('value');
+      const existingMessages = snapshot.val() || {};
+
+      // Find the next index based on existing keys
+      const currentIndexes = Object.keys(existingMessages).map(Number);
+      const nextIndex =
+        currentIndexes.length > 0 ? Math.max(...currentIndexes) + 1 : 0;
 
       // Prepare the new message object
       const newMessage = {
         content: content,
-        senderUID: senderUID,
-        receiverUID: receiverUID,
+        senderUID: receiverUID,
+        receiverUID: senderUID,
         createdAt: Date.now(),
+        imageUrl: imageUrl, // Include image URL if provided
+        fileUrl: fileUrl, // Include file URL if provided
       };
 
-      // Push the new message to Firebase
-      await chatRef.push(newMessage);
+      // Use the nextIndex as a string to avoid path errors
+      await chatRef.child(nextIndex.toString()).set(newMessage);
       console.log('Message sent successfully!');
     } catch (error) {
       console.error('Error creating message:', error);
     }
   };
+
   return (
     <UsersDataContext.Provider
       value={{usersData, loading, chatData, chats, createMessage}}>

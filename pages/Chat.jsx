@@ -41,6 +41,8 @@ const Chat = ({route}) => {
   const scrollViewRef = useRef(null);
   const [file, setFile] = useState(null);
   const [content, setContent] = useState('');
+  const [imageUrl, setImageUrl] = useState(null);
+  const [fileUrl, setFileUrl] = useState(null);
   const textColor = theme === 'dark' ? 'white' : 'black';
 
   // Scroll to the end when the page is loaded
@@ -86,7 +88,7 @@ const Chat = ({route}) => {
     }
   };
   const createmessageHandler = () => {
-    createMessage(reciever, sender, content);
+    createMessage(reciever, sender, content, imageUrl, fileUrl);
     setContent('');
   };
   return (
