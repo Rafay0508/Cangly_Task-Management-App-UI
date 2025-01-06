@@ -26,8 +26,7 @@ import {useAuth} from '../context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 
 const ProfileScreen = () => {
-  const {user, userDetails, logOut} = useAuth();
-  const navigation = useNavigation();
+  const {userDetails, logOut} = useAuth();
   const {theme, toggleTheme} = useTheme(); // Get theme and toggleTheme from context
   const [isSwitchOn, setIsSwitchOn] = useState(theme === 'dark'); // Sync switch state with current theme
 
@@ -38,11 +37,9 @@ const ProfileScreen = () => {
   };
 
   const handleLogout = async () => {
-    console.log('click');
     try {
-      await logOut();
+      logOut();
       Alert.alert('Logout Sucess');
-      navigation.navigate('Login');
     } catch (error) {
       Alert.alert('Logout Failed', 'somethin went wrong');
     }

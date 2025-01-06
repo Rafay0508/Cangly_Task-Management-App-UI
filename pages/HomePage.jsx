@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, View, Text, Alert} from 'react-native';
 import HomeScreen from '../screen/HomeScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MyProjectsScreen from '../screen/MyProjectsScreen';
@@ -32,6 +32,9 @@ const HomePage = () => {
   const toggleModal = () => {
     setModelOpen(!isModalOpen);
   };
+  useEffect(() => {
+    Alert.alert('Login Successful', 'Welcome back!');
+  }, []);
 
   return (
     <>

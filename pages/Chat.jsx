@@ -356,7 +356,6 @@
 //     backgroundColor: 'rgb(76,217,100)',
 //   },
 // });
-
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
@@ -400,16 +399,13 @@ const Chat = ({route}) => {
   const [file, setFile] = useState(null);
   const textColor = theme === 'dark' ? 'white' : 'black';
 
-  // Scroll to the end when the page is loaded
+  // Scroll to the end when new messages arrive
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (scrollViewRef.current) {
-        scrollViewRef.current.scrollToEnd({animated: true});
-      }
-    }, 300);
-
-    return () => clearTimeout(timer);
-  }, []);
+    // Ensure scrolling happens on new messages or chatData changes
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollToEnd({animated: true});
+    }
+  }, [chats]); // Dependency on chats so that it triggers on new messages
 
   const pickDocument = async () => {
     try {
@@ -430,7 +426,6 @@ const Chat = ({route}) => {
   useEffect(() => {
     chatData(reciever, sender);
   }, [reciever, sender]);
-  // console.log(chats);
 
   const getDateLabel = timestamp => {
     const messageDate = new Date(timestamp);
@@ -487,7 +482,6 @@ const Chat = ({route}) => {
         ref={scrollViewRef}
         style={[
           styles.messagesContainer,
-
           {backgroundColor: theme === 'dark' ? 'black' : 'rgb(249, 252, 253)'},
         ]}
         contentContainerStyle={styles.scrollViewContentContainer}>
@@ -503,7 +497,6 @@ const Chat = ({route}) => {
                       ? 'flex-end'
                       : 'flex-start',
                 },
-                {borderWidth: 1, borderColor: 'transparent'},
               ]}>
               <Text style={styles.timestamp}>
                 {format(new Date(chat.createdAt), 'hh:mm a')}
@@ -539,7 +532,7 @@ const Chat = ({route}) => {
             </View>
           ))
         ) : (
-          <Text>no messages</Text>
+          <Text style={{color: textColor}}>No messages</Text>
         )}
       </ScrollView>
 
@@ -617,18 +610,19 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     paddingBottom: 8,
+    marginBottom: 8, // Added space between messages
   },
   timestamp: {
     textAlign: 'right',
     fontFamily: Fonts.regular,
-    fontSize: 14,
+    fontSize: 12,
     marginRight: 15,
     marginVertical: 2,
     color: 'gray',
   },
   messageText: {
     fontSize: 16,
-    padding: 10,
+    padding: 12,
     borderRadius: 25,
     paddingHorizontal: 10,
   },

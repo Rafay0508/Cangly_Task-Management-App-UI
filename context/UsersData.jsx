@@ -35,6 +35,7 @@ export const UsersDataProvider = ({children}) => {
   const chatData = (reciever, sender) => {
     const recieverUID = reciever.uid;
     const senderUID = sender.uid;
+    console.log(reciever.fullName, sender.fullName);
 
     try {
       database()

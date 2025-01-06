@@ -25,8 +25,7 @@ import {useAuth} from '../context/AuthContext';
 const HomeScreen = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
-  const {user, userDetails} = useAuth();
-
+  const {userDetails} = useAuth();
   // Array of project data
   const projects = [
     {

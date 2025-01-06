@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -24,13 +24,16 @@ import {useAuth} from '../context/AuthContext';
 const LoginPage = () => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-  const {user, signInWithGoogle, login} = useAuth();
+  const {login, loginWithGoogle} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureText, setSecureText] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [loading, setLoading] = useState();
+
+  // Refs to handle focus between input fields
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
 
   // theme Toggle
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
@@ -39,7 +42,9 @@ const LoginPage = () => {
   const toggleSecureText = () => {
     setSecureText(prevState => !prevState);
   };
+
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
   const validateForm = () => {
     if (email.trim() === '' || password.trim() === '') {
       Alert.alert('Validation Error', 'Please fill in all fields');
@@ -55,6 +60,7 @@ const LoginPage = () => {
     }
     return true;
   };
+
   useEffect(() => {
     setEmailError('');
     setPasswordError('');
@@ -63,31 +69,32 @@ const LoginPage = () => {
   const loginHandler = async () => {
     if (!validateForm()) return;
     try {
-      await login(email, password);
-
-      Alert.alert('Login Successful', 'Welcome back!');
-      // navigation.navigate('HomePage');
+      login(email, password);
       setEmail('');
       setPassword('');
       setEmailError('');
       setPasswordError('');
     } catch (error) {
-      Alert.alert('Login Failed', 'Invalid Credentials. Please tryAgain');
+      Alert.alert('Login Failed', 'Invalid Credentials. Please try again');
     }
   };
 
-  const handleSigninWithGoogle = async () => {
+  const handleSigninWithGoogle = () => {
     try {
-      await signInWithGoogle();
-
-      if (user) {
-        Alert.alert('Login Successful', 'Welcome back!');
-      }
-      navigation.navigate('HomePage');
+      loginWithGoogle();
     } catch (error) {
-      Alert.alert('SiginError', error.message);
+      Alert.alert('Login Failed', 'Invalid Credentials. Please try again');
     }
   };
+
+  const handleSigninWithFacebook = () => {
+    try {
+      loginWithGoogle();
+    } catch (error) {
+      Alert.alert('Login Failed', 'Invalid Credentials. Please try again');
+    }
+  };
+
   return (
     <SafeAreaView
       style={[
@@ -107,9 +114,11 @@ const LoginPage = () => {
           </Text>
           <Text style={styles.secondText}>Hello there, login to continue</Text>
         </View>
+
         <View style={styles.formContainer}>
           <View>
             <TextInput
+              ref={emailInputRef} // Reference to the email input
               style={[
                 styles.input,
                 {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
@@ -128,11 +137,15 @@ const LoginPage = () => {
               textColor={textColor}
               value={email}
               onChangeText={text => setEmail(text)}
+              returnKeyType="next" // "Next" on keyboard
+              onSubmitEditing={() => passwordInputRef.current.focus()} // Focus password field
             />
             {emailError ? <Text style={{color: 'red'}}>{emailError}</Text> : ''}
           </View>
+
           <View style={styles.passwordContainer}>
             <TextInput
+              ref={passwordInputRef} // Reference to the password input
               style={[
                 styles.input,
                 {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
@@ -152,6 +165,8 @@ const LoginPage = () => {
               textColor={textColor}
               value={password}
               onChangeText={text => setPassword(text)}
+              returnKeyType="done" // "Done" on keyboard
+              onSubmitEditing={loginHandler} // Submit form when "Enter" is pressed
             />
             <TouchableOpacity
               onPress={toggleSecureText}
@@ -168,6 +183,7 @@ const LoginPage = () => {
               ''
             )}
           </View>
+
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgetPassword')}>
             <Text
@@ -179,10 +195,13 @@ const LoginPage = () => {
               Forget Password?
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity style={styles.button} onPress={loginHandler}>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
+
           <Text style={styles.socialText}>Or continue with social account</Text>
+
           <View style={styles.socialButtonContainer}>
             <TouchableOpacity
               style={styles.socialButton}
@@ -200,7 +219,10 @@ const LoginPage = () => {
                 Google
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.socialButton}>
+
+            <TouchableOpacity
+              style={styles.socialButton}
+              onPress={handleSigninWithFacebook}>
               <Image
                 source={require('../assets/social/facebook.png')}
                 style={{width: 20, height: 20}}
@@ -215,6 +237,7 @@ const LoginPage = () => {
               </Text>
             </TouchableOpacity>
           </View>
+
           <View style={styles.bottomText}>
             <Text
               style={[

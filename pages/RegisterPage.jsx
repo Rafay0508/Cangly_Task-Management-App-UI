@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -24,7 +24,9 @@ import {useAuth} from '../context/AuthContext';
 const RegisterPage = () => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-  const {user, signUp, signInWithGoogle} = useAuth();
+  const {signUp, signInWithGoogle, user} = useAuth(); // Updated to use signUp and signInWithGoogle
+
+  // State variables for form fields
   const [fname, setFname] = useState('');
   const [sname, setSname] = useState('');
   const [email, setEmail] = useState('');
@@ -33,16 +35,26 @@ const RegisterPage = () => {
   const [confirmCondition, setConfirmCondition] = useState(false);
   const [secureText, setSecureText] = useState(false);
 
+  // Refs to manage focus between fields
+  const firstNameInputRef = useRef(null);
+  const lastNameInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const passwordInputRef = useRef(null);
+  const confirmPasswordInputRef = useRef(null);
+
+  // Toggle for password visibility
   const toggleSecureText = () => {
     setSecureText(prevState => !prevState);
   };
 
+  // Handle checkbox toggle
   const handleCheckBoxToggle = () => {
     setConfirmCondition(prevChecked => !prevChecked);
   };
 
+  // Register handler
   const registerHandler = async () => {
-    if ((fname, sname, email, password, confirmPassword)) {
+    if (fname && sname && email && password && confirmPassword) {
       if (password !== confirmPassword) {
         Alert.alert('Error', "Passwords don't match!");
         return;
@@ -52,10 +64,11 @@ const RegisterPage = () => {
         Alert.alert('Warning!', 'You must agree to the terms and conditions');
         return;
       }
+
       try {
         await signUp(fname, sname, email, password);
         navigation.navigate('Login');
-        Alert.alert('signup successfull');
+        Alert.alert('SignUp Successful');
       } catch (error) {
         if (error.message.slice(0, 27) === '[auth/email-already-in-use]') {
           Alert.alert(
@@ -64,13 +77,13 @@ const RegisterPage = () => {
           );
         } else {
           Alert.alert(
-            'Login Failed',
+            'SignUp Failed',
             error.message.slice(21, error.message.length),
           );
         }
       }
     } else {
-      Alert.alert('Login Failed', 'All Field Required');
+      Alert.alert('SignUp Failed', 'All Fields Are Required');
     }
 
     // Clear inputs after registration
@@ -81,6 +94,7 @@ const RegisterPage = () => {
     setConfirmPassword('');
   };
 
+  // Google sign-in handler
   const handleSigninWithGoogle = async () => {
     if (confirmCondition) {
       try {
@@ -91,7 +105,7 @@ const RegisterPage = () => {
         }
         navigation.navigate('HomePage');
       } catch (error) {
-        Alert.alert('SiginError', error.message);
+        Alert.alert('SignIn Error', error.message);
       }
     } else {
       Alert.alert('Warning!', 'You must agree to the terms and conditions');
@@ -123,8 +137,10 @@ const RegisterPage = () => {
             Hello there, register to continue
           </Text>
         </View>
+
         <View style={styles.formContainer}>
           <TextInput
+            ref={firstNameInputRef} // Ref for first name field
             style={[
               styles.input,
               {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
@@ -142,9 +158,13 @@ const RegisterPage = () => {
             labelStyle={{color: textColor}}
             textColor={textColor}
             value={fname}
-            onChangeText={text => setFname(text)}
+            onChangeText={setFname}
+            returnKeyType="next"
+            onSubmitEditing={() => lastNameInputRef.current.focus()}
           />
+
           <TextInput
+            ref={lastNameInputRef} // Ref for last name field
             style={[
               styles.input,
               {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
@@ -162,9 +182,13 @@ const RegisterPage = () => {
             labelStyle={{color: textColor}}
             textColor={textColor}
             value={sname}
-            onChangeText={text => setSname(text)}
+            onChangeText={setSname}
+            returnKeyType="next"
+            onSubmitEditing={() => emailInputRef.current.focus()}
           />
+
           <TextInput
+            ref={emailInputRef} // Ref for email field
             style={[
               styles.input,
               {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
@@ -182,10 +206,14 @@ const RegisterPage = () => {
             labelStyle={{color: textColor}}
             textColor={textColor}
             value={email}
-            onChangeText={text => setEmail(text)}
+            onChangeText={setEmail}
+            returnKeyType="next"
+            onSubmitEditing={() => passwordInputRef.current.focus()}
           />
+
           <View style={styles.passwordContainer}>
             <TextInput
+              ref={passwordInputRef} // Ref for password field
               style={[
                 styles.input,
                 {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
@@ -204,9 +232,10 @@ const RegisterPage = () => {
               labelStyle={{color: textColor}}
               textColor={textColor}
               value={password}
-              onChangeText={text => setPassword(text)}
+              onChangeText={setPassword}
+              returnKeyType="next"
+              onSubmitEditing={() => confirmPasswordInputRef.current.focus()}
             />
-            {/* Eye icon outside of TextInput */}
             <TouchableOpacity
               onPress={toggleSecureText}
               style={styles.eyeIconContainer}>
@@ -217,8 +246,10 @@ const RegisterPage = () => {
               )}
             </TouchableOpacity>
           </View>
+
           <View style={styles.passwordContainer}>
             <TextInput
+              ref={confirmPasswordInputRef} // Ref for confirm password field
               style={[
                 styles.input,
                 {backgroundColor: theme === 'dark' ? '#333' : '#fff'},
@@ -237,9 +268,10 @@ const RegisterPage = () => {
               labelStyle={{color: textColor}}
               textColor={textColor}
               value={confirmPassword}
-              onChangeText={text => setConfirmPassword(text)}
+              onChangeText={setConfirmPassword}
+              returnKeyType="done"
+              onSubmitEditing={registerHandler} // Call register handler on "Enter"
             />
-            {/* Eye icon outside of TextInput */}
             <TouchableOpacity
               onPress={toggleSecureText}
               style={styles.eyeIconContainer}>
@@ -250,11 +282,12 @@ const RegisterPage = () => {
               )}
             </TouchableOpacity>
           </View>
+
           <View style={{flexDirection: 'row', gap: hp(1.5)}}>
             <CheckBox
               checkBoxColor={Color.firstColor}
-              onClick={handleCheckBoxToggle} // Correctly bind the checkbox toggle
-              isChecked={confirmCondition} // Bind the checkbox state
+              onClick={handleCheckBoxToggle}
+              isChecked={confirmCondition}
             />
             <Text
               style={{
@@ -271,10 +304,13 @@ const RegisterPage = () => {
               set out by this site.
             </Text>
           </View>
+
           <TouchableOpacity style={styles.button} onPress={registerHandler}>
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
+
           <Text style={styles.socialText}>Or continue with social account</Text>
+
           <View style={styles.socialButtonContainer}>
             <TouchableOpacity
               style={styles.socialButton}
@@ -297,6 +333,7 @@ const RegisterPage = () => {
               </Text>
             </TouchableOpacity>
           </View>
+
           <View style={styles.bottomText}>
             <Text
               style={[
