@@ -35,7 +35,6 @@ export const UsersDataProvider = ({children}) => {
   const chatData = (reciever, sender) => {
     const recieverUID = reciever.uid;
     const senderUID = sender.uid;
-    console.log(reciever.fullName, sender.fullName);
 
     try {
       database()
@@ -48,16 +47,62 @@ export const UsersDataProvider = ({children}) => {
               item =>
                 (item.user1UID === recieverUID ||
                   item.user1UID === senderUID) &&
-                (item.user1UID === senderUID || item.user1UID === recieverUID),
+                (item.user2UID === recieverUID || item.user2UID === senderUID),
             );
-            setChats(filteredData[0].messages);
+            if (filteredData.length > 0) {
+              setChats(filteredData[0].messages);
+            } else {
+              setChats([]); // No chat found, set empty array
+            }
           }
         });
     } catch (error) {}
   };
 
+  const createMessage = (sender, receiver, content) => {
+    const senderUID = sender.uid;
+    const receiverUID = receiver.uid;
+    console.log(content);
+
+    try {
+      // Check if a chat already exists between the sender and receiver
+      database()
+        .ref('/chats')
+        .once('value', snapshot => {
+          const chatData = snapshot.val();
+          const chatDataArray = Object.values(chatData);
+
+          const existingChat = chatDataArray.find(
+            item =>
+              (item.user1UID === senderUID && item.user2UID === receiverUID) ||
+              (item.user1UID === receiverUID && item.user2UID === senderUID),
+          );
+          console.log(existingChat);
+
+          // if (existingChat) {
+          //   // Push the new message to the existing chat's messages array
+          //   const newMessage = {
+          //     content: content,
+          //     senderUID: senderUID,
+          //     createdAt: Date.now(),
+          //   };
+
+          // const chatRef = database().ref(
+          //   `/chats/${existingChat.key}/messages`,
+          // );
+          // chatRef.push(newMessage); // This will add the new message to the messages array
+          // } else {
+          //   console.error('No existing chat found to send the message.');
+          // }
+        });
+    } catch (error) {
+      console.error('Error creating message:', error);
+    }
+  };
+
   return (
-    <UsersDataContext.Provider value={{usersData, loading, chatData, chats}}>
+    <UsersDataContext.Provider
+      value={{usersData, loading, chatData, chats, createMessage}}>
       {children}
     </UsersDataContext.Provider>
   );
