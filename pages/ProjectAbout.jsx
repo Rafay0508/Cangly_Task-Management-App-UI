@@ -41,7 +41,7 @@ const ProjectAbout = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {project} = route.params;
-  // console.log(project);
+  console.log(project);
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State to track if sheet is open
 
   const textColor = theme == 'dark' ? 'white' : 'black';
@@ -105,13 +105,33 @@ const ProjectAbout = ({route}) => {
                 <Text style={[styles.text, {color: textColor}]}>Team</Text>
               </View>
               <View style={styles.teamImagesContainer}>
-                {project.teamMembers.map((member, memberIndex) => (
+                {project.teamMembers.slice(0, 3).map((member, index) => (
                   <Image
-                    key={memberIndex}
-                    source={require('../assets/profile.jpg')}
+                    key={index}
+                    source={{uri: member.photoURL}}
                     style={styles.teamMemberImage}
                   />
                 ))}
+                {project.teamMembers.length > 3 && (
+                  <View
+                    style={{
+                      backgroundColor: 'white',
+                      padding: 8,
+                      borderRadius: 100,
+                    }}>
+                    <Text
+                      style={[
+                        styles.remainingText,
+                        {
+                          color: Color.firstColor,
+                          fontSize: 18,
+                          fontFamily: Fonts.regular,
+                        },
+                      ]}>
+                      +{project.teamMembers.length - 3}
+                    </Text>
+                  </View>
+                )}
               </View>
             </View>
             <View style={styles.rowContainer}>
@@ -121,10 +141,10 @@ const ProjectAbout = ({route}) => {
               </View>
               <View style={styles.PMContainer}>
                 <Image
-                  source={require('../assets/profile.jpg')}
+                  source={{uri: project.projectManager.photoURL}}
                   style={styles.teamMemberImage}
                 />
-                <Text>John Stemberger</Text>
+                <Text>{project.projectManager.fullName}</Text>
               </View>
             </View>
             <View style={styles.rowContainer}>
@@ -142,7 +162,7 @@ const ProjectAbout = ({route}) => {
                       fontSize: wp(3),
                       color: 'white',
                     }}>
-                    To Do
+                    {project.status}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -156,7 +176,7 @@ const ProjectAbout = ({route}) => {
                 style={styles.teamImagesContainer}
                 onPress={openDueDateActionSheet}>
                 <Text style={{fontFamily: Fonts.regular, color: textColor}}>
-                  17 Jan, 2023
+                  {project.dueDate}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -509,7 +529,11 @@ const ProjectAbout = ({route}) => {
         )}
       </SafeAreaView>
 
-      <UpdateStatus ref={updateStatusActionSheetRef} onClose={closeSheets} />
+      <UpdateStatus
+        ref={updateStatusActionSheetRef}
+        onClose={closeSheets}
+        status={project.status}
+      />
       <FileAttach ref={fileAttachActionSheetRef} onClose={closeSheets} />
       <DueDate ref={dueDateActionSheetRef} onClose={closeSheets} />
     </GestureHandlerRootView>
