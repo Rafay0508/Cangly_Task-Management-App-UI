@@ -41,6 +41,7 @@ const ProjectAbout = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {project} = route.params;
+  // console.log(project);
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State to track if sheet is open
 
   const textColor = theme == 'dark' ? 'white' : 'black';
@@ -82,7 +83,7 @@ const ProjectAbout = ({route}) => {
             />
           </TouchableOpacity>
           <Text style={[styles.projectTitle, {color: textColor}]}>
-            {project.title}
+            {project.projectName}
           </Text>
           <View style={styles.iconContainer}>
             <TouchableOpacity>
@@ -95,7 +96,7 @@ const ProjectAbout = ({route}) => {
         </View>
         <View>
           <Text style={[styles.detailedDescription, {color: textColor}]}>
-            {project.detailedDescription}
+            {project.description}
           </Text>
           <View>
             <View style={styles.rowContainer}>

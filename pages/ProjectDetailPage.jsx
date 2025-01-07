@@ -6,7 +6,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,93 +22,22 @@ import CheckBox from 'react-native-check-box';
 import {Fonts} from '../utils/fonts';
 import {useTheme} from '../context/ThemeContext';
 import {Color} from '../utils/colors';
+import {useProjects} from '../context/ProjectsContext';
 
 const ProjectDetailPage = ({route}) => {
   const {theme} = useTheme();
   const navigation = useNavigation();
   const {project} = route.params; // Destructure the 'project' parameter passed during navigation
-
-  // Task data with project association
-  const allTasks = [
-    {
-      projectId: 1,
-      taskId: 1,
-      taskName: 'Design homepage layout',
-      status: 'In Progress',
-      assignedTo: 'John Doe',
-      deadline: '05 December 2022',
-    },
-    {
-      projectId: 1,
-      taskId: 2,
-      taskName: 'Develop mobile navigation system',
-      status: 'Pending',
-      assignedTo: 'Jane Smith',
-      deadline: '10 December 2022',
-    },
-
-    {
-      projectId: 1,
-      taskId: 3,
-      taskName: 'Integrate payment gateway',
-      status: 'Completed',
-      assignedTo: 'Mark Lee',
-      deadline: '29 September 2022',
-    },
-    {
-      projectId: 2,
-      taskId: 1,
-      taskName: 'Create user registration UI',
-      status: 'In Progress',
-      assignedTo: 'Alice Johnson',
-      deadline: '08 December 2023',
-    },
-    {
-      projectId: 2,
-      taskId: 2,
-      taskName: 'Develop health data tracker feature',
-      status: 'Pending',
-      assignedTo: 'Bob Smith',
-      deadline: '15 December 2023',
-    },
-    {
-      projectId: 2,
-      taskId: 3,
-      taskName: 'Write API documentation',
-      status: 'Completed',
-      assignedTo: 'Charlie Brown',
-      deadline: '02 December 2023',
-    },
-    {
-      projectId: 3,
-      taskId: 1,
-      taskName: 'Build product listing page',
-      status: 'In Progress',
-      assignedTo: 'Diana White',
-      deadline: '10 December 2023',
-    },
-    {
-      projectId: 3,
-      taskId: 2,
-      taskName: 'Implement user authentication',
-      status: 'Pending',
-      assignedTo: 'Ethan Black',
-      deadline: '20 December 2023',
-    },
-    {
-      projectId: 3,
-      taskId: 3,
-      taskName: 'Configure shipping options',
-      status: 'Completed',
-      assignedTo: 'Fiona Green',
-      deadline: '01 December 2023',
-    },
-  ];
+  const {tasksForUser} = useProjects();
+  const [tasksForProject, setTasksForProject] = useState([]);
 
   // Filter tasks based on the selected project
-  const tasksForProject = allTasks.filter(
-    task => task.projectId === project.id,
-  );
+  useEffect(() => {
+    const tasksForProject = tasksForUser.filter(
+      task => task.projectName === project.projectName,
+    );
+    setTasksForProject(tasksForProject);
+  }, [project]);
 
   const textColor = theme == 'dark' ? 'white' : 'black';
 
@@ -124,37 +53,53 @@ const ProjectDetailPage = ({route}) => {
         <View style={styles.topNavigation}>
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => navigation.navigate('HomePage')}>
+            onPress={() => navigation.navigate('MyProjects')}>
             <ChevronLeftIcon color={'white'} size={30} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
+          <TouchableOpacity onPress={() => navigation.navigate('MyProjects')}>
             <CalendarDaysIcon color={'white'} size={30} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
+          <TouchableOpacity onPress={() => navigation.navigate('MyProjects')}>
             <EllipsisVerticalIcon color={'white'} size={30} />
           </TouchableOpacity>
         </View>
 
         <View style={styles.projectHeader}>
-          <Text style={styles.projectTitle}>{project.title}</Text>
-          <Text style={styles.projectDate}>{project.date}</Text>
+          <Text style={styles.projectTitle}>{project.projectName}</Text>
+          <Text style={styles.projectDate}>{project.submissionDate}</Text>
         </View>
 
         <View style={styles.imageContainer}>
-          {project.teamMembers.map((member, index) => (
+          {project.teamMembers.slice(0, 3).map((member, index) => (
             <Image
               key={index}
-              source={require('../assets/profile.jpg')}
+              source={{uri: member.photoURL}}
               style={styles.image}
             />
           ))}
+
+          {/* Show remaining members count if there are more than 5 */}
+          {project.teamMembers.length > 3 && (
+            <View
+              style={{backgroundColor: 'white', padding: 8, borderRadius: 100}}>
+              <Text
+                style={[
+                  styles.remainingText,
+                  {
+                    color: Color.firstColor,
+                    fontSize: 18,
+                    fontFamily: Fonts.regular,
+                  },
+                ]}>
+                +{project.teamMembers.length - 3}
+              </Text>
+            </View>
+          )}
         </View>
 
-        <Text style={styles.projectDescription}>{project.description}</Text>
+        <Text style={styles.projectDescription}>{project.projectType}</Text>
         <Text style={styles.DescriptionHeading}>Descriptions</Text>
-        <Text style={styles.projectDescription}>
-          {project.detailedDescription}
-        </Text>
+        <Text style={styles.projectDescription}>{project.description}</Text>
 
         <View style={styles.topTextContainer}>
           <Text style={styles.progressText}>Progress</Text>
@@ -187,9 +132,9 @@ const ProjectDetailPage = ({route}) => {
                 />
                 <View>
                   <Text style={[styles.taskName, {color: textColor}]}>
-                    {task.taskName}
+                    {task.taskTitle}
                   </Text>
-                  <Text style={styles.taskdeadline}>{task.deadline}</Text>
+                  <Text style={styles.taskdeadline}>{task.dueDate}</Text>
                 </View>
               </View>
               <View style={styles.taskDetails}>

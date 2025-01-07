@@ -14,14 +14,15 @@ import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../context/ThemeContext';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
+import {useProjects} from '../context/ProjectsContext';
 
-const MyProjects = ({isHorizontal, project}) => {
+const MyProjects = ({isHorizontal, project, index}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
 
   // Set progress bar color based on the project ID
-  const progressBarColor = project.id === 1 ? 'white' : Color.firstColor;
-  const isProject1 = project.id === 1 ? true : false;
+  const progressBarColor = index === 0 ? 'white' : Color.firstColor;
+  const isProject1 = index === 0 ? true : false;
 
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
 
@@ -34,7 +35,11 @@ const MyProjects = ({isHorizontal, project}) => {
         theme == 'dark'
           ? {backgroundColor: '#222320'}
           : {backgroundColor: 'white'},
-        project.id == 1 ? {backgroundColor: Color.firstColor} : {},
+        index === 0
+          ? {
+              backgroundColor: Color.firstColor,
+            }
+          : {},
       ]}>
       <View style={styles.topContainer}>
         <View>
@@ -43,14 +48,14 @@ const MyProjects = ({isHorizontal, project}) => {
               styles.projectTitle,
               isProject1 ? {color: 'white'} : {color: textColor},
             ]}>
-            {project.title}
+            {project.projectName}
           </Text>
           <Text
             style={[
               styles.projectDate,
               isProject1 ? {color: 'white'} : {color: textColor},
             ]}>
-            {project.date}
+            {project.submissionDate}
           </Text>
         </View>
         <TouchableOpacity
@@ -63,23 +68,54 @@ const MyProjects = ({isHorizontal, project}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
-        {project.teamMembers.map((member, index) => (
+        {project.teamMembers.slice(0, 3).map((member, index) => (
           <Image
             key={index}
-            source={require('../assets/profile.jpg')}
+            source={{uri: member.photoURL}}
             style={styles.profileImage}
           />
         ))}
+
+        {/* Show remaining members count if there are more than 5 */}
+        {project.teamMembers.length > 3 && (
+          <View
+            style={{backgroundColor: 'white', padding: 8, borderRadius: 100}}>
+            <Text
+              style={[
+                styles.remainingText,
+                {
+                  color: Color.firstColor,
+                  fontSize: 18,
+                  fontFamily: Fonts.regular,
+                },
+              ]}>
+              +{project.teamMembers.length - 3}
+            </Text>
+          </View>
+        )}
       </View>
       <Text
         style={[
           {
             marginVertical: hp(2),
+            fontFamily: Fonts.heading,
+          },
+          isProject1 ? {color: 'white'} : {color: textColor},
+        ]}>
+        {project.projectType}
+      </Text>
+      <Text
+        style={[
+          {
+            marginBottom: hp(2),
             fontFamily: Fonts.regular,
           },
           isProject1 ? {color: 'white'} : {color: textColor},
         ]}>
-        {project.description}
+        {/* {project.description} */}
+        {project.description.length > 120
+          ? project.description.substring(0, 100) + '...'
+          : project.description}
       </Text>
 
       <View style={styles.bottomContainer}>
@@ -127,7 +163,7 @@ const MyProjects = ({isHorizontal, project}) => {
                 {fontFamily: Fonts.regular},
                 isProject1 ? {color: 'white'} : {color: textColor},
               ]}>
-              {project.timeAgo}
+              {project.timeAgo} 4 days
             </Text>
           </View>
         </View>
@@ -149,7 +185,7 @@ const styles = StyleSheet.create({
     width: '97%', // Default width for vertical layout
   },
   horizontalLayout: {
-    width: '30%', // Decrease width for horizontal scrolling
+    width: '10%',
     marginRight: wp(3),
   },
   topContainer: {
@@ -168,7 +204,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flexDirection: 'row',
-    marginTop: hp(4),
+    marginTop: hp(2),
     alignItems: 'center',
   },
   profileImage: {

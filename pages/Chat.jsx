@@ -54,14 +54,14 @@ const Chat = ({route}) => {
     }, 300);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [chats]);
 
   const pickDocument = async () => {
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.pdf, DocumentPicker.types.plainText],
       });
-      setFile(res);
+      setFileUrl(res);
       console.log('Picked document: ', res);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -155,34 +155,41 @@ const Chat = ({route}) => {
               <Text style={styles.timestamp}>
                 {format(new Date(chat.createdAt), 'hh:mm a')}
               </Text>
-              <Text
-                style={[
-                  styles.messageText,
-                  {
-                    textAlign:
-                      chat.senderUID === userDetails.uid ? 'right' : 'left',
-                  },
-                  {
-                    backgroundColor:
-                      theme === 'dark'
-                        ? chat.senderUID === userDetails.uid
+
+              <Image
+                source={require('../assets/profile.jpg')}
+                style={{width: 200, height: 200}}
+              />
+              {chat.content && (
+                <Text
+                  style={[
+                    styles.messageText,
+                    {
+                      textAlign:
+                        chat.senderUID === userDetails.uid ? 'right' : 'left',
+                    },
+                    {
+                      backgroundColor:
+                        theme === 'dark'
+                          ? chat.senderUID === userDetails.uid
+                            ? Color.firstColor
+                            : '#222320'
+                          : chat.senderUID === userDetails.uid
                           ? Color.firstColor
-                          : '#222320'
-                        : chat.senderUID === userDetails.uid
-                        ? Color.firstColor
-                        : 'white',
-                    color:
-                      theme === 'dark'
-                        ? chat.senderUID === userDetails.uid
-                          ? 'black'
-                          : 'white'
-                        : chat.senderUID === userDetails.uid
-                        ? 'white'
-                        : 'black',
-                  },
-                ]}>
-                {chat.content}
-              </Text>
+                          : 'white',
+                      color:
+                        theme === 'dark'
+                          ? chat.senderUID === userDetails.uid
+                            ? 'black'
+                            : 'white'
+                          : chat.senderUID === userDetails.uid
+                          ? 'white'
+                          : 'black',
+                    },
+                  ]}>
+                  {chat.content}
+                </Text>
+              )}
             </View>
           ))
         ) : (
@@ -211,11 +218,13 @@ const Chat = ({route}) => {
             value={content}
             onChangeText={text => setContent(text)}
           />
-          <TouchableOpacity
-            onPress={createmessageHandler}
-            style={{backgroundColor: Color.firstColor, padding: 2}}>
-            <ArrowRightIcon color="white" />
-          </TouchableOpacity>
+          {(imageUrl || content || fileUrl) && (
+            <TouchableOpacity
+              onPress={createmessageHandler}
+              style={{backgroundColor: Color.firstColor, padding: 2}}>
+              <ArrowRightIcon color="white" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </View>

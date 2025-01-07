@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from '../context/ThemeContext';
 import {BellAlertIcon} from 'react-native-heroicons/outline';
 import MyProjects from '../components/MyProjects';
@@ -21,62 +22,64 @@ import SearchBar from '../components/SearchBar';
 import {ChatBubbleLeftEllipsisIcon} from 'react-native-heroicons/solid';
 import {Color} from '../utils/colors';
 import {useAuth} from '../context/AuthContext';
+import {useProjects} from '../context/ProjectsContext';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {userDetails} = useAuth();
+  const {projects} = useProjects();
   // Array of project data
-  const projects = [
-    {
-      id: 1,
-      title: 'Pintap Project',
-      date: 'Wednesday 30 Nov, 2022',
-      description: 'Website | Mobile App Design',
-      detailedDescription:
-        'A design project for creating a mobile app and website for Pintap.',
-      progress: 40,
-      comments: 5,
-      timeAgo: '4 Days ago',
-      teamMembers: [
-        {imageUrl: '../assets/profile.jpg'},
-        {imageUrl: '../assets/profile.jpg'},
-        {imageUrl: '../assets/profile.jpg'},
-      ],
-    },
-    {
-      id: 2,
-      title: 'HealthApp',
-      date: 'Monday 5 Dec, 2023',
-      description: 'Mobile App Design for Healthcare',
-      detailedDescription:
-        'A healthcare app that helps users track health data, appointments, and medication.',
-      progress: 89,
-      comments: 12,
-      timeAgo: '2 Days ago',
-      teamMembers: [
-        {imageUrl: '../assets/profile.jpg'},
-        {imageUrl: '../assets/profile.jpg'},
-      ],
-    },
-    {
-      id: 3,
-      title: 'E-Commerce Platform',
-      date: 'Friday 2 Dec, 2023',
-      description: 'E-Commerce Website and Mobile App',
-      detailedDescription:
-        'A full-stack e-commerce platform including a responsive website and mobile app for online shopping.',
-      progress: 25,
-      comments: 2,
-      timeAgo: '1 Week ago',
-      teamMembers: [
-        {imageUrl: '../assets/profile.jpg'},
-        {imageUrl: '../assets/profile.jpg'},
-        {imageUrl: '../assets/profile.jpg'},
-        {imageUrl: '../assets/profile.jpg'},
-      ],
-    },
-  ];
+  // const projects = [
+  //   {
+  //     id: 1,
+  //     title: 'Pintap Project',
+  //     date: 'Wednesday 30 Nov, 2022',
+  //     description: 'Website | Mobile App Design',
+  //     detailedDescription:
+  //       'A design project for creating a mobile app and website for Pintap.',
+  //     progress: 40,
+  //     comments: 5,
+  //     timeAgo: '4 Days ago',
+  //     teamMembers: [
+  //       {imageUrl: '../assets/profile.jpg'},
+  //       {imageUrl: '../assets/profile.jpg'},
+  //       {imageUrl: '../assets/profile.jpg'},
+  //     ],
+  //   },
+  //   {
+  //     id: 2,
+  //     title: 'HealthApp',
+  //     date: 'Monday 5 Dec, 2023',
+  //     description: 'Mobile App Design for Healthcare',
+  //     detailedDescription:
+  //       'A healthcare app that helps users track health data, appointments, and medication.',
+  //     progress: 89,
+  //     comments: 12,
+  //     timeAgo: '2 Days ago',
+  //     teamMembers: [
+  //       {imageUrl: '../assets/profile.jpg'},
+  //       {imageUrl: '../assets/profile.jpg'},
+  //     ],
+  //   },
+  //   {
+  //     id: 3,
+  //     title: 'E-Commerce Platform',
+  //     date: 'Friday 2 Dec, 2023',
+  //     description: 'E-Commerce Website and Mobile App',
+  //     detailedDescription:
+  //       'A full-stack e-commerce platform including a responsive website and mobile app for online shopping.',
+  //     progress: 25,
+  //     comments: 2,
+  //     timeAgo: '1 Week ago',
+  //     teamMembers: [
+  //       {imageUrl: '../assets/profile.jpg'},
+  //       {imageUrl: '../assets/profile.jpg'},
+  //       {imageUrl: '../assets/profile.jpg'},
+  //       {imageUrl: '../assets/profile.jpg'},
+  //     ],
+  //   },
+  // ];
 
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
 
@@ -134,11 +137,22 @@ const HomeScreen = () => {
         </View>
 
         {/* ScrollView with horizontal scrolling */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {projects.map((project, index) => (
-            <MyProjects key={index} isHorizontal={true} project={project} />
-          ))}
-        </ScrollView>
+        {projects.length === 0 ? (
+          <View style={styles.noProjectsContainer}>
+            <Text style={styles.noProjectsText}>No projects available</Text>
+          </View>
+        ) : (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            {projects.map((project, index) => (
+              <MyProjects
+                key={index}
+                isHorizontal={true}
+                project={project}
+                index={index}
+              />
+            ))}
+          </ScrollView>
+        )}
       </View>
 
       {/* Today's Task Section */}
@@ -217,5 +231,15 @@ const styles = StyleSheet.create({
   todayTasksHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  noProjectsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  noProjectsText: {
+    fontSize: 18,
+    color: '#777', // Light gray text color
+    fontStyle: 'italic',
   },
 });

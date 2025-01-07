@@ -23,135 +23,19 @@ import {useTheme} from '../context/ThemeContext';
 import {useUsersData} from '../context/UsersData';
 import {useAuth} from '../context/AuthContext';
 
-const messages = [
-  {
-    senderId: 1,
-    messageId: 101,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Leslie Alexander',
-    message: 'Arigathanks',
-    timeStamp: '12:40 AM',
-    online: true,
-  },
-  {
-    senderId: 2,
-    messageId: 102,
-    image: require('../assets/profile.jpg'),
-    senderName: 'John Doe',
-    message: 'Hey, are you coming to the event tomorrow?',
-    timeStamp: '1:20 AM',
-    online: true,
-  },
-  {
-    senderId: 3,
-    messageId: 103,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Jane Smith',
-    message: 'Can you send me the report by EOD?',
-    timeStamp: '2:15 AM',
-    online: false,
-  },
-  {
-    senderId: 4,
-    messageId: 104,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Michael Brown',
-    message: 'Good morning! Do you have any updates on the project?',
-    timeStamp: '7:05 AM',
-    online: true,
-  },
-  {
-    senderId: 5,
-    messageId: 105,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Sarah Lee',
-    message: 'Happy birthday! 🎉',
-    timeStamp: '8:30 AM',
-    online: true,
-  },
-  {
-    senderId: 6,
-    messageId: 106,
-    image: require('../assets/profile.jpg'),
-    senderName: 'David Wilson',
-    message: 'Let’s grab lunch today. How about 12 PM?',
-    timeStamp: '10:10 AM',
-    online: true,
-  },
-  {
-    senderId: 7,
-    messageId: 107,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Emily Davis',
-    message: 'Did you get the tickets for the movie?',
-    timeStamp: '11:45 AM',
-    online: true,
-  },
-  {
-    senderId: 8,
-    messageId: 108,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Chris Johnson',
-    message:
-      'I will be out of the office next week. Let me know if you need anything.',
-    timeStamp: '12:00 PM',
-    online: true,
-  },
-  {
-    senderId: 9,
-    messageId: 109,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Alice White',
-    message: 'Looking forward to the weekend trip!',
-    timeStamp: '2:10 PM',
-    online: true,
-  },
-  {
-    senderId: 10,
-    messageId: 110,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Tom Harris',
-    message: 'Can you send me the files for the meeting?',
-    timeStamp: '3:45 PM',
-    online: true,
-  },
-  {
-    senderId: 11,
-    messageId: 111,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Rachel Green',
-    message: 'Let’s catch up later this week.',
-    timeStamp: '4:30 PM',
-    online: true,
-  },
-  {
-    senderId: 12,
-    messageId: 112,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Joshua King',
-    message: 'Just checking in. Hope all is well!',
-    timeStamp: '6:00 PM',
-    online: true,
-  },
-  {
-    senderId: 13,
-    messageId: 113,
-    image: require('../assets/profile.jpg'),
-    senderName: 'Samantha Wright',
-    message: 'I’ll see you at the gym later!',
-    timeStamp: '7:15 PM',
-    online: true,
-  },
-];
-
 const Messages = ({placeholder = 'Search'}) => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(''); // Search state
   const {userDetails} = useAuth();
   const {usersData} = useUsersData();
   const textColor = theme == 'dark' ? 'white' : 'black';
   const borderColor = theme === 'dark' ? '#2b2a2a' : '#f7efef'; // Border color based on theme
+
+  // Filter users based on search input
+  const filteredUsers = usersData?.filter(user =>
+    user.fullName.toLowerCase().includes(search.toLowerCase()),
+  );
 
   return (
     <View
@@ -192,7 +76,7 @@ const Messages = ({placeholder = 'Search'}) => {
           style={[styles.input, {color: textColor}]}
           placeholder={placeholder}
           placeholderTextColor={textColor}
-          onChangeText={setSearch}
+          onChangeText={setSearch} // Update search state
         />
         <TouchableOpacity>
           <AdjustmentsHorizontalIcon
@@ -204,8 +88,8 @@ const Messages = ({placeholder = 'Search'}) => {
       </View>
 
       <ScrollView style={styles.messagesContainer}>
-        {usersData ? (
-          usersData.map((user, index) => (
+        {filteredUsers && filteredUsers.length > 0 ? (
+          filteredUsers.map((user, index) => (
             <TouchableOpacity
               style={[styles.messageBox, {borderColor: borderColor}]}
               key={index}
@@ -239,9 +123,7 @@ const Messages = ({placeholder = 'Search'}) => {
                         backgroundColor: 'rgb(76,217,100)',
                       }}></View>
                   </View>
-                ) : (
-                  <></>
-                )}
+                ) : null}
               </View>
               <View style={styles.textContainer}>
                 <Text style={[styles.senderName, {color: textColor}]}>
@@ -255,7 +137,7 @@ const Messages = ({placeholder = 'Search'}) => {
             </TouchableOpacity>
           ))
         ) : (
-          <Text>no chats avaiable</Text>
+          <Text>No chats available</Text> // Show a message if no results are found
         )}
       </ScrollView>
     </View>

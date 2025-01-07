@@ -123,7 +123,7 @@ const App = () => {
     const checkUser = async () => {
       const storedDetails = await AsyncStorage.getItem('userDetails');
       if (storedDetails) {
-        console.log(storedDetails);
+        // console.log(storedDetails);
         // This could be used to set user details in context
       }
       setLoading(false); // Finished loading

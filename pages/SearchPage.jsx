@@ -11,7 +11,7 @@ import SearchBar from '../components/SearchBar';
 import {HandThumbUpIcon} from 'react-native-heroicons/outline';
 import {useTheme} from '../context/ThemeContext';
 import {Color} from '../utils/colors';
-const SearchPage = () => {
+const SearchPage = ({params}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
 

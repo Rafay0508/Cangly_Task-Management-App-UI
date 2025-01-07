@@ -32,9 +32,6 @@ const HomePage = () => {
   const toggleModal = () => {
     setModelOpen(!isModalOpen);
   };
-  useEffect(() => {
-    Alert.alert('Login Successful', 'Welcome back!');
-  }, []);
 
   return (
     <>

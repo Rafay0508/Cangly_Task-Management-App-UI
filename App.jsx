@@ -7,6 +7,7 @@ import Main from './Main';
 import {UsersDataProvider} from './context/UsersData';
 import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ProjectsProvider} from './context/ProjectsContext';
 
 const App = () => {
   useEffect(() => {
@@ -23,13 +24,15 @@ const App = () => {
     <NavigationContainer>
       <AuthProvider>
         <UsersDataProvider>
-          <ThemeProvider>
-            <DateProvider>
-              <TaskLengthProvider>
-                <Main />
-              </TaskLengthProvider>
-            </DateProvider>
-          </ThemeProvider>
+          <ProjectsProvider>
+            <ThemeProvider>
+              <DateProvider>
+                <TaskLengthProvider>
+                  <Main />
+                </TaskLengthProvider>
+              </DateProvider>
+            </ThemeProvider>
+          </ProjectsProvider>
         </UsersDataProvider>
       </AuthProvider>
     </NavigationContainer>

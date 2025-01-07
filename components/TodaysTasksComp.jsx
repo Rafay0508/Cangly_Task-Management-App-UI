@@ -7,8 +7,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Fonts} from '../utils/fonts';
+import {useProjects} from '../context/ProjectsContext';
+
 const TodaysTasksComp = () => {
   const {theme} = useTheme();
+  const {tasksForUser} = useProjects();
   const tasks = [
     {
       title: 'Client Review & Feedback',
@@ -18,6 +21,9 @@ const TodaysTasksComp = () => {
         require('../assets/profile.jpg'),
         require('../assets/profile.jpg'),
         require('../assets/profile.jpg'),
+        require('../assets/profile.jpg'),
+        require('../assets/profile.jpg'),
+        require('../assets/profile.jpg'), // More than 5 participants
       ],
     },
     {
@@ -25,7 +31,6 @@ const TodaysTasksComp = () => {
       project: 'Internal App Development',
       time: 'Today 11:00 AM - 11:45 AM',
       participants: [
-        require('../assets/profile.jpg'),
         require('../assets/profile.jpg'),
         require('../assets/profile.jpg'),
       ],
@@ -46,45 +51,67 @@ const TodaysTasksComp = () => {
       ],
     },
   ];
-
+  // console.log(tasksForUser);
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
+  const maxParticipants = 2; // Maximum number of images to display
 
   return (
-    <ScrollView contentContainerStyle={[styles.container]}>
-      {tasks.map((task, index) => (
-        <View
-          style={[
-            styles.card,
-            theme == 'dark'
-              ? {backgroundColor: '#222320'}
-              : {backgroundColor: 'white'},
-          ]}
-          key={index}>
-          <View style={styles.header}>
-            <View>
-              <Text style={[styles.taskTitle, {color: textColor}]}>
-                {task.title}
-              </Text>
-              <Text style={styles.projectName}>{task.project}</Text>
-            </View>
-            <EllipsisVerticalIcon color={textColor} />
-          </View>
-          <View style={styles.taskDetails}>
-            <Text style={[styles.timeText, {color: textColor}]}>
-              {task.time}
-            </Text>
-            <View style={styles.imageContainer}>
-              {task.participants.map((imageSrc, idx) => (
-                <Image
-                  key={idx}
-                  source={imageSrc}
-                  style={styles.profileImage}
-                />
-              ))}
-            </View>
-          </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      {tasksForUser.length === 0 ? (
+        <View style={styles.noTasksContainer}>
+          <Text style={styles.noTasksText}>No tasks available</Text>
         </View>
-      ))}
+      ) : (
+        tasksForUser.map((task, index) => (
+          <View
+            style={[
+              styles.card,
+              theme === 'dark'
+                ? {backgroundColor: '#222320'}
+                : {backgroundColor: 'white'},
+            ]}
+            key={index}>
+            <View style={styles.header}>
+              <View>
+                <Text style={[styles.taskTitle, {color: textColor}]}>
+                  {task.taskTitle}
+                </Text>
+                <Text style={styles.projectName}>{task.projectName}</Text>
+              </View>
+              <EllipsisVerticalIcon color={textColor} />
+            </View>
+            <View style={styles.taskDetails}>
+              <Text style={[styles.timeText, {color: textColor}]}>
+                {task.timeline.endTime} -{task.timeline.startTime}
+              </Text>
+
+              <View style={styles.imageContainer}>
+                <Text style={[styles.timeText, {color: textColor}]}>
+                  {task.dueDate}
+                </Text>
+                {/* Display first 5 participants */}
+                {/* {task.participants
+                  .slice(0, maxParticipants)
+                  .map((imageSrc, idx) => (
+                    <Image
+                      key={idx}
+                      source={imageSrc}
+                      style={styles.profileImage}
+                    />
+                  ))} */}
+                {/* Show remaining participants count */}
+                {/* {task.participants.length > maxParticipants && (
+                  <View style={styles.moreParticipantsContainer}>
+                    <Text style={styles.moreParticipantsText}>
+                      +{task.participants.length - maxParticipants}
+                    </Text>
+                  </View>
+                )} */}
+              </View>
+            </View>
+          </View>
+        ))
+      )}
     </ScrollView>
   );
 };
@@ -94,16 +121,16 @@ export default TodaysTasksComp;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    alignItems: 'center', // To center the card in the container
+    alignItems: 'center', // Center the card in the container
+    paddingVertical: hp(1),
   },
   card: {
     width: '95%',
-
     padding: hp(2),
     paddingTop: hp(1),
     backgroundColor: 'white',
-    elevation: 5, // For Android shadow
-    shadowColor: '#000', // iOS shadow properties
+    elevation: 5, // Android shadow
+    shadowColor: '#000', // iOS shadow
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -140,12 +167,32 @@ const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start', // Ensures the images are aligned from the left
+    justifyContent: 'flex-start', // Align images from the left
+    marginRight: 20,
   },
   profileImage: {
     width: 35,
     height: 35,
     marginRight: -15,
     borderRadius: 25,
+  },
+  moreParticipantsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 20,
+  },
+  moreParticipantsText: {
+    fontSize: 12,
+    color: '#777',
+  },
+  noTasksContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  noTasksText: {
+    fontSize: 18,
+    color: '#777',
+    fontStyle: 'italic',
   },
 });
