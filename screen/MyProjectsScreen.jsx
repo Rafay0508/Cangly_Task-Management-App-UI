@@ -25,62 +25,15 @@ import {ProgressBar} from 'react-native-paper';
 import {Color} from '../utils/colors';
 import {useProjects} from '../context/ProjectsContext';
 
-const projects = [
-  {
-    id: 1,
-    title: 'Pintap Project',
-    date: 'Wednesday 30 Nov, 2022',
-    description: 'Website | Mobile App Design',
-    detailedDescription:
-      'A design project for creating a mobile app and website for Pintap.',
-    progress: 40,
-    comments: 5,
-    timeAgo: '4 Days ago',
-    teamMembers: [
-      {imageUrl: '../assets/profile.jpg'},
-      {imageUrl: '../assets/profile.jpg'},
-      {imageUrl: '../assets/profile.jpg'},
-    ],
-  },
-  {
-    id: 2,
-    title: 'HealthApp',
-    date: 'Monday 5 Dec, 2023',
-    description: 'Mobile App Design for Healthcare',
-    detailedDescription:
-      'A healthcare app that helps users track health data, appointments, and medication.',
-    progress: 89,
-    comments: 12,
-    timeAgo: '2 Days ago',
-    teamMembers: [
-      {imageUrl: '../assets/profile.jpg'},
-      {imageUrl: '../assets/profile.jpg'},
-    ],
-  },
-  {
-    id: 3,
-    title: 'E-Commerce Platform',
-    date: 'Friday 2 Dec, 2023',
-    description: 'E-Commerce Website and Mobile App',
-    detailedDescription:
-      'A full-stack e-commerce platform including a responsive website and mobile app for online shopping.',
-    progress: 25,
-    comments: 2,
-    timeAgo: '1 Week ago',
-    teamMembers: [
-      {imageUrl: '../assets/profile.jpg'},
-      {imageUrl: '../assets/profile.jpg'},
-      {imageUrl: '../assets/profile.jpg'},
-      {imageUrl: '../assets/profile.jpg'},
-    ],
-  },
-];
-
 const MyProjectsScreen = ({placeholder = 'Search'}) => {
   const {theme} = useTheme();
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const {projects} = useProjects();
+
+  const filteredProject = projects?.filter(project =>
+    project.projectName.toLowerCase().includes(search.toLowerCase()),
+  );
 
   const textColor = theme === 'dark' ? 'white' : 'black';
 
@@ -113,105 +66,109 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
       </View>
 
       <ScrollView style={styles.projectContainer}>
-        {projects.map((project, index) => {
-          const progress = Number(project.progress) / 100; // Ensure it's a number (0 to 1)
-          return (
-            <View
-              key={index}
-              style={[
-                styles.projectBox,
-                theme === 'dark'
-                  ? styles.darkProjectBox
-                  : styles.lightProjectBox,
-              ]}>
-              <View style={styles.topContainer}>
-                <View>
-                  <Text style={[styles.projectTitle, {color: textColor}]}>
-                    {project.projectName}
-                  </Text>
-                  <Text style={[styles.projectDate, {color: textColor}]}>
-                    {project.submissionDate}
-                  </Text>
-                </View>
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate('ProjectAbout', {project})
-                  }>
-                  <EllipsisVerticalIcon
-                    style={styles.ellipsisIcon}
-                    color={textColor}
-                    size={30}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <Text style={[styles.projectDescription, {color: textColor}]}>
-                {project.description}
-              </Text>
-
-              <View style={styles.bottomContainer}>
-                <View style={styles.topTextContainer}>
-                  <Text style={[styles.progressLabel, {color: textColor}]}>
-                    Progress
-                  </Text>
-                  <Text style={[styles.progressValue, {color: textColor}]}>
-                    {project.progress}%
-                  </Text>
-                </View>
-
-                <ProgressBar
-                  progress={progress}
-                  color={Color.firstColor}
-                  style={styles.progressBar}
-                />
-
-                <View style={styles.bottomTextContainer}>
-                  <View style={styles.imageContainer}>
-                    {project.teamMembers.slice(0, 3).map((member, index) => (
-                      <Image
-                        key={index}
-                        source={{uri: member.photoURL}}
-                        style={styles.profileImage}
-                      />
-                    ))}
-
-                    {/* Show remaining members count if there are more than 5 */}
-                    {project.teamMembers.length > 3 && (
-                      <View
-                        style={{
-                          backgroundColor: 'white',
-                          padding: 8,
-                          borderRadius: 100,
-                        }}>
-                        <Text
-                          style={[
-                            styles.remainingText,
-                            {
-                              color: Color.firstColor,
-                              fontSize: 18,
-                              fontFamily: Fonts.regular,
-                            },
-                          ]}>
-                          +{project.teamMembers.length - 3}
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                  <View style={styles.commentContainer}>
-                    <ChatBubbleLeftEllipsisIcon color={textColor} />
-                    <Text style={{color: textColor}}>{project.comments}</Text>
-                  </View>
-                  <View style={styles.timeContainer}>
-                    <ClockIcon color={textColor} />
-                    <Text style={[styles.timeText, {color: textColor}]}>
-                      {/* {project.submissionDate} */}
+        {filteredProject && filteredProject.length > 0 ? (
+          filteredProject.map((project, index) => {
+            const progress = Number(project.progress) / 100; // Ensure it's a number (0 to 1)
+            return (
+              <View
+                key={index}
+                style={[
+                  styles.projectBox,
+                  theme === 'dark'
+                    ? styles.darkProjectBox
+                    : styles.lightProjectBox,
+                ]}>
+                <View style={styles.topContainer}>
+                  <View>
+                    <Text style={[styles.projectTitle, {color: textColor}]}>
+                      {project.projectName}
+                    </Text>
+                    <Text style={[styles.projectDate, {color: textColor}]}>
+                      {project.submissionDate}
                     </Text>
                   </View>
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ProjectAbout', {project})
+                    }>
+                    <EllipsisVerticalIcon
+                      style={styles.ellipsisIcon}
+                      color={textColor}
+                      size={30}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <Text style={[styles.projectDescription, {color: textColor}]}>
+                  {project.description}
+                </Text>
+
+                <View style={styles.bottomContainer}>
+                  <View style={styles.topTextContainer}>
+                    <Text style={[styles.progressLabel, {color: textColor}]}>
+                      Progress
+                    </Text>
+                    <Text style={[styles.progressValue, {color: textColor}]}>
+                      {project.progress}%
+                    </Text>
+                  </View>
+
+                  <ProgressBar
+                    progress={progress}
+                    color={Color.firstColor}
+                    style={styles.progressBar}
+                  />
+
+                  <View style={styles.bottomTextContainer}>
+                    <View style={styles.imageContainer}>
+                      {project.teamMembers.slice(0, 3).map((member, index) => (
+                        <Image
+                          key={index}
+                          source={{uri: member.photoURL}}
+                          style={styles.profileImage}
+                        />
+                      ))}
+
+                      {/* Show remaining members count if there are more than 5 */}
+                      {project.teamMembers.length > 3 && (
+                        <View
+                          style={{
+                            backgroundColor: 'white',
+                            padding: 8,
+                            borderRadius: 100,
+                          }}>
+                          <Text
+                            style={[
+                              styles.remainingText,
+                              {
+                                color: Color.firstColor,
+                                fontSize: 18,
+                                fontFamily: Fonts.regular,
+                              },
+                            ]}>
+                            +{project.teamMembers.length - 3}
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                    <View style={styles.commentContainer}>
+                      <ChatBubbleLeftEllipsisIcon color={textColor} />
+                      <Text style={{color: textColor}}>{project.comments}</Text>
+                    </View>
+                    <View style={styles.timeContainer}>
+                      <ClockIcon color={textColor} />
+                      <Text style={[styles.timeText, {color: textColor}]}>
+                        {project.submissionDate}
+                      </Text>
+                    </View>
+                  </View>
                 </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })
+        ) : (
+          <Text>No Projects available</Text>
+        )}
       </ScrollView>
     </View>
   );
@@ -335,10 +292,12 @@ const styles = StyleSheet.create({
   timeContainer: {
     width: '50%',
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 4,
   },
   timeText: {
     fontFamily: Fonts.regular,
+    fontSize: hp(1.1),
   },
   ellipsisIcon: {
     paddingLeft: wp(2),

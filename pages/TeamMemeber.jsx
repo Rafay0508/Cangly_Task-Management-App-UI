@@ -26,6 +26,7 @@ import {
   PlusCircleIcon,
 } from 'react-native-heroicons/outline';
 import {Color} from '../utils/colors';
+import {useUsersData} from '../context/UsersData';
 // import {TextInput} from 'react-native-paper';
 
 const TeamMember = () => {
@@ -33,7 +34,8 @@ const TeamMember = () => {
   const navigation = useNavigation();
   const isDarkMode = theme === 'dark';
   const [search, setSearch] = useState('');
-
+  const {usersData} = useUsersData();
+  // console.log(usersData);
   const textColor = theme == 'dark' ? 'white' : 'black';
 
   return (
@@ -67,169 +69,43 @@ const TeamMember = () => {
         />
       </View>
       <ScrollView style={styles.teamContainer}>
-        {/* delete extra button */}
-        <View
-          style={[
-            styles.teamBox,
-            {
-              borderColor:
-                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
-            },
-          ]}>
-          <View>
-            <Image
-              source={require('../assets/profile.jpg')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={[styles.name, {color: textColor}]}>Jane Hawkins</Text>
-            <Text style={styles.idName}>Jane_hawkins</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity>
-              <PaperAirplaneIcon color={textColor} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <ArchiveBoxIcon color={'red'} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.teamBox,
-            {
-              borderColor:
-                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
-            },
-          ]}>
-          <View>
-            <Image
-              source={require('../assets/profile.jpg')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={[styles.name, {color: textColor}]}>Jane Hawkins</Text>
-            <Text style={styles.idName}>Jane_hawkins</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity>
-              <PaperAirplaneIcon color={textColor} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <ArchiveBoxIcon color={'red'} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.teamBox,
-            {
-              borderColor:
-                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
-            },
-          ]}>
-          <View>
-            <Image
-              source={require('../assets/profile.jpg')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={[styles.name, {color: textColor}]}>Jane Hawkins</Text>
-            <Text style={styles.idName}>Jane_hawkins</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity>
-              <PaperAirplaneIcon color={textColor} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <ArchiveBoxIcon color={'red'} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.teamBox,
-            {
-              borderColor:
-                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
-            },
-          ]}>
-          <View>
-            <Image
-              source={require('../assets/profile.jpg')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={[styles.name, {color: textColor}]}>Jane Hawkins</Text>
-            <Text style={styles.idName}>Jane_hawkins</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity>
-              <PaperAirplaneIcon color={textColor} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <ArchiveBoxIcon color={'red'} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.teamBox,
-            {
-              borderColor:
-                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
-            },
-          ]}>
-          <View>
-            <Image
-              source={require('../assets/profile.jpg')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={[styles.name, {color: textColor}]}>Jane Hawkins</Text>
-            <Text style={styles.idName}>Jane_hawkins</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity>
-              <PaperAirplaneIcon color={textColor} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <ArchiveBoxIcon color={'red'} />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View
-          style={[
-            styles.teamBox,
-            {
-              borderColor:
-                theme == 'dark' ? 'rgb(39, 39, 39)' : 'rgb(245, 244, 244)',
-            },
-          ]}>
-          <View>
-            <Image
-              source={require('../assets/profile.jpg')}
-              style={styles.image}
-            />
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={[styles.name, {color: textColor}]}>Jane Hawkins</Text>
-            <Text style={styles.idName}>Jane_hawkins</Text>
-          </View>
-          <View style={styles.iconContainer}>
-            <TouchableOpacity>
-              <PaperAirplaneIcon color={textColor} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <ArchiveBoxIcon color={'red'} />
-            </TouchableOpacity>
-          </View>
-        </View>
+        {usersData && usersData.length > 0 ? (
+          usersData.map((user, index) => {
+            return (
+              <View
+                key={index}
+                style={[
+                  styles.teamBox,
+                  {
+                    borderColor:
+                      theme === 'dark'
+                        ? 'rgb(39, 39, 39)'
+                        : 'rgb(245, 244, 244)',
+                  },
+                ]}>
+                <View>
+                  <Image source={{uri: user.photoURL}} style={styles.image} />
+                </View>
+                <View style={styles.textContainer}>
+                  <Text style={[styles.name, {color: textColor}]}>
+                    {user.fullName}
+                  </Text>
+                  <Text style={styles.idName}>{user.email}</Text>
+                </View>
+                <View style={styles.iconContainer}>
+                  <TouchableOpacity>
+                    <PaperAirplaneIcon color={textColor} />
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <ArchiveBoxIcon color={'red'} />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            );
+          })
+        ) : (
+          <Text>No users found</Text>
+        )}
 
         {/* delete extra button */}
       </ScrollView>

@@ -137,7 +137,7 @@ const Messages = ({placeholder = 'Search'}) => {
             </TouchableOpacity>
           ))
         ) : (
-          <Text>No chats available</Text> // Show a message if no results are found
+          <Text>No chats available</Text>
         )}
       </ScrollView>
     </View>
