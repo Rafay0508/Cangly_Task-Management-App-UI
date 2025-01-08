@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
   Alert,
   Image,
@@ -24,11 +24,13 @@ import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
 import {useAuth} from '../context/AuthContext';
 import {useNavigation} from '@react-navigation/native';
+import EditProfile from '../components/EditProfile';
 
 const ProfileScreen = () => {
   const {userDetails, logOut} = useAuth();
-  const {theme, toggleTheme} = useTheme(); // Get theme and toggleTheme from context
-  const [isSwitchOn, setIsSwitchOn] = useState(theme === 'dark'); // Sync switch state with current theme
+  const {theme, toggleTheme} = useTheme();
+  const [isSwitchOn, setIsSwitchOn] = useState(theme === 'dark');
+  const [isModalVisible, setModalVisible] = useState(false);
 
   // Toggle switch and update context
   const onToggleSwitch = () => {
@@ -41,7 +43,7 @@ const ProfileScreen = () => {
       logOut();
       Alert.alert('Logout Sucess');
     } catch (error) {
-      Alert.alert('Logout Failed', 'somethin went wrong');
+      Alert.alert('Logout Failed', 'something went wrong');
     }
   };
 
@@ -89,7 +91,10 @@ const ProfileScreen = () => {
             {userDetails ? userDetails.email : 'unknown'}
           </Text>
         </View>
-        <TouchableOpacity style={styles.editContainer}>
+        <TouchableOpacity
+          style={styles.editContainer}
+          onPress={() => setModalVisible(true)} // Open the modal on button press
+        >
           <Text style={styles.editText}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
@@ -148,6 +153,12 @@ const ProfileScreen = () => {
           <ChevronRightIcon color={textColor} />
         </TouchableOpacity>
       </View>
+
+      {/* EditProfile Modal */}
+      <EditProfile
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+      />
     </View>
   );
 };

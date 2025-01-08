@@ -1,7 +1,9 @@
 import {
   Alert,
+  Animated,
   Image,
   KeyboardAvoidingView,
+  Modal,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -24,20 +26,18 @@ import {useAuth} from '../context/AuthContext';
 const LoginPage = () => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-  const {login, loginWithGoogle} = useAuth();
+  const {login, loginWithGoogle, userDetails} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureText, setSecureText] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-
-  // Refs to handle focus between input fields
+  const [loading, setLoading] = useState(false);
   const emailInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
-  // theme Toggle
-  const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
-  const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e'; // Placeholder color based on theme
+  const textColor = theme === 'dark' ? 'white' : 'black';
+  const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e';
 
   const toggleSecureText = () => {
     setSecureText(prevState => !prevState);
@@ -66,8 +66,15 @@ const LoginPage = () => {
     setPasswordError('');
   }, [email, password]);
 
+  useEffect(() => {
+    if (userDetails) {
+      setLoading(false);
+    }
+  }, [userDetails]);
+
   const loginHandler = async () => {
     if (!validateForm()) return;
+    setLoading(true);
     try {
       login(email, password);
       setEmail('');
@@ -197,7 +204,11 @@ const LoginPage = () => {
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={loginHandler}>
-            <Text style={styles.buttonText}>Login</Text>
+            {loading ? (
+              <Text style={styles.buttonText}>Loading..... </Text>
+            ) : (
+              <Text style={styles.buttonText}>Login </Text>
+            )}
           </TouchableOpacity>
 
           <Text style={styles.socialText}>Or continue with social account</Text>
@@ -258,6 +269,21 @@ const LoginPage = () => {
           </View>
         </View>
       </View>
+      {loading && (
+        <Modal animationType="slide" transparent={true}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Image
+                source={require('../assets/logo-blue.png')}
+                style={{width: 100, height: 100}}
+              />
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[styles.modalText]}>Loading Please Wait...</Text>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
     </SafeAreaView>
   );
 };
@@ -342,6 +368,52 @@ const styles = StyleSheet.create({
   bottomText: {
     marginTop: hp(2),
     width: '100%',
+    fontFamily: Fonts.regular,
+  },
+  // modal
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    width: '90%',
+    gap: hp(1),
+    backgroundColor: 'white',
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: hp(1),
+    textAlign: 'center',
+    fontSize: hp(3),
+    fontFamily: Fonts.heading,
+    color: Color.firstColor,
+  },
+  modalSubText: {
+    marginBottom: 15,
+    textAlign: 'center',
+    fontSize: hp(2),
+    fontFamily: Fonts.regular,
+  },
+  modalButton: {
+    backgroundColor: Color.firstColor,
+    padding: hp(2),
+    width: '100%',
+  },
+  modalButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: hp(2),
     fontFamily: Fonts.regular,
   },
 });

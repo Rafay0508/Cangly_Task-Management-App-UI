@@ -8,7 +8,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true); // Add a loading state
-  const [signinMethod, setSigninMethod] = useState(null);
 
   const saveUserToStorage = async userDetails => {
     try {
@@ -76,7 +75,7 @@ export const AuthProvider = ({children}) => {
         email,
         password,
       );
-      setSigninMethod('emailPassword');
+      await AsyncStorage.setItem('signinMethod', 'emailPassword');
       const snapshot = await database()
         .ref(`users/${userCredential.user.uid}`)
         .once('value');
@@ -93,11 +92,47 @@ export const AuthProvider = ({children}) => {
     }
   };
 
-  const logOut = async () => {
+  const Register = async (fname, sname, email, password) => {
     try {
-      await auth().signOut();
-      setUserDetails(null); // Clear user details from state
-      await removeFromStorage(); // Remove user details from AsyncStorage
+      const userCredential = await auth().createUserWithEmailAndPassword(
+        email,
+        password,
+      );
+      await AsyncStorage.setItem('signinMethod', 'emailPassword');
+      const snapshot = await database()
+        .ref(`users/${userCredential.user.uid}`)
+        .set({
+          createdAt: Date.now(),
+          email: userCredential.user.email,
+          fullName: fname + ' ' + sname,
+          photoURL: 'https://shorturl.at/UD9Ft',
+          uid: userCredential.user.uid,
+        });
+      if (snapshot) {
+        const userData = snapshot.val();
+        setUserDetails(userData);
+        await saveUserToStorage(userData);
+      } else {
+        console.log('No user data available for this UID');
+      }
+    } catch (error) {
+      console.error('Login error:', error.message);
+      throw new Error(error.message);
+    }
+  };
+
+  const logOut = async () => {
+    const signinMethod = await AsyncStorage.getItem('signinMethod');
+    try {
+      if (signinMethod === 'emailPassword') {
+        await auth().signOut();
+      } else if (signinMethod === 'google') {
+        await auth().signOut();
+        await GoogleSignin.signOut();
+      }
+      await AsyncStorage.removeItem('signinMethod');
+      setUserDetails(null);
+      await removeFromStorage();
     } catch (error) {
       console.error('Error during logout:', error);
     }
@@ -133,9 +168,31 @@ export const AuthProvider = ({children}) => {
     }
   };
 
+  const editProfile = async fullName => {
+    try {
+      console.log(fullName);
+      // const user = auth().currentUser;
+      // await database().ref(`/users/${user.uid}`).update({
+      //   photoURL: 'https://shorturl.at/UD9Ft',
+      //   fullName,
+      // });
+      console.log('Profile updated successfully.');
+    } catch (error) {
+      console.error('Error editing profile:', error);
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{login, logOut, loginWithGoogle, userDetails, loading}}>
+      value={{
+        login,
+        Register,
+        logOut,
+        loginWithGoogle,
+        userDetails,
+        loading,
+        editProfile,
+      }}>
       {children}
     </AuthContext.Provider>
   );

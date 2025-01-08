@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Alert,
   Image,
   ScrollView,
@@ -7,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTheme} from '../context/ThemeContext';
 import {BellAlertIcon} from 'react-native-heroicons/outline';
 import MyProjects from '../components/MyProjects';
@@ -29,6 +30,7 @@ const HomeScreen = () => {
   const {theme} = useTheme();
   const {userDetails} = useAuth();
   const {projects} = useProjects();
+  const [loading, setLoading] = useState(true);
   // Array of project data
   // const projects = [
   //   {
@@ -81,7 +83,18 @@ const HomeScreen = () => {
   //   },
   // ];
 
-  const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
+  useEffect(() => {
+    if (projects.length === 0) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    } else {
+      setLoading(false);
+    }
+  }, [projects]);
+
+  const textColor = theme === 'dark' ? 'white' : 'black';
 
   return (
     <View
@@ -89,10 +102,8 @@ const HomeScreen = () => {
         styles.container,
         theme === 'dark' ? styles.darkBackground : styles.lightBackground,
       ]}>
-      {/* Top header section */}
       <View style={styles.topContainer}>
         <Image
-          // source={require('../assets/profile.jpg')}
           source={
             userDetails
               ? {uri: userDetails.photoURL}
@@ -137,11 +148,19 @@ const HomeScreen = () => {
         </View>
 
         {/* ScrollView with horizontal scrolling */}
-        {projects.length === 0 ? (
+
+        {loading ? (
+          // Show ActivityIndicator when no projects are available
+          <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        ) : projects.length === 0 ? (
+          // Show "No projects available" after loading
           <View style={styles.noProjectsContainer}>
             <Text style={styles.noProjectsText}>No projects available</Text>
           </View>
         ) : (
+          // Display the list of projects if they exist
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {projects.map((project, index) => (
               <MyProjects

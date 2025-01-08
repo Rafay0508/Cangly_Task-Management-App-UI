@@ -24,9 +24,8 @@ import {useAuth} from '../context/AuthContext';
 const RegisterPage = () => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-  const {signUp, signInWithGoogle, user} = useAuth(); // Updated to use signUp and signInWithGoogle
+  const {Register} = useAuth();
 
-  // State variables for form fields
   const [fname, setFname] = useState('');
   const [sname, setSname] = useState('');
   const [email, setEmail] = useState('');
@@ -66,8 +65,7 @@ const RegisterPage = () => {
       }
 
       try {
-        await signUp(fname, sname, email, password);
-        navigation.navigate('Login');
+        await Register(fname, sname, email, password);
         Alert.alert('SignUp Successful');
       } catch (error) {
         if (error.message.slice(0, 27) === '[auth/email-already-in-use]') {
@@ -85,8 +83,6 @@ const RegisterPage = () => {
     } else {
       Alert.alert('SignUp Failed', 'All Fields Are Required');
     }
-
-    // Clear inputs after registration
     setFname('');
     setSname('');
     setEmail('');
@@ -94,7 +90,6 @@ const RegisterPage = () => {
     setConfirmPassword('');
   };
 
-  // Google sign-in handler
   const handleSigninWithGoogle = async () => {
     if (confirmCondition) {
       try {
@@ -112,10 +107,8 @@ const RegisterPage = () => {
     }
   };
 
-  // theme toggle
-  const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
-  const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e'; // Placeholder color based on theme
-
+  const textColor = theme === 'dark' ? 'white' : 'black';
+  const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e';
   return (
     <ScrollView
       style={[

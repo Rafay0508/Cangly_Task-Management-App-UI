@@ -1,5 +1,12 @@
-import {Image, StyleSheet, Text, View, ScrollView} from 'react-native';
-import React from 'react';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {EllipsisVerticalIcon} from 'react-native-heroicons/solid';
 import {useTheme} from '../context/ThemeContext';
 import {
@@ -12,51 +19,29 @@ import {useProjects} from '../context/ProjectsContext';
 const TodaysTasksComp = () => {
   const {theme} = useTheme();
   const {tasksForUser} = useProjects();
-  const tasks = [
-    {
-      title: 'Client Review & Feedback',
-      project: 'Indeep Project Website',
-      time: 'Today 10:00 PM - 10:30 PM',
-      participants: [
-        require('../assets/profile.jpg'),
-        require('../assets/profile.jpg'),
-        require('../assets/profile.jpg'),
-        require('../assets/profile.jpg'),
-        require('../assets/profile.jpg'),
-        require('../assets/profile.jpg'), // More than 5 participants
-      ],
-    },
-    {
-      title: 'Team Meeting',
-      project: 'Internal App Development',
-      time: 'Today 11:00 AM - 11:45 AM',
-      participants: [
-        require('../assets/profile.jpg'),
-        require('../assets/profile.jpg'),
-      ],
-    },
-    {
-      title: 'Project Presentation',
-      project: 'E-Commerce Platform',
-      time: 'Today 02:00 PM - 03:00 PM',
-      participants: [require('../assets/profile.jpg')],
-    },
-    {
-      title: 'Client Call: Budget Discussion',
-      project: 'Marketing Strategy',
-      time: 'Today 04:00 PM - 04:30 PM',
-      participants: [
-        require('../assets/profile.jpg'),
-        require('../assets/profile.jpg'),
-      ],
-    },
-  ];
-  const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
-  const maxParticipants = 2; // Maximum number of images to display
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (useProjects.length === 0) {
+      const timer = setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+
+      return () => clearTimeout(timer);
+    } else {
+      setLoading(false);
+    }
+  }, [tasksForUser]);
+
+  const textColor = theme === 'dark' ? 'white' : 'black';
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {tasksForUser.length === 0 ? (
+      {loading ? (
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      ) : tasksForUser.length === 0 ? (
         <View style={styles.noTasksContainer}>
           <Text style={styles.noTasksText}>No tasks available</Text>
         </View>
@@ -120,7 +105,7 @@ export default TodaysTasksComp;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    alignItems: 'center', // Center the card in the container
+    alignItems: 'center',
     paddingVertical: hp(1),
   },
   card: {
@@ -128,8 +113,8 @@ const styles = StyleSheet.create({
     padding: hp(2),
     paddingTop: hp(1),
     backgroundColor: 'white',
-    elevation: 5, // Android shadow
-    shadowColor: '#000', // iOS shadow
+    elevation: 5,
+    shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 4,
@@ -166,7 +151,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start', // Align images from the left
+    justifyContent: 'flex-start',
     marginRight: 20,
   },
   profileImage: {

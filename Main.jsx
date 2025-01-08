@@ -130,10 +130,8 @@ const App = () => {
     };
     checkUser();
   }, []);
-
-  // If loading is true, show loading screen (optional)
   if (loading) {
-    return <LoadingScreen />; // Add a proper loading screen here if needed
+    return <LoadingScreen />;
   }
 
   return userDetails ? <MainStackContainer /> : <AuthStackContainer />;
