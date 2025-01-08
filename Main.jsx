@@ -25,7 +25,7 @@ import LoadingScreen from './components/LoadingScreen';
 const Stack = createStackNavigator();
 
 const AuthStackContainer = () => (
-  <Stack.Navigator initialRouteName="Login">
+  <Stack.Navigator>
     <Stack.Screen
       name="Welcome"
       component={WelcomePage}

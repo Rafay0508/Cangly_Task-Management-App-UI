@@ -114,7 +114,7 @@ const MyProjects = ({isHorizontal, project, index}) => {
         ]}>
         {/* {project.description} */}
         {project.description.length > 120
-          ? project.description.substring(0, 100) + '...'
+          ? project.description.substring(0, 80) + '...'
           : project.description}
       </Text>
 
@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flexDirection: 'row',
-    marginTop: hp(2),
+    marginTop: hp(0),
     alignItems: 'center',
   },
   profileImage: {
