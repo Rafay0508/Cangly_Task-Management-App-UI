@@ -170,12 +170,22 @@ export const AuthProvider = ({children}) => {
 
   const editProfile = async fullName => {
     try {
-      console.log(fullName);
-      // const user = auth().currentUser;
-      // await database().ref(`/users/${user.uid}`).update({
-      //   photoURL: 'https://shorturl.at/UD9Ft',
-      //   fullName,
-      // });
+      const user = auth().currentUser;
+
+      await database().ref(`/users/${user.uid}`).update({
+        photoURL: 'https://shorturl.at/UD9Ft',
+        fullName,
+      });
+
+      const updatedUserDetails = {
+        ...userDetails,
+        fullName,
+        photoURL: 'https://shorturl.at/UD9Ft',
+      };
+      setUserDetails(updatedUserDetails);
+
+      await saveUserToStorage(updatedUserDetails);
+
       console.log('Profile updated successfully.');
     } catch (error) {
       console.error('Error editing profile:', error);

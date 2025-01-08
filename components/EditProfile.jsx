@@ -24,7 +24,8 @@ const EditProfile = ({visible, onClose}) => {
     if (userDetails.fullName === fullName) {
       Alert.alert('no chenge');
     } else {
-      await editProfile({fullName});
+      await editProfile(fullName);
+      onClose();
     }
   };
 
