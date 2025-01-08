@@ -51,7 +51,6 @@ const TodaysTasksComp = () => {
       ],
     },
   ];
-  // console.log(tasksForUser);
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
   const maxParticipants = 2; // Maximum number of images to display
 

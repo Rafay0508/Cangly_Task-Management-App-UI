@@ -241,6 +241,7 @@ const styles = StyleSheet.create({
     padding: hp(2),
     margin: hp(1),
     marginHorizontal: hp(2),
+    elevation: 5,
   },
   taskHeader: {
     flexDirection: 'row',

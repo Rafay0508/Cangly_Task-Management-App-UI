@@ -110,9 +110,30 @@ export const UsersDataProvider = ({children}) => {
     }
   };
 
+  const getUserDetail = async userId => {
+    try {
+      const snapshot = await database().ref(`users/${userId}`).once('value');
+      if (snapshot.exists()) {
+        const userData = snapshot.val();
+        return userData;
+      } else {
+        console.log('No user data available for this UID');
+      }
+    } catch (error) {
+      console.error('Error retrieving user data:', error);
+    }
+  };
+
   return (
     <UsersDataContext.Provider
-      value={{usersData, loading, chatData, chats, createMessage}}>
+      value={{
+        usersData,
+        loading,
+        chatData,
+        chats,
+        createMessage,
+        getUserDetail,
+      }}>
       {children}
     </UsersDataContext.Provider>
   );

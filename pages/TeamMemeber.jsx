@@ -35,7 +35,6 @@ const TeamMember = () => {
   const isDarkMode = theme === 'dark';
   const [search, setSearch] = useState('');
   const {usersData} = useUsersData();
-  // console.log(usersData);
   const textColor = theme == 'dark' ? 'white' : 'black';
 
   return (

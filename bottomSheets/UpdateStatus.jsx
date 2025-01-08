@@ -164,7 +164,6 @@ import dayjs from 'dayjs';
 
 const DueDate = forwardRef((props, ref) => {
   const {status} = props; // The status prop passed from the parent
-  console.log(status); // Debugging: Log the `status` prop to confirm its value
 
   const {theme} = useTheme();
   const [statuses, setStatuses] = useState({

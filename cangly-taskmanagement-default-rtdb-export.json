@@ -169,13 +169,12 @@
   "Project_001": {
     "description": "An e-commerce app aimed at providing seamless online shopping experiences with an intuitive interface.",
     "status": "In Progress",
-    "dueDate": "15 Nov, 2023",
+    "dueDate": "2025-02-08",
     "fileAttached": "",
     "progress": "80",
     "comments":"3",
     "projectName": "TechHub App",
     "projectType": "Mobile App | E-commerce",
-    "submissionDate": "Monday 15 Nov, 2022",
     "visibility": "public",
     "projectManager": {
       "createdAt": "1735898279954",
@@ -183,8 +182,8 @@
       "fullName": "rafay ccc",
       "photoURL": "https://shorturl.at/UD9Ft",
       "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-    },
-    "teamMembers": [
+    },"teamMembers":
+     [
       {
         "email": "rafayabdul508@gmail.com",
         "fullName": "abdul rafay",
@@ -207,7 +206,7 @@
           "7B2uDPo1JyZgPCIDhqr2oeo5El92"
         ],
         "status": "In Progress",
-        "dueDate": "15 Nov, 2023",
+        "dueDate": "2025-01-08",
         "timeline": {
           "startTime": "9:00 AM",
           "endTime": "10:00 AM"
@@ -221,7 +220,7 @@
           "RLuctKgIQNcfFv4LwA1YIbYYH903"
         ],
         "status": "Pending",
-        "dueDate": "15 Nov, 2023",
+        "dueDate": "2025-01-09",
         "timeline": {
           "startTime": "10:00 AM",
           "endTime": "11:00 AM"
@@ -232,12 +231,11 @@
   "Indeep_Project_002": {
     "description": "Lorem ipsum odor amet, consectetuer adipiscing elit. Aptent morbi vehicula etiam finibus nostra sapien faucibus. Rhoncus nisl risus tortor nisl erat mus euismod orci.",
     "status": "In Progress",
-    "dueDate": "15 Nov, 2023",
+    "dueDate": "2025-03-10",
     "fileAttached": "",
     "progress": "50","comments":"4",
     "projectName": "Indeep Project",
     "projectType": "Website | Mobile App Design",
-    "submissionDate": "Friday 02 Dec, 2022",
     "visibility": "private",
     "projectManager": {
       "createdAt": "1735898279954",
@@ -275,7 +273,7 @@
           "eoRbu3dWETZBucy2uZ2FITp7TUM2"
         ],
         "status": "Completed",
-        "dueDate": "15 Nov, 2023",
+        "dueDate": "2025-01-08",
         "timeline": {
           "startTime": "8:00 AM",
           "endTime": "9:00 AM"
@@ -285,11 +283,11 @@
         "taskTitle": "Client Feedback Integration",
         "description": "Implement client feedback into the current version of the app.",
         "assignees": [
-          "7B2uDPo1JyZgPCIDhqr2oeo5El92",
-          "9HOMhOoLLPMtfGt1U7MhyRNqlGo2"
+          "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+          "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
         ],
         "status": "In Progress",
-        "dueDate": "15 Nov, 2023",
+        "dueDate": "2025-01-09",
         "timeline": {
           "startTime": "9:00 AM",
           "endTime": "10:00 AM"
@@ -300,13 +298,12 @@
   "Project_003": {
     "description": "A mobile app focused on health and fitness, offering personalized workout plans and progress tracking.",
     "status": "In Progress",
-    "dueDate": "18 Nov, 2023",
+    "dueDate": "2025-05-08",
     "fileAttached": "",
     "progress": "30",
     "comments":"7",
     "projectName": "FitLife App",
     "projectType": "Mobile App | Health & Fitness",
-    "submissionDate": "Tuesday 14 Jan, 2023",
     "visibility": "public",
     "projectManager": {
       "createdAt": "1735898279954",
@@ -338,9 +335,9 @@
           "7B2uDPo1JyZgPCIDhqr2oeo5El92"
         ],
         "status": "In Progress",
-        "dueDate": "18 Nov, 2023",
+        "dueDate": "2025-01-08",
         "timeline": {
-          "startTime": "9:00 AM",
+          "startTime": "10:00 AM",
           "endTime": "11:00 AM"
         }
       },
@@ -352,7 +349,7 @@
           "RLuctKgIQNcfFv4LwA1YIbYYH903"
         ],
         "status": "Pending",
-        "dueDate": "20 Nov, 2023",
+        "dueDate": "2025-01-09",
         "timeline": {
           "startTime": "2:00 PM",
           "endTime": "4:00 PM"
@@ -363,13 +360,13 @@
   "Project_004": {
     "description": "A comprehensive online learning platform with video tutorials and quizzes.",
     "status": "In Progress",
-    "dueDate": "12 Jan, 2023",
+    "dueDate": "2025-10-08",
     "fileAttached": "",
     "progress": "65",
     "comments":"10",
     "projectName": "EduLearn Platform",
     "projectType": "Website | E-learning",
-    "submissionDate": "Friday 05 Jan, 2023",
+ 
     "visibility": "private",
     "projectManager": {
       "createdAt": "1735898279954",
@@ -398,13 +395,15 @@
         "description": "Develop the video upload feature for instructors to upload courses.",
         "assignees": [
           "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+          "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+          "eoRbu3dWETZBucy2uZ2FITp7TUM2",
           "eoRbu3dWETZBucy2uZ2FITp7TUM2"
         ],
         "status": "Completed",
-        "dueDate": "10 Jan, 2023",
+        "dueDate": "2025-01-08",
         "timeline": {
-          "startTime": "8:00 AM",
-          "endTime": "9:30 AM"
+          "startTime": "2:00 PM",
+          "endTime": "3:00 PM"
         }
       },
       {
@@ -415,7 +414,7 @@
           "9HOMhOoLLPMtfGt1U7MhyRNqlGo2"
         ],
         "status": "In Progress",
-        "dueDate": "12 Jan, 2023",
+        "dueDate": "2025-01-98",
         "timeline": {
           "startTime": "9:00 AM",
           "endTime": "11:00 AM"

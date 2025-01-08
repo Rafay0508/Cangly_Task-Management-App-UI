@@ -60,7 +60,6 @@ const VerificationPage = () => {
               <OtpInput
                 numberOfDigits={4}
                 focusStickBlinkingDuration={500}
-                // onTextChange={text => console.log(text)}
                 onFilled={text => console.log(`OTP is ${text}`)}
                 textInputProps={{
                   accessibilityLabel: 'One-Time Password',

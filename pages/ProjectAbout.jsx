@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useTheme} from '../context/ThemeContext';
 import {
   ChevronLeftIcon,
@@ -37,14 +37,27 @@ import UpdateStatus from '../bottomSheets/UpdateStatus';
 import FileAttach from '../bottomSheets/FileAttach';
 import DueDate from '../bottomSheets/DueDate';
 import {BlurView} from '@react-native-community/blur';
+import {useProjects} from '../context/ProjectsContext';
 const ProjectAbout = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {project} = route.params;
-  console.log(project);
+
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State to track if sheet is open
 
   const textColor = theme == 'dark' ? 'white' : 'black';
+  const {tasksForUser} = useProjects();
+  const [tasksForProject, setTasksForProject] = useState([]);
+
+  // Filter tasks based on the selected project
+  useEffect(() => {
+    console.log('task', tasksForUser);
+    const tasksForProject = tasksForUser.filter(
+      task => task.projectName === project.projectName,
+    );
+    console.log(tasksForProject);
+    setTasksForProject(tasksForProject);
+  }, [project]);
 
   const updateStatusActionSheetRef = useRef(null);
   const fileAttachActionSheetRef = useRef(null);
@@ -235,260 +248,70 @@ const ProjectAbout = ({route}) => {
           }}>
           Sub Tasks
         </Text>
-        <ScrollView
-          contentContainerStyle={{width: '100%', alignItems: 'center'}}>
-          <View
-            style={[
-              {
-                width: '100%',
-                borderRadius: 10,
-                padding: hp(2),
-                paddingTop: hp(1),
-                backgroundColor: 'white',
-                elevation: 5, // For Android shadow
-                shadowColor: '#000', // iOS shadow properties
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-                marginBottom: hp(1.5),
-              },
-              theme == 'dark'
-                ? {backgroundColor: '#222320'}
-                : {backgroundColor: 'white'},
-            ]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: hp(1.5),
-                borderBottomWidth: 1,
-                paddingVertical: hp(1),
-                borderColor: '#d6dbd0',
-              }}>
-              <View>
-                <Text
-                  style={{
-                    fontFamily: Fonts.subHeading,
-                    fontSize: wp(4),
-                    color: textColor,
-                  }}>
-                  Client Review & FeedBack
-                </Text>
-                <Text
-                  style={{
-                    color: '#888',
-                    fontFamily: Fonts.regular,
-                    fontSize: hp(1.5),
-                  }}>
-                  Indeep Project Website
-                </Text>
-              </View>
-              <CheckBox
-                isChecked={true}
-                onClick={() => console.log('task checked')}
-                checkBoxColor={Color.firstColor}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <Text
-                style={[
-                  {fontSize: hp(1.5), color: '#333', fontFamily: Fonts.regular},
-                  {color: textColor},
-                ]}>
-                Today 10:00 PM - 10:30 PM
-              </Text>
+        <ScrollView style={styles.tasksContainer}>
+          {tasksForProject.length > 0 ? (
+            tasksForProject.map((task, index) => (
               <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}>
-                <Image
-                  source={require('../assets/profile.jpg')}
-                  style={{
-                    width: 35,
-                    height: 35,
-                    marginRight: -15,
-                    borderRadius: 25,
-                  }}
-                />
-              </View>
-            </View>
-          </View>
-          <View
-            style={[
-              {
-                width: '100%',
-                borderRadius: 10,
-                padding: hp(2),
-                paddingTop: hp(1),
-                backgroundColor: 'white',
-                elevation: 5, // For Android shadow
-                shadowColor: '#000', // iOS shadow properties
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-                marginBottom: hp(1.5),
-              },
-              theme == 'dark'
-                ? {backgroundColor: '#222320'}
-                : {backgroundColor: 'white'},
-            ]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: hp(1.5),
-                borderBottomWidth: 1,
-                paddingVertical: hp(1),
-                borderColor: '#d6dbd0',
-              }}>
-              <View>
-                <Text
-                  style={{
-                    fontFamily: Fonts.subHeading,
-                    fontSize: wp(4),
-                    color: textColor,
-                  }}>
-                  Client Review & FeedBack
-                </Text>
-                <Text
-                  style={{
-                    color: '#888',
-                    fontFamily: Fonts.regular,
-                    fontSize: hp(1.5),
-                  }}>
-                  Indeep Project Website
-                </Text>
-              </View>
-              <CheckBox
-                isChecked={true}
-                onClick={() => console.log('task checked')}
-                checkBoxColor={Color.firstColor}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <Text
                 style={[
-                  {fontSize: hp(1.5), color: '#333', fontFamily: Fonts.regular},
-                  {color: textColor},
-                ]}>
-                Today 10:00 PM - 10:30 PM
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}>
-                <Image
-                  source={require('../assets/profile.jpg')}
-                  style={{
-                    width: 35,
-                    height: 35,
-                    marginRight: -15,
-                    borderRadius: 25,
-                  }}
-                />
+                  styles.taskCard,
+                  theme == 'dark'
+                    ? {backgroundColor: '#222320'}
+                    : {backgroundColor: 'white'},
+                ]}
+                key={index}>
+                <View style={styles.taskHeader}>
+                  <View>
+                    <Text style={[styles.taskName, {color: textColor}]}>
+                      {task.taskTitle}
+                    </Text>
+                    <Text style={styles.taskdeadline}>{task.projectName}</Text>
+                  </View>
+                  <CheckBox
+                    isChecked={true}
+                    onClick={() => console.log('task checked')}
+                    checkBoxColor={Color.firstColor}
+                  />
+                </View>
+                <View style={styles.taskDetails}>
+                  <Text style={styles.taskComment}>{task.dueDate}</Text>
+                  <Text style={styles.taskComment}>
+                    {task.timeline.startTime} - {task.timeline.endTime}
+                  </Text>
+                  {task.assignees.slice(0, 3).map((member, index) => {
+                    return (
+                      <Image
+                        key={index}
+                        source={{uri: member.photoURL}}
+                        style={styles.profileImage}
+                      />
+                    );
+                  })}
+                  {/* {task.assignees.length > 3 && (
+                    <View
+                      style={{
+                        backgroundColor: 'white',
+                        padding: 8,
+                        borderRadius: 100,
+                      }}>
+                      <Text
+                        style={[
+                          styles.remainingText,
+                          {
+                            color: Color.firstColor,
+                            fontSize: 18,
+                            fontFamily: Fonts.regular,
+                          },
+                        ]}>
+                        +{project.teamMembers.length - 3}
+                      </Text>
+                    </View>
+                  )} */}
+                </View>
               </View>
-            </View>
-          </View>
-          <View
-            style={[
-              {
-                width: '100%',
-                borderRadius: 10,
-                padding: hp(2),
-                paddingTop: hp(1),
-                backgroundColor: 'white',
-                elevation: 5, // For Android shadow
-                shadowColor: '#000', // iOS shadow properties
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.1,
-                shadowRadius: 4,
-                marginBottom: hp(1.5),
-              },
-              theme == 'dark'
-                ? {backgroundColor: '#222320'}
-                : {backgroundColor: 'white'},
-            ]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: hp(1.5),
-                borderBottomWidth: 1,
-                paddingVertical: hp(1),
-                borderColor: '#d6dbd0',
-              }}>
-              <View>
-                <Text
-                  style={{
-                    fontFamily: Fonts.subHeading,
-                    fontSize: wp(4),
-                    color: textColor,
-                  }}>
-                  Client Review & FeedBack
-                </Text>
-                <Text
-                  style={{
-                    color: '#888',
-                    fontFamily: Fonts.regular,
-                    fontSize: hp(1.5),
-                  }}>
-                  Indeep Project Website
-                </Text>
-              </View>
-              <CheckBox
-                isChecked={true}
-                onClick={() => console.log('task checked')}
-                checkBoxColor={Color.firstColor}
-              />
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}>
-              <Text
-                style={[
-                  {fontSize: hp(1.5), color: '#333', fontFamily: Fonts.regular},
-                  {color: textColor},
-                ]}>
-                Today 10:00 PM - 10:30 PM
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}>
-                <Image
-                  source={require('../assets/profile.jpg')}
-                  style={{
-                    width: 35,
-                    height: 35,
-                    marginRight: -15,
-                    borderRadius: 25,
-                  }}
-                />
-              </View>
-            </View>
-          </View>
+            ))
+          ) : (
+            <Text style={styles.noTasksText}>No tasks for this project.</Text>
+          )}
         </ScrollView>
         <View
           style={[
@@ -614,5 +437,43 @@ const styles = StyleSheet.create({
     left: 0,
     bottom: 0,
     right: 0,
+  },
+  tasksContainer: {
+    marginBottom: 50,
+  },
+  taskCard: {
+    backgroundColor: 'white',
+    padding: hp(1),
+    margin: hp(1),
+    marginHorizontal: hp(0.2),
+    elevation: 5,
+    gap: 20,
+  },
+  taskHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: wp(1),
+    paddingBottom: hp(1),
+    borderBottomWidth: 1,
+    borderColor: Color.borderBottomColor,
+  },
+  taskName: {fontFamily: Fonts.subHeading, fontSize: wp(4)},
+  taskdeadline: {color: 'gray', fontFamily: Fonts.regular},
+  taskDetails: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 6,
+  },
+  taskComment: {color: 'gray', fontFamily: Fonts.regular},
+  profileImage: {
+    width: 30,
+    height: 30,
+    borderRadius: 25,
+  },
+  noTasksText: {
+    color: 'black',
+    fontSize: 16,
+    marginTop: 10,
   },
 });

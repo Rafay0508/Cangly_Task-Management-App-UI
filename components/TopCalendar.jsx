@@ -174,10 +174,8 @@ const TopCalendar = () => {
               item.date === selectedDate ? styles.selectedDay : null, // Highlight selected day
             ]}
             onPress={() => {
-              console.log(item.date);
               handleDaySelect(item.date);
-            }} // Handle day selection
-          >
+            }}>
             <Text
               style={[
                 styles.dateText,
@@ -205,7 +203,6 @@ const TopCalendar = () => {
 
 const styles = StyleSheet.create({
   container: {
-    // paddingHorizontal: wp(4),
     padding: hp(2),
     justifyContent: 'center',
   },
@@ -223,11 +220,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   selectedDay: {
-    backgroundColor: Color.firstColor, // Highlight selected day
+    backgroundColor: Color.firstColor,
     borderColor: '#007bff',
   },
   currentDay: {
-    color: Color.firstColor, // Highlight current day with a different color
+    color: Color.firstColor,
   },
   dayText: {
     fontSize: hp(2),

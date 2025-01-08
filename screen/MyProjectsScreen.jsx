@@ -158,7 +158,7 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
                     <View style={styles.timeContainer}>
                       <ClockIcon color={textColor} />
                       <Text style={[styles.timeText, {color: textColor}]}>
-                        {project.submissionDate}
+                        {project.dueDate}
                       </Text>
                     </View>
                   </View>
@@ -297,7 +297,6 @@ const styles = StyleSheet.create({
   },
   timeText: {
     fontFamily: Fonts.regular,
-    fontSize: hp(1.1),
   },
   ellipsisIcon: {
     paddingLeft: wp(2),
