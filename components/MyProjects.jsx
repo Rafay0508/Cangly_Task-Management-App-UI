@@ -220,10 +220,10 @@ const styles = StyleSheet.create({
     elevation: 2,
     shadowOpacity: 0.1,
     shadowRadius: 5,
-    width: '97%', // Default width for vertical layout
+    width: '100%', // Default width for vertical layout
   },
   horizontalLayout: {
-    width: '10%',
+    width: hp(35),
     marginRight: wp(3),
   },
   topContainer: {
@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImage: {
-    width: 40,
-    height: 40,
+    width: hp(6),
+    height: hp(6),
     marginRight: -15,
     borderRadius: 25,
   },

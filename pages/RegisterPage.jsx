@@ -263,7 +263,6 @@ const RegisterPage = () => {
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               returnKeyType="done"
-              onSubmitEditing={registerHandler} // Call register handler on "Enter"
             />
             <TouchableOpacity
               onPress={toggleSecureText}

@@ -25,8 +25,8 @@ const ForgetPasswordPage = () => {
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
 
   return (
-    <View
-      style={[
+    <ScrollView
+      contentContainerStyle={[
         theme === 'dark'
           ? {backgroundColor: 'black'}
           : {backgroundColor: 'white'},
@@ -130,7 +130,7 @@ const ForgetPasswordPage = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 };
 

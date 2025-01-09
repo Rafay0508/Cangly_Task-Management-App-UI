@@ -22,12 +22,11 @@ import {Color} from '../utils/colors';
 const VerificationPage = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
-  const [checked, setChecked] = React.useState('first');
   const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
 
   return (
-    <KeyboardAvoidingView
-      style={[
+    <ScrollView
+      contentContainerStyle={[
         theme === 'dark'
           ? {backgroundColor: 'black'}
           : {backgroundColor: 'white'},
@@ -105,7 +104,7 @@ const VerificationPage = () => {
           </View>
         </ScrollView>
       </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 

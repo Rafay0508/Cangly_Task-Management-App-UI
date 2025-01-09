@@ -44,8 +44,8 @@ const NewPasswordPage = () => {
   const placeholderColor = theme === 'dark' ? '#d3d3d3' : '#8e8e8e';
 
   return (
-    <KeyboardAvoidingView
-      style={[
+    <ScrollView
+      contentContainerStyle={[
         theme === 'dark'
           ? {backgroundColor: 'black'}
           : {backgroundColor: 'white'},
@@ -165,7 +165,7 @@ const NewPasswordPage = () => {
           </View>
         </View>
       </Modal>
-    </KeyboardAvoidingView>
+    </ScrollView>
   );
 };
 
