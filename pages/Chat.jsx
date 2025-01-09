@@ -337,6 +337,7 @@
 // });
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  ActivityIndicator,
   Image,
   Linking,
   ScrollView,
@@ -382,6 +383,9 @@ const Chat = ({route}) => {
   const [content, setContent] = useState('');
   const [imageUrl, setImageUrl] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
+  const [imageUrlLoading, setImageUrlLoading] = useState(false);
+  const [fileUrlLoading, setfileUrlLoading] = useState(false);
+  const [] = useState(true);
   const textColor = theme === 'dark' ? 'white' : 'black';
 
   // Scroll to the end when the page is loaded
@@ -438,11 +442,13 @@ const Chat = ({route}) => {
   };
 
   const pickImage = async () => {
+    setImageUrlLoading(true);
     try {
       const res = await DocumentPicker.pick({
         type: [DocumentPicker.types.images], // Allow image selection
       });
       await uploadImage(res); // Upload the selected image
+      setImageUrlLoading(false);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         console.log('User canceled the picker');
@@ -495,11 +501,13 @@ const Chat = ({route}) => {
   };
 
   const pickFile = async () => {
+    setfileUrlLoading(true);
     try {
       const res = await DocumentPicker.pick({
-        type: [DocumentPicker.types.pdf], // Allow all file types
+        type: [DocumentPicker.types.pdf],
       });
-      await uploadFile(res); // Pass URI, type, and name to the upload function
+      await uploadFile(res);
+      setfileUrlLoading(false);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
         console.log('User canceled the picker');
@@ -681,6 +689,7 @@ const Chat = ({route}) => {
             </TouchableOpacity>
           </View>
         )}
+
         {imageUrl && (
           <View
             style={{
@@ -714,12 +723,20 @@ const Chat = ({route}) => {
             : {backgroundColor: 'white'},
         ]}>
         <View style={styles.iconContainer}>
-          <TouchableOpacity onPress={pickImage}>
-            <PlusIcon color={textColor} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={pickFile}>
-            <LinkIcon color={textColor} />
-          </TouchableOpacity>
+          {imageUrlLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <TouchableOpacity onPress={pickImage}>
+              <PlusIcon color={textColor} />
+            </TouchableOpacity>
+          )}
+          {fileUrlLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <TouchableOpacity onPress={pickFile}>
+              <LinkIcon color={textColor} />
+            </TouchableOpacity>
+          )}
         </View>
         <View style={styles.inputWrapper}>
           <TextInput

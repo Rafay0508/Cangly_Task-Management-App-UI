@@ -8,6 +8,7 @@ import {
   View,
   Alert,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -16,15 +17,62 @@ import {
 import {Color} from '../utils/colors';
 import {Fonts} from '../utils/fonts';
 import {useAuth} from '../context/AuthContext';
+import DocumentPicker from 'react-native-document-picker';
 
 const EditProfile = ({visible, onClose}) => {
   const {userDetails, editProfile} = useAuth();
   const [fullName, setFullName] = useState(userDetails.fullName);
+  const [photoURL, setPhotoURL] = useState(userDetails.photoURL);
+  const [imageUrlLoading, setImageUrlLoading] = useState(false);
+
+  const uploadImage = async res => {
+    const data = new FormData();
+    data.append('file', {
+      uri: res[0].uri,
+      type: res[0].type, // Adjust as necessary
+      name: res[0].name,
+    });
+    data.append('folder', 'cangly_task_managment_app');
+    data.append('upload_preset', 'jdbowltq');
+
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dttaqjdvm/upload`,
+        {
+          method: 'POST',
+          body: data,
+        },
+      );
+      const result = await response.json();
+      console.log(response);
+      setPhotoURL(result.secure_url);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+    }
+  };
+
+  const pickImage = async () => {
+    setImageUrlLoading(true);
+    try {
+      const res = await DocumentPicker.pick({
+        type: [DocumentPicker.types.images], // Allow image selection
+      });
+      await uploadImage(res); // Upload the selected image
+      setImageUrlLoading(false);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('User canceled the picker');
+      } else {
+        console.log('Error picking image: ', err);
+      }
+    }
+  };
+
   const handleSave = async () => {
     if (userDetails.fullName === fullName) {
       Alert.alert('no chenge');
     } else {
-      await editProfile(fullName);
+      await editProfile(fullName, photoURL);
       onClose();
     }
   };
@@ -41,11 +89,15 @@ const EditProfile = ({visible, onClose}) => {
 
           <View style={styles.formContainer}>
             <View style={{justifyContent: 'center', alignItems: 'center'}}>
-              <Image
-                source={require('../assets/profile.jpg')}
-                style={{width: hp(10), height: hp(10), borderRadius: 100}}
-              />
-              <TouchableOpacity>
+              {imageUrlLoading ? (
+                <ActivityIndicator />
+              ) : (
+                <Image
+                  source={{uri: photoURL}}
+                  style={{width: hp(10), height: hp(10), borderRadius: 100}}
+                />
+              )}
+              <TouchableOpacity onPress={pickImage}>
                 <Text
                   style={{
                     color: Color.firstColor,
@@ -85,7 +137,10 @@ const EditProfile = ({visible, onClose}) => {
 
             <TouchableOpacity
               style={[styles.button, styles.cancelButton]}
-              onPress={onClose}>
+              onPress={() => {
+                onClose();
+                setPhotoURL(userDetails.photoURL);
+              }}>
               <Text style={styles.buttonText}>Cancel</Text>
             </TouchableOpacity>
           </View>

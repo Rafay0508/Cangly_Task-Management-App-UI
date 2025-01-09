@@ -168,19 +168,19 @@ export const AuthProvider = ({children}) => {
     }
   };
 
-  const editProfile = async fullName => {
+  const editProfile = async (fullName, photoURL) => {
     try {
       const user = auth().currentUser;
 
       await database().ref(`/users/${user.uid}`).update({
-        photoURL: 'https://shorturl.at/UD9Ft',
+        photoURL,
         fullName,
       });
 
       const updatedUserDetails = {
         ...userDetails,
         fullName,
-        photoURL: 'https://shorturl.at/UD9Ft',
+        photoURL,
       };
       setUserDetails(updatedUserDetails);
 
