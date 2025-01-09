@@ -115,6 +115,7 @@ export const UsersDataProvider = ({children}) => {
       const snapshot = await database().ref(`users/${userId}`).once('value');
       if (snapshot.exists()) {
         const userData = snapshot.val();
+
         return userData;
       } else {
         console.log('No user data available for this UID');

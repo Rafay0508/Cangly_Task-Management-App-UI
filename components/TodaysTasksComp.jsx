@@ -15,6 +15,7 @@ import {
 } from 'react-native-responsive-screen';
 import {Fonts} from '../utils/fonts';
 import {useProjects} from '../context/ProjectsContext';
+import {Color} from '../utils/colors';
 
 const TodaysTasksComp = () => {
   const {theme} = useTheme();
@@ -66,31 +67,26 @@ const TodaysTasksComp = () => {
             </View>
             <View style={styles.taskDetails}>
               <Text style={[styles.timeText, {color: textColor}]}>
+                {task.dueDate}
+              </Text>
+              <Text style={[styles.timeText, {color: textColor}]}>
                 {task.timeline.endTime} -{task.timeline.startTime}
               </Text>
-
               <View style={styles.imageContainer}>
-                <Text style={[styles.timeText, {color: textColor}]}>
-                  {task.dueDate}
-                </Text>
-                {/* Display first 5 participants */}
-                {/* {task.participants
-                  .slice(0, maxParticipants)
-                  .map((imageSrc, idx) => (
-                    <Image
-                      key={idx}
-                      source={imageSrc}
-                      style={styles.profileImage}
-                    />
-                  ))} */}
-                {/* Show remaining participants count */}
-                {/* {task.participants.length > maxParticipants && (
+                {task.assignees.slice(0, 2).map((member, id) => (
+                  <Image
+                    key={id}
+                    source={{uri: member.photoURL}}
+                    style={styles.profileImage}
+                  />
+                ))}
+                {task.assignees.length > 3 && (
                   <View style={styles.moreParticipantsContainer}>
                     <Text style={styles.moreParticipantsText}>
-                      +{task.participants.length - maxParticipants}
+                      +{task.assignees.length - 3}
                     </Text>
                   </View>
-                )} */}
+                )}
               </View>
             </View>
           </View>
@@ -163,11 +159,14 @@ const styles = StyleSheet.create({
   moreParticipantsContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: 20,
+    marginLeft: wp(1),
+    backgroundColor: Color.borderBottomColor,
+    padding: hp(1),
+    borderRadius: 100,
   },
   moreParticipantsText: {
     fontSize: 12,
-    color: '#777',
+    color: Color.firstColor,
   },
   noTasksContainer: {
     justifyContent: 'center',

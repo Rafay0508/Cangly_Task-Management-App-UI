@@ -14,7 +14,7 @@ const App = () => {
     const fetchUserDetails = async () => {
       const storedDetails = await AsyncStorage.getItem('userDetails');
       if (storedDetails) {
-        console.log(JSON.parse(storedDetails));
+        console.log('aaaa', JSON.parse(storedDetails));
       }
     };
 

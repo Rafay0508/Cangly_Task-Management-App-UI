@@ -38,6 +38,7 @@ import FileAttach from '../bottomSheets/FileAttach';
 import DueDate from '../bottomSheets/DueDate';
 import {BlurView} from '@react-native-community/blur';
 import {useProjects} from '../context/ProjectsContext';
+import {useUsersData} from '../context/UsersData';
 const ProjectAbout = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
@@ -46,18 +47,47 @@ const ProjectAbout = ({route}) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false); // State to track if sheet is open
 
   const textColor = theme == 'dark' ? 'white' : 'black';
-  const {tasksForUser} = useProjects();
+  const {tasksByProject} = useProjects();
+  const {getUserDetail} = useUsersData();
   const [tasksForProject, setTasksForProject] = useState([]);
-
-  // Filter tasks based on the selected project
+  const [projectManagerDetails, setProjectManagerDetails] = useState(null);
+  const [teamMemberDetails, setTeamMemberDetails] = useState([]);
   useEffect(() => {
-    console.log('task', tasksForUser);
-    const tasksForProject = tasksForUser.filter(
-      task => task.projectName === project.projectName,
-    );
-    console.log(tasksForProject);
+    if (!tasksByProject || !project || !project.projectName) {
+      return;
+    }
+    const tasksForProject = tasksByProject[project.projectName] || []; // Access tasks for the specific project
+
     setTasksForProject(tasksForProject);
-  }, [project]);
+  }, [project, tasksByProject]);
+
+  useEffect(() => {
+    const fetchProjectManagerDetails = async () => {
+      if (project.projectManager) {
+        const details = await getUserDetail(project.projectManager);
+        setProjectManagerDetails(details);
+      }
+    };
+    fetchProjectManagerDetails();
+  }, [project.projectManager]);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const users = {};
+
+      for (const member of project.teamMembers) {
+        // Directly iterate through teamMembers
+        if (!users[member]) {
+          const userDetail = await getUserDetail(member);
+          users[member] = userDetail;
+        }
+      }
+      setTeamMemberDetails(users);
+    };
+    if (project) {
+      fetchUserDetails();
+    }
+  }, [project, getUserDetail]);
 
   const updateStatusActionSheetRef = useRef(null);
   const fileAttachActionSheetRef = useRef(null);
@@ -118,13 +148,18 @@ const ProjectAbout = ({route}) => {
                 <Text style={[styles.text, {color: textColor}]}>Team</Text>
               </View>
               <View style={styles.teamImagesContainer}>
-                {project.teamMembers.slice(0, 3).map((member, index) => (
-                  <Image
-                    key={index}
-                    source={{uri: member.photoURL}}
-                    style={styles.teamMemberImage}
-                  />
-                ))}
+                {project.teamMembers
+                  .slice(0, 3)
+                  .map((member, index) =>
+                    teamMemberDetails[member] ? (
+                      <Image
+                        key={index}
+                        source={{uri: teamMemberDetails[member]?.photoURL}}
+                        style={styles.teamMemberImage}
+                      />
+                    ) : null,
+                  )}
+
                 {project.teamMembers.length > 3 && (
                   <View
                     style={{
@@ -153,11 +188,18 @@ const ProjectAbout = ({route}) => {
                 <Text style={[styles.text, {color: textColor}]}>PM</Text>
               </View>
               <View style={styles.PMContainer}>
-                <Image
-                  source={{uri: project.projectManager.photoURL}}
-                  style={styles.teamMemberImage}
-                />
-                <Text>{project.projectManager.fullName}</Text>
+                {projectManagerDetails ? (
+                  <Image
+                    source={{uri: projectManagerDetails.photoURL}}
+                    style={styles.teamMemberImage}
+                  />
+                ) : (
+                  <Text> 'Loading...'</Text>
+                )}
+
+                <Text style={{color: Color.firstColor}}>
+                  {projectManagerDetails && projectManagerDetails.fullName}
+                </Text>
               </View>
             </View>
             <View style={styles.rowContainer}>
@@ -264,7 +306,9 @@ const ProjectAbout = ({route}) => {
                     <Text style={[styles.taskName, {color: textColor}]}>
                       {task.taskTitle}
                     </Text>
-                    <Text style={styles.taskdeadline}>{task.projectName}</Text>
+                    <Text style={styles.taskdeadline}>
+                      {project.projectName}
+                    </Text>
                   </View>
                   <CheckBox
                     isChecked={true}
@@ -277,35 +321,40 @@ const ProjectAbout = ({route}) => {
                   <Text style={styles.taskComment}>
                     {task.timeline.startTime} - {task.timeline.endTime}
                   </Text>
-                  {task.assignees.slice(0, 3).map((member, index) => {
-                    return (
-                      <Image
-                        key={index}
-                        source={{uri: member.photoURL}}
-                        style={styles.profileImage}
-                      />
-                    );
-                  })}
-                  {/* {task.assignees.length > 3 && (
-                    <View
-                      style={{
-                        backgroundColor: 'white',
-                        padding: 8,
-                        borderRadius: 100,
-                      }}>
-                      <Text
-                        style={[
-                          styles.remainingText,
-                          {
-                            color: Color.firstColor,
-                            fontSize: 18,
-                            fontFamily: Fonts.regular,
-                          },
-                        ]}>
-                        +{project.teamMembers.length - 3}
-                      </Text>
-                    </View>
-                  )} */}
+                  <View style={{flexDirection: 'row'}}>
+                    {task.assignees.slice(0, 3).map((member, index) => {
+                      return (
+                        <Image
+                          key={index}
+                          source={{uri: member.photoURL}}
+                          style={styles.profileImage}
+                        />
+                      );
+                    })}
+                    {task.assignees.length > 3 && (
+                      <View
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          backgroundColor: Color.borderBottomColor,
+                          padding: hp(0.5),
+                          borderRadius: 100,
+                          marginLeft: -wp(4),
+                        }}>
+                        <Text
+                          style={[
+                            styles.remainingText,
+                            {
+                              color: Color.firstColor,
+                              fontSize: hp(2),
+                              fontFamily: Fonts.regular,
+                            },
+                          ]}>
+                          +{task.assignees.length - 3}
+                        </Text>
+                      </View>
+                    )}
+                  </View>
                 </View>
               </View>
             ))
@@ -412,7 +461,12 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginRight: -wp(2),
   },
-  PMContainer: {flexDirection: 'row', gap: wp(4), fontFamily: Fonts.regular},
+  PMContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: wp(4),
+    fontFamily: Fonts.regular,
+  },
   button: {
     backgroundColor: Color.firstColor,
     padding: wp(2),
@@ -470,6 +524,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 25,
+    marginLeft: -wp(4),
   },
   noTasksText: {
     color: 'black',

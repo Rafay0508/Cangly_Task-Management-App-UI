@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
@@ -24,16 +24,38 @@ import {Fonts} from '../utils/fonts';
 import {ProgressBar} from 'react-native-paper';
 import {Color} from '../utils/colors';
 import {useProjects} from '../context/ProjectsContext';
+import {useUsersData} from '../context/UsersData';
 
 const MyProjectsScreen = ({placeholder = 'Search'}) => {
   const {theme} = useTheme();
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const {projects} = useProjects();
+  const {getUserDetail} = useUsersData();
+  const [userDetails, setUserDetails] = useState({});
 
   const filteredProject = projects?.filter(project =>
     project.projectName.toLowerCase().includes(search.toLowerCase()),
   );
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const users = {};
+
+      for (const project of projects) {
+        for (const member of project.teamMembers) {
+          if (!users[member]) {
+            const userDetail = await getUserDetail(member);
+            users[member] = userDetail;
+          }
+        }
+      }
+      setUserDetails(users);
+    };
+    if (projects) {
+      fetchUserDetails();
+    }
+  }, [projects, getUserDetail]);
 
   const textColor = theme === 'dark' ? 'white' : 'black';
 
@@ -121,15 +143,18 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
 
                   <View style={styles.bottomTextContainer}>
                     <View style={styles.imageContainer}>
-                      {project.teamMembers.slice(0, 3).map((member, index) => (
-                        <Image
-                          key={index}
-                          source={{uri: member.photoURL}}
-                          style={styles.profileImage}
-                        />
-                      ))}
+                      {project.teamMembers
+                        .slice(0, 3)
+                        .map((member, index) =>
+                          userDetails[member] ? (
+                            <Image
+                              key={index}
+                              source={{uri: userDetails[member]?.photoURL}}
+                              style={styles.profileImage}
+                            />
+                          ) : null,
+                        )}
 
-                      {/* Show remaining members count if there are more than 5 */}
                       {project.teamMembers.length > 3 && (
                         <View
                           style={{

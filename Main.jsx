@@ -21,11 +21,12 @@ import ProjectAbout from './pages/ProjectAbout';
 import TeamMemeber from './pages/TeamMemeber';
 import {Text} from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
+import AddTeamMember from './pages/AddTeamMember';
 
 const Stack = createStackNavigator();
 
 const AuthStackContainer = () => (
-  <Stack.Navigator>
+  <Stack.Navigator initialRouteName="Login">
     <Stack.Screen
       name="Welcome"
       component={WelcomePage}
@@ -105,6 +106,11 @@ const MainStackContainer = () => (
     <Stack.Screen
       name="ProjectAbout"
       component={ProjectAbout}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="AddTeamMember"
+      component={AddTeamMember}
       options={{headerShown: false}}
     />
     <Stack.Screen

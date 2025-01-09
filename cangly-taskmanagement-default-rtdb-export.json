@@ -50,101 +50,143 @@
         "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
       },
       {
-        "content": "Dxxx",
-        "createdAt": 1736195002397,
-        "receiverUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-        "senderUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
-      },
-      {
-        "content": "Xzxxx",
-        "createdAt": 1736195061771,
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "add",
-        "createdAt": 1736238524780,
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "xx",
-        "createdAt": 1736239420689,
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "xxxxxxxxxxxxxxxxxxxxxxxx",
-        "createdAt": 1736239430179,
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "abc",
-        "createdAt": 1736239475999,
-        "imageUrl": "https://static.invertase.io/assets/firebase/authentication.svg",
+        "content": "",
+        "createdAt": 1736376121360,
+        "imageUrl": {
+          "access_mode": "public",
+          "asset_id": "3b2400d03bd132aa3e46ead08973ae6a",
+          "bytes": 38445,
+          "created_at": "2025-01-08T22:39:54Z",
+          "etag": "055ae67a3bd526e354b244b785f8b839",
+          "folder": "cangly_task_managment_app",
+          "format": "jpg",
+          "height": 449,
+          "original_filename": "IMG-20250108-WA0004",
+          "placeholder": false,
+          "public_id": "cangly_task_managment_app/uoxlyz3zncjcc3hbxyzd",
+          "resource_type": "image",
+          "secure_url": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736375994/cangly_task_managment_app/uoxlyz3zncjcc3hbxyzd.jpg",
+          "signature": "07c2d27ab36160dffac2ccae11a3874a564d5840",
+          "type": "upload",
+          "url": "http://res.cloudinary.com/dttaqjdvm/image/upload/v1736375994/cangly_task_managment_app/uoxlyz3zncjcc3hbxyzd.jpg",
+          "version": 1736375994,
+          "version_id": "971c0bef013398ac3f3d0380e5f0ff67",
+          "width": 500
+        },
         "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
         "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
       },
       {
         "content": "",
-        "createdAt": 1736239577864,
-        "imageUrl": "https://static.invertase.io/assets/firebase/authentication.svg",
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "ddvdvdvv",
-        "createdAt": 1736239636435,
-        "imageUrl": "https://static.invertase.io/assets/firebase/authentication.svg",
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "hello world",
-        "createdAt": 1736239810178,
-        "imageUrl": "https://static.invertase.io/assets/firebase/authentication.svg",
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "ssss",
-        "createdAt": 1736239909637,
-        "imageUrl": "https://static.invertase.io/assets/firebase/authentication.svg",
-        "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-      },
-      {
-        "content": "ssss",
-        "createdAt": 1736239917662,
-        "imageUrl": "https://static.invertase.io/assets/firebase/authentication.svg",
+        "createdAt": 1736376162349,
+        "fileUrl": {
+          "access_mode": "public",
+          "asset_id": "c3d911cd47e22a117a97f4244b4bf573",
+          "bytes": 92192,
+          "created_at": "2025-01-08T22:40:37Z",
+          "etag": "2cd2286f0a0b21b932ec75ad053a6080",
+          "folder": "cangly_task_managment_app/file",
+          "format": "pdf",
+          "height": 842,
+          "original_filename": "e-statement (1)",
+          "pages": 6,
+          "placeholder": false,
+          "public_id": "cangly_task_managment_app/file/gnzrk0dhqj0cctcd7mz6",
+          "resource_type": "image",
+          "secure_url": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736376037/cangly_task_managment_app/file/gnzrk0dhqj0cctcd7mz6.pdf",
+          "signature": "26101a925248e50f3fc044d8d8ad244ec3a6ae92",
+          "type": "upload",
+          "url": "http://res.cloudinary.com/dttaqjdvm/image/upload/v1736376037/cangly_task_managment_app/file/gnzrk0dhqj0cctcd7mz6.pdf",
+          "version": 1736376037,
+          "version_id": "9a2bf75bffcce19fc9904a8c20e7306d",
+          "width": 595
+        },
+        "imageUrl": "",
         "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
         "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
       },
       {
         "content": "",
-        "createdAt": 1736240339150,
-        "fileUrl": [
-          {
-            "name": "Jang-07-07-2024.pdf",
-            "size": 16426826,
-            "type": "application/pdf",
-            "uri": "content://com.android.providers.media.documents/document/document%3A1000000034"
-          }
-        ],
-        "imageUrl": "https://static.invertase.io/assets/firebase/authentication.svg",
+        "createdAt": 1736378472933,
+        "fileUrl": {
+          "access_mode": "public",
+          "asset_id": "690ea5db012c7aedba63c51e89f13277",
+          "bytes": 92192,
+          "created_at": "2025-01-08T23:18:42Z",
+          "etag": "1e2723c7f56b6f44a03edbce571cfbd9",
+          "folder": "cangly_task_managment_app/file",
+          "format": "pdf",
+          "height": 842,
+          "original_filename": "e-statement",
+          "pages": 6,
+          "placeholder": false,
+          "public_id": "cangly_task_managment_app/file/nazgnftdj2wa09yuys4c",
+          "resource_type": "image",
+          "secure_url": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736378322/cangly_task_managment_app/file/nazgnftdj2wa09yuys4c.pdf",
+          "signature": "230e26fdcb9be40e91a3eff96faf1c90dd50f09a",
+          "type": "upload",
+          "url": "http://res.cloudinary.com/dttaqjdvm/image/upload/v1736378322/cangly_task_managment_app/file/nazgnftdj2wa09yuys4c.pdf",
+          "version": 1736378322,
+          "version_id": "bb44538bbd5baadeb37061009cc5bb95",
+          "width": 595
+        },
+        "imageUrl": true,
         "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
         "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
       },
       {
-        "content": "sss",
-        "createdAt": 1736241525777,
+        "content": "",
+        "createdAt": 1736411860741,
+        "fileUrl": {
+          "access_mode": "public",
+          "asset_id": "1f0c7ecd0374b5a3be3e7d27c5f40d96",
+          "bytes": 3472297,
+          "created_at": "2025-01-09T08:35:34Z",
+          "etag": "76176315286475f48a6cd59a14dbe10c",
+          "folder": "cangly_task_managment_app/file",
+          "format": "pdf",
+          "height": 762,
+          "original_filename": "2024-11-08-12-27-32-Consolidated-Advertisement-No.11-2024",
+          "pages": 6,
+          "placeholder": false,
+          "public_id": "cangly_task_managment_app/file/aaslkxswpm3odjpv5myi",
+          "resource_type": "image",
+          "secure_url": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736411734/cangly_task_managment_app/file/aaslkxswpm3odjpv5myi.pdf",
+          "signature": "99d38e582c809f2fdad67e8541519718abd94e49",
+          "type": "upload",
+          "url": "http://res.cloudinary.com/dttaqjdvm/image/upload/v1736411734/cangly_task_managment_app/file/aaslkxswpm3odjpv5myi.pdf",
+          "version": 1736411734,
+          "version_id": "20d21c7c8b7e33637bfc47bbd45cb801",
+          "width": 537
+        },
         "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
         "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
       },
       {
-        "content": "Ggggg",
-        "createdAt": 1736241534662,
+        "content": "",
+        "createdAt": 1736411891483,
+        "fileUrl": "",
+        "imageUrl": {
+          "access_mode": "public",
+          "asset_id": "6fb2fc0e8062dee694e87723b552a52a",
+          "bytes": 31837,
+          "created_at": "2025-01-09T08:36:06Z",
+          "etag": "1d05bbfb10f0bf0c6dd79b3ee4bafc35",
+          "folder": "cangly_task_managment_app",
+          "format": "jpg",
+          "height": 571,
+          "original_filename": "IMG-20250108-WA0002",
+          "placeholder": false,
+          "public_id": "cangly_task_managment_app/hpds9golpgmn4qmgnd2b",
+          "resource_type": "image",
+          "secure_url": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736411766/cangly_task_managment_app/hpds9golpgmn4qmgnd2b.jpg",
+          "signature": "ab9271e19daa40f0e2cb3aa6adde884766fd65f0",
+          "type": "upload",
+          "url": "http://res.cloudinary.com/dttaqjdvm/image/upload/v1736411766/cangly_task_managment_app/hpds9golpgmn4qmgnd2b.jpg",
+          "version": 1736411766,
+          "version_id": "e91c5a635cef939dacbd00213fb31a0f",
+          "width": 405
+        },
         "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
         "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
       }
@@ -162,30 +204,43 @@
         "receiverUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
         "senderUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
       }
+    ],
+    "KfQVDRazvuO6Ni1q3JDOgArcG7S2__rrKMrG9nfHRxgim2soSwqHmgD5L2": [
+      {
+        "content": "Ggg",
+        "createdAt": 1736412957847,
+        "receiverUID": "rrKMrG9nfHRxgim2soSwqHmgD5L2",
+        "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+      }
     ]
   },
   "projects": {
-    "Indeep_Project_002": {
+    "Indeep Project": {
       "comments": "4",
       "description": "Lorem ipsum odor amet, consectetuer adipiscing elit. Aptent morbi vehicula etiam finibus nostra sapien faucibus. Rhoncus nisl risus tortor nisl erat mus euismod orci.",
       "dueDate": "2025-03-10",
       "fileAttached": "",
       "progress": "50",
-      "projectManager": {
-        "createdAt": "1735898279954",
-        "email": "xsc44@gmail.com",
-        "fullName": "rafay ccc",
-        "photoURL": "https://shorturl.at/UD9Ft",
-        "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-      },
+      "projectManager": 
+        "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
       "projectName": "Indeep Project",
       "projectType": "Website | Mobile App Design",
       "status": "In Progress",
       "tasks": [
         {
           "assignees": [
-            "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-            "eoRbu3dWETZBucy2uZ2FITp7TUM2"
+         {
+              "uid": "rrKMrG9nfHRxgim2soSwqHmgD5L2",
+              "email": "ddd4@gmail.com",
+              "fullName": "addsddds dd",
+              "photoURL": "https://shorturl.at/UD9Ft"
+            },
+            {
+              "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+              "email": "wasayabdul508@gmail.com",
+              "fullName": "Abdul  Wasay",
+              "photoURL": "https://shorturl.at/UD9Ft"
+            }
           ],
           "description": "Design and develop the landing page for the website with responsive design.",
           "dueDate": "2025-01-08",
@@ -198,8 +253,18 @@
         },
         {
           "assignees": [
-            "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-            "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+           {
+              "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+              "email": "wasayabdul508@gmail.com",
+              "fullName": "Abdul  Wasay",
+              "photoURL": "https://shorturl.at/UD9Ft"
+            },
+            {
+              "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+              "email": "rafayabdul508@gmail.com",
+              "fullName": "Abdul Rafay",
+              "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg"
+            }
           ],
           "description": "Implement client feedback into the current version of the app.",
           "dueDate": "2025-01-09",
@@ -212,48 +277,38 @@
         }
       ],
       "teamMembers": [
-        {
-          "email": "rafayabdul508@gmail.com",
-          "fullName": "abdul rafay",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-        },
-        {
-          "email": "wasayabdul508@gmail.com",
-          "fullName": "Abdul Wasay",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
-        },
-        {
-          "email": "xsc44@gmail.com",
-          "fullName": "rafay ccc",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-        }
+       "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+       "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+      "7B2uDPo1JyZgPCIDhqr2oeo5El92"  
       ],
       "visibility": "private"
     },
-    "Project_001": {
+    "TechHub App": {
       "comments": "3",
       "description": "An e-commerce app aimed at providing seamless online shopping experiences with an intuitive interface.",
       "dueDate": "2025-02-08",
       "fileAttached": "",
       "progress": "80",
-      "projectManager": {
-        "createdAt": "1735898279954",
-        "email": "xsc44@gmail.com",
-        "fullName": "rafay ccc",
-        "photoURL": "https://shorturl.at/UD9Ft",
-        "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-      },
+      "projectManager": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+      ,
       "projectName": "TechHub App",
       "projectType": "Mobile App | E-commerce",
       "status": "In Progress",
       "tasks": [
         {
           "assignees": [
-            "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-            "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+            {
+              "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+              "email": "rafayabdul508@gmail.com",
+              "fullName": "Abdul Rafay",
+              "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg"
+            },
+            {
+              "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92",
+              "email": "xsc44@gmail.com",
+              "fullName": "rafay ccc",
+              "photoURL": "https://shorturl.at/UD9Ft"
+            }
           ],
           "description": "Implement login screen with form validation and authentication integration.",
           "dueDate": "2025-01-08",
@@ -266,8 +321,20 @@
         },
         {
           "assignees": [
-            "Je2YkSpDkCP3uY7qffez0oPu6w12",
-            "RLuctKgIQNcfFv4LwA1YIbYYH903"
+          {
+      "createdAt": 1735900178128,
+      "email": "dd4@gmail.com",
+      "fullName": "g f",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "Je2YkSpDkCP3uY7qffez0oPu6w12"
+    },
+        {
+      "createdAt": 1735900147413,
+      "email": "dddd3@gmail.com",
+      "fullName": "dd d",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "RLuctKgIQNcfFv4LwA1YIbYYH903"
+    }
           ],
           "description": "Review the UI designs for the homepage and mobile screens.",
           "dueDate": "2025-01-09",
@@ -280,42 +347,42 @@
         }
       ],
       "teamMembers": [
-        {
-          "email": "rafayabdul508@gmail.com",
-          "fullName": "abdul rafay",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-        },
-        {
-          "email": "xsc44@gmail.com",
-          "fullName": "rafay ccc",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-        }
+        "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+      "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+        
       ],
       "visibility": "public"
     },
-    "Project_003": {
+    "FitLife App": {
       "comments": "7",
       "description": "A mobile app focused on health and fitness, offering personalized workout plans and progress tracking.",
       "dueDate": "2025-05-08",
       "fileAttached": "",
       "progress": "30",
-      "projectManager": {
-        "createdAt": "1735898279954",
-        "email": "xsc44@gmail.com",
-        "fullName": "rafay ccc",
-        "photoURL": "https://shorturl.at/UD9Ft",
-        "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-      },
+      "projectManager": 
+     
+        "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+      ,
       "projectName": "FitLife App",
       "projectType": "Mobile App | Health & Fitness",
       "status": "In Progress",
       "tasks": [
         {
           "assignees": [
-            "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-            "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+           {
+      "createdAt": 1735820030662,
+      "email": "rafayabdul508@gmail.com",
+      "fullName": "Abdul Rafay",
+      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg",
+      "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+    },
+          {
+      "createdAt": 1735898279954,
+      "email": "xsc44@gmail.com",
+      "fullName": "rafay ccc",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+    }
           ],
           "description": "Create the registration flow for new users including email and social login options.",
           "dueDate": "2025-01-08",
@@ -328,8 +395,20 @@
         },
         {
           "assignees": [
-            "Je2YkSpDkCP3uY7qffez0oPu6w12",
-            "RLuctKgIQNcfFv4LwA1YIbYYH903"
+           {
+      "createdAt": 1735900178128,
+      "email": "dd4@gmail.com",
+      "fullName": "g f",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "Je2YkSpDkCP3uY7qffez0oPu6w12"
+    },
+         {
+      "createdAt": 1735900147413,
+      "email": "dddd3@gmail.com",
+      "fullName": "dd d",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "RLuctKgIQNcfFv4LwA1YIbYYH903"
+    }
           ],
           "description": "Integrate predefined fitness plans for users based on their fitness goals.",
           "dueDate": "2025-01-09",
@@ -342,44 +421,56 @@
         }
       ],
       "teamMembers": [
-        {
-          "email": "rafayabdul508@gmail.com",
-          "fullName": "abdul rafay",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-        },
-        {
-          "email": "xsc44@gmail.com",
-          "fullName": "rafay ccc",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-        }
+       "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+        ,
+       "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+        
       ],
       "visibility": "public"
     },
-    "Project_004": {
+    "EduLearn Platform": {
       "comments": "10",
       "description": "A comprehensive online learning platform with video tutorials and quizzes.",
       "dueDate": "2025-10-08",
       "fileAttached": "",
       "progress": "65",
-      "projectManager": {
-        "createdAt": "1735898279954",
-        "email": "xsc44@gmail.com",
-        "fullName": "rafay ccc",
-        "photoURL": "https://shorturl.at/UD9Ft",
-        "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-      },
+      "projectManager": 
+        "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+      ,
       "projectName": "EduLearn Platform",
       "projectType": "Website | E-learning",
       "status": "In Progress",
       "tasks": [
         {
           "assignees": [
-            "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-            "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-            "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-            "eoRbu3dWETZBucy2uZ2FITp7TUM2"
+            {
+      "createdAt": 1735820030662,
+      "email": "rafayabdul508@gmail.com",
+      "fullName": "Abdul Rafay",
+      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg",
+      "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+    },
+           {
+      "createdAt": 1735820894133,
+      "email": "wasayabdul508@gmail.com",
+      "fullName": "Abdul  Wasay",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
+    },
+           {
+      "createdAt": 1735820894133,
+      "email": "wasayabdul508@gmail.com",
+      "fullName": "Abdul  Wasay",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
+    },
+          {
+      "createdAt": 1735820894133,
+      "email": "wasayabdul508@gmail.com",
+      "fullName": "Abdul  Wasay",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
+    }
           ],
           "description": "Develop the video upload feature for instructors to upload courses.",
           "dueDate": "2025-01-08",
@@ -392,8 +483,20 @@
         },
         {
           "assignees": [
-            "7B2uDPo1JyZgPCIDhqr2oeo5El92",
-            "9HOMhOoLLPMtfGt1U7MhyRNqlGo2"
+           {
+      "createdAt": 1735901056798,
+      "email": "ddd44@gmail.com",
+      "fullName": "dddd dd",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "b7tNY0Mki9YlcRlh37O8EOK48IR2"
+    },
+         {
+      "createdAt": 1735894080020,
+      "email": "dsf324@gmail.com",
+      "fullName": "sf ds",
+      "photoURL": "https://shorturl.at/UD9Ft",
+      "uid": "9HOMhOoLLPMtfGt1U7MhyRNqlGo2"
+    }
           ],
           "description": "Integrate quiz functionality for various courses, including scoring and result tracking.",
           "dueDate": "2025-01-98",
@@ -406,18 +509,10 @@
         }
       ],
       "teamMembers": [
-        {
-          "email": "rafayabdul508@gmail.com",
-          "fullName": "abdul rafay",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-        },
-        {
-          "email": "wasayabdul508@gmail.com",
-          "fullName": "Abdul Wasay",
-          "photoURL": "https://shorturl.at/UD9Ft",
-          "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
-        }
+      "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+        ,
+      "eoRbu3dWETZBucy2uZ2FITp7TUM2"
+        
       ],
       "visibility": "private"
     }
@@ -448,7 +543,7 @@
       "createdAt": 1735820030662,
       "email": "rafayabdul508@gmail.com",
       "fullName": "Abdul Rafay",
-      "photoURL": "https://shorturl.at/UD9Ft",
+      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg",
       "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
     },
     "RLuctKgIQNcfFv4LwA1YIbYYH903": {

@@ -61,6 +61,7 @@ const EditProfile = ({visible, onClose}) => {
       setImageUrlLoading(false);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
+        setImageUrlLoading(false);
         console.log('User canceled the picker');
       } else {
         console.log('Error picking image: ', err);

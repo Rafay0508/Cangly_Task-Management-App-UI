@@ -31,57 +31,6 @@ const HomeScreen = () => {
   const {userDetails} = useAuth();
   const {projects} = useProjects();
   const [loading, setLoading] = useState(true);
-  // Array of project data
-  // const projects = [
-  //   {
-  //     id: 1,
-  //     title: 'Pintap Project',
-  //     date: 'Wednesday 30 Nov, 2022',
-  //     description: 'Website | Mobile App Design',
-  //     detailedDescription:
-  //       'A design project for creating a mobile app and website for Pintap.',
-  //     progress: 40,
-  //     comments: 5,
-  //     timeAgo: '4 Days ago',
-  //     teamMembers: [
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'HealthApp',
-  //     date: 'Monday 5 Dec, 2023',
-  //     description: 'Mobile App Design for Healthcare',
-  //     detailedDescription:
-  //       'A healthcare app that helps users track health data, appointments, and medication.',
-  //     progress: 89,
-  //     comments: 12,
-  //     timeAgo: '2 Days ago',
-  //     teamMembers: [
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //     ],
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'E-Commerce Platform',
-  //     date: 'Friday 2 Dec, 2023',
-  //     description: 'E-Commerce Website and Mobile App',
-  //     detailedDescription:
-  //       'A full-stack e-commerce platform including a responsive website and mobile app for online shopping.',
-  //     progress: 25,
-  //     comments: 2,
-  //     timeAgo: '1 Week ago',
-  //     teamMembers: [
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //     ],
-  //   },
-  // ];
 
   useEffect(() => {
     if (projects.length === 0) {
