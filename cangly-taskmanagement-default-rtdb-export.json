@@ -189,6 +189,20 @@
         },
         "receiverUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
         "senderUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+      },
+      {
+        "content": "hi",
+        "createdAt": 1736510022767,
+        "receiverUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+        "senderUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
+      },
+      {
+        "content": "Hello",
+        "createdAt": 1736510035821,
+        "fileUrl": "",
+        "imageUrl": "",
+        "receiverUID": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+        "senderUID": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
       }
     ],
     "KfQVDRazvuO6Ni1q3JDOgArcG7S2__eoRbu3dWETZBucy2uZ2FWTp7TUM2": [
@@ -215,266 +229,26 @@
     ]
   },
   "projects": {
-    "Indeep Project": {
-      "comments": "4",
-      "description": "Lorem ipsum odor amet, consectetuer adipiscing elit. Aptent morbi vehicula etiam finibus nostra sapien faucibus. Rhoncus nisl risus tortor nisl erat mus euismod orci.",
-      "dueDate": "2025-03-10",
-      "fileAttached": "",
-      "progress": "50",
-      "projectManager": 
-        "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-      "projectName": "Indeep Project",
-      "projectType": "Website | Mobile App Design",
-      "status": "In Progress",
-      "tasks": [
-        {
-          "assignees": [
-         {
-              "uid": "rrKMrG9nfHRxgim2soSwqHmgD5L2",
-              "email": "ddd4@gmail.com",
-              "fullName": "addsddds dd",
-              "photoURL": "https://shorturl.at/UD9Ft"
-            },
-            {
-              "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-              "email": "wasayabdul508@gmail.com",
-              "fullName": "Abdul  Wasay",
-              "photoURL": "https://shorturl.at/UD9Ft"
-            }
-          ],
-          "description": "Design and develop the landing page for the website with responsive design.",
-          "dueDate": "2025-01-08",
-          "status": "Completed",
-          "taskTitle": "Create Landing Page",
-          "timeline": {
-            "endTime": "9:00 AM",
-            "startTime": "8:00 AM"
-          }
-        },
-        {
-          "assignees": [
-           {
-              "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-              "email": "wasayabdul508@gmail.com",
-              "fullName": "Abdul  Wasay",
-              "photoURL": "https://shorturl.at/UD9Ft"
-            },
-            {
-              "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-              "email": "rafayabdul508@gmail.com",
-              "fullName": "Abdul Rafay",
-              "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg"
-            }
-          ],
-          "description": "Implement client feedback into the current version of the app.",
-          "dueDate": "2025-01-09",
-          "status": "In Progress",
-          "taskTitle": "Client Feedback Integration",
-          "timeline": {
-            "endTime": "10:00 AM",
-            "startTime": "9:00 AM"
-          }
-        }
-      ],
-      "teamMembers": [
-       "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-       "eoRbu3dWETZBucy2uZ2FITp7TUM2",
-      "7B2uDPo1JyZgPCIDhqr2oeo5El92"  
-      ],
-      "visibility": "private"
-    },
-    "TechHub App": {
-      "comments": "3",
-      "description": "An e-commerce app aimed at providing seamless online shopping experiences with an intuitive interface.",
-      "dueDate": "2025-02-08",
-      "fileAttached": "",
-      "progress": "80",
-      "projectManager": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-      ,
-      "projectName": "TechHub App",
-      "projectType": "Mobile App | E-commerce",
-      "status": "In Progress",
-      "tasks": [
-        {
-          "assignees": [
-            {
-              "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-              "email": "rafayabdul508@gmail.com",
-              "fullName": "Abdul Rafay",
-              "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg"
-            },
-            {
-              "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92",
-              "email": "xsc44@gmail.com",
-              "fullName": "rafay ccc",
-              "photoURL": "https://shorturl.at/UD9Ft"
-            }
-          ],
-          "description": "Implement login screen with form validation and authentication integration.",
-          "dueDate": "2025-01-08",
-          "status": "In Progress",
-          "taskTitle": "Develop Login Feature",
-          "timeline": {
-            "endTime": "10:00 AM",
-            "startTime": "9:00 AM"
-          }
-        },
-        {
-          "assignees": [
-          {
-      "createdAt": 1735900178128,
-      "email": "dd4@gmail.com",
-      "fullName": "g f",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "Je2YkSpDkCP3uY7qffez0oPu6w12"
-    },
-        {
-      "createdAt": 1735900147413,
-      "email": "dddd3@gmail.com",
-      "fullName": "dd d",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "RLuctKgIQNcfFv4LwA1YIbYYH903"
-    }
-          ],
-          "description": "Review the UI designs for the homepage and mobile screens.",
-          "dueDate": "2025-01-09",
-          "status": "Pending",
-          "taskTitle": "UI Design Review",
-          "timeline": {
-            "endTime": "11:00 AM",
-            "startTime": "10:00 AM"
-          }
-        }
-      ],
-      "teamMembers": [
-        "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
-      "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-        
-      ],
-      "visibility": "public"
-    },
-    "FitLife App": {
-      "comments": "7",
-      "description": "A mobile app focused on health and fitness, offering personalized workout plans and progress tracking.",
-      "dueDate": "2025-05-08",
-      "fileAttached": "",
-      "progress": "30",
-      "projectManager": 
-     
-        "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-      ,
-      "projectName": "FitLife App",
-      "projectType": "Mobile App | Health & Fitness",
-      "status": "In Progress",
-      "tasks": [
-        {
-          "assignees": [
-           {
-      "createdAt": 1735820030662,
-      "email": "rafayabdul508@gmail.com",
-      "fullName": "Abdul Rafay",
-      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg",
-      "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-    },
-          {
-      "createdAt": 1735898279954,
-      "email": "xsc44@gmail.com",
-      "fullName": "rafay ccc",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-    }
-          ],
-          "description": "Create the registration flow for new users including email and social login options.",
-          "dueDate": "2025-01-08",
-          "status": "In Progress",
-          "taskTitle": "Develop Registration Flow",
-          "timeline": {
-            "endTime": "11:00 AM",
-            "startTime": "10:00 AM"
-          }
-        },
-        {
-          "assignees": [
-           {
-      "createdAt": 1735900178128,
-      "email": "dd4@gmail.com",
-      "fullName": "g f",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "Je2YkSpDkCP3uY7qffez0oPu6w12"
-    },
-         {
-      "createdAt": 1735900147413,
-      "email": "dddd3@gmail.com",
-      "fullName": "dd d",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "RLuctKgIQNcfFv4LwA1YIbYYH903"
-    }
-          ],
-          "description": "Integrate predefined fitness plans for users based on their fitness goals.",
-          "dueDate": "2025-01-09",
-          "status": "Pending",
-          "taskTitle": "Fitness Plans Integration",
-          "timeline": {
-            "endTime": "4:00 PM",
-            "startTime": "2:00 PM"
-          }
-        }
-      ],
-      "teamMembers": [
-       "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-        ,
-       "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-        
-      ],
-      "visibility": "public"
-    },
     "EduLearn Platform": {
       "comments": "10",
       "description": "A comprehensive online learning platform with video tutorials and quizzes.",
-      "dueDate": "2025-10-08",
+      "dueDate": "2025-10-4",
       "fileAttached": "",
       "progress": "65",
-      "projectManager": 
-        "7B2uDPo1JyZgPCIDhqr2oeo5El92"
-      ,
+      "projectManager": "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
       "projectName": "EduLearn Platform",
       "projectType": "Website | E-learning",
-      "status": "In Progress",
+      "status": "revision",
       "tasks": [
         {
           "assignees": [
-            {
-      "createdAt": 1735820030662,
-      "email": "rafayabdul508@gmail.com",
-      "fullName": "Abdul Rafay",
-      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg",
-      "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-    },
-           {
-      "createdAt": 1735820894133,
-      "email": "wasayabdul508@gmail.com",
-      "fullName": "Abdul  Wasay",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
-    },
-           {
-      "createdAt": 1735820894133,
-      "email": "wasayabdul508@gmail.com",
-      "fullName": "Abdul  Wasay",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
-    },
-          {
-      "createdAt": 1735820894133,
-      "email": "wasayabdul508@gmail.com",
-      "fullName": "Abdul  Wasay",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
-    }
+            "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+            "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+            "7B2uDPo1JyZgPCIDhqr2oeo5El92"
           ],
           "description": "Develop the video upload feature for instructors to upload courses.",
           "dueDate": "2025-01-08",
-          "status": "Completed",
+          "status": "completed",
           "taskTitle": "Video Upload Feature",
           "timeline": {
             "endTime": "3:00 PM",
@@ -483,24 +257,12 @@
         },
         {
           "assignees": [
-           {
-      "createdAt": 1735901056798,
-      "email": "ddd44@gmail.com",
-      "fullName": "dddd dd",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "b7tNY0Mki9YlcRlh37O8EOK48IR2"
-    },
-         {
-      "createdAt": 1735894080020,
-      "email": "dsf324@gmail.com",
-      "fullName": "sf ds",
-      "photoURL": "https://shorturl.at/UD9Ft",
-      "uid": "9HOMhOoLLPMtfGt1U7MhyRNqlGo2"
-    }
+            "b7tNY0Mki9YlcRlh37O8EOK48IR2",
+            "9HOMhOoLLPMtfGt1U7MhyRNqlGo2"
           ],
           "description": "Integrate quiz functionality for various courses, including scoring and result tracking.",
           "dueDate": "2025-01-98",
-          "status": "In Progress",
+          "status": "todo",
           "taskTitle": "Quiz Feature Integration",
           "timeline": {
             "endTime": "11:00 AM",
@@ -509,10 +271,57 @@
         }
       ],
       "teamMembers": [
-      "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
-        ,
-      "eoRbu3dWETZBucy2uZ2FITp7TUM2"
-        
+        "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+        "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+        "b7tNY0Mki9YlcRlh37O8EOK48IR2",
+        "9HOMhOoLLPMtfGt1U7MhyRNqlGo2",
+        "7B2uDPo1JyZgPCIDhqr2oeo5El92"
+      ],
+      "visibility": "private"
+    },
+    "Indeep Project": {
+      "comments": "4",
+      "description": "Lorem ipsum odor amet, consectetuer adipiscing elit. Aptent morbi vehicula etiam finibus nostra sapien faucibus. Rhoncus nisl risus tortor nisl erat mus euismod orci.",
+      "dueDate": "2025-03-10",
+      "fileAttached": "",
+      "progress": "50",
+      "projectManager": "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+      "projectName": "Indeep Project",
+      "projectType": "Website | Mobile App Design",
+      "status": "todo",
+      "tasks": [
+        {
+          "assignees": [
+            "rrKMrG9nfHRxgim2soSwqHmgD5L2"
+          ],
+          "description": "Design and develop the landing page for the website with responsive design.",
+          "dueDate": "2025-01-08",
+          "status": "completed",
+          "taskTitle": "Create Landing Page",
+          "timeline": {
+            "endTime": "9:00 AM",
+            "startTime": "8:00 AM"
+          }
+        },
+        {
+          "assignees": [
+            "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+            "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
+          ],
+          "description": "Implement client feedback into the current version of the app.",
+          "dueDate": "2025-01-09",
+          "status": "todo",
+          "taskTitle": "Client Feedback Integration",
+          "timeline": {
+            "endTime": "10:00 AM",
+            "startTime": "9:00 AM"
+          }
+        }
+      ],
+      "teamMembers": [
+        "eoRbu3dWETZBucy2uZ2FITp7TUM2",
+        "KfQVDRazvuO6Ni1q3JDOgArcG7S2",
+        "rrKMrG9nfHRxgim2soSwqHmgD5L2"
       ],
       "visibility": "private"
     }
@@ -543,7 +352,7 @@
       "createdAt": 1735820030662,
       "email": "rafayabdul508@gmail.com",
       "fullName": "Abdul Rafay",
-      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736412803/cangly_task_managment_app/swpgvfdd6pf9hxm1rg3v.jpg",
+      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736520032/cangly_task_managment_app/ouckado8tia1uabht8bo.jpg",
       "uid": "KfQVDRazvuO6Ni1q3JDOgArcG7S2"
     },
     "RLuctKgIQNcfFv4LwA1YIbYYH903": {
@@ -571,7 +380,7 @@
       "createdAt": 1735820894133,
       "email": "wasayabdul508@gmail.com",
       "fullName": "Abdul  Wasay",
-      "photoURL": "https://shorturl.at/UD9Ft",
+      "photoURL": "https://res.cloudinary.com/dttaqjdvm/image/upload/v1736521046/cangly_task_managment_app/rfkhhug2gidroeb6zygh.jpg",
       "uid": "eoRbu3dWETZBucy2uZ2FITp7TUM2"
     },
     "pXyscBCKW6S5uKyJvPrzplHLvrj1": {

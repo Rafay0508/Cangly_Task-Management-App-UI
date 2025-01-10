@@ -32,7 +32,6 @@ const ProfileScreen = () => {
   const [isSwitchOn, setIsSwitchOn] = useState(theme === 'dark');
   const [isModalVisible, setModalVisible] = useState(false);
 
-  // Toggle switch and update context
   const onToggleSwitch = () => {
     setIsSwitchOn(!isSwitchOn); // Local state change
     toggleTheme(); // Update theme in context

@@ -16,23 +16,45 @@ import {
 import {Fonts} from '../utils/fonts';
 import {useProjects} from '../context/ProjectsContext';
 import {Color} from '../utils/colors';
+import {useUsersData} from '../context/UsersData';
 
 const TodaysTasksComp = () => {
   const {theme} = useTheme();
   const {tasksForUser} = useProjects();
+  const {getUserDetail} = useUsersData();
   const [loading, setLoading] = useState(true);
+  const [assigneeDetails, setAssigneeDetails] = useState({}); // Store user details as a dictionary
 
+  // Fetch tasks and assignee details
   useEffect(() => {
-    if (useProjects.length === 0) {
+    if (tasksForUser.length === 0) {
       const timer = setTimeout(() => {
         setLoading(false);
       }, 2000);
-
       return () => clearTimeout(timer);
     } else {
       setLoading(false);
     }
   }, [tasksForUser]);
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const users = {};
+      // Fetch user details for each task assignee
+      for (const member of tasksForUser) {
+        for (const assigneeId of member.assignees) {
+          if (!users[assigneeId]) {
+            const userDetail = await getUserDetail(assigneeId);
+            users[assigneeId] = userDetail;
+          }
+        }
+      }
+      setAssigneeDetails(users); // Store the fetched user details
+    };
+    if (tasksForUser.length > 0) {
+      fetchUserDetails();
+    }
+  }, [tasksForUser, getUserDetail]);
 
   const textColor = theme === 'dark' ? 'white' : 'black';
 
@@ -70,16 +92,25 @@ const TodaysTasksComp = () => {
                 {task.dueDate}
               </Text>
               <Text style={[styles.timeText, {color: textColor}]}>
-                {task.timeline.endTime} -{task.timeline.startTime}
+                {task.timeline.endTime} - {task.timeline.startTime}
               </Text>
               <View style={styles.imageContainer}>
-                {task.assignees.slice(0, 2).map((member, id) => (
-                  <Image
-                    key={id}
-                    source={{uri: member.photoURL}}
-                    style={styles.profileImage}
-                  />
-                ))}
+                {task.assignees.slice(0, 2).map((assigneeId, id) => {
+                  const assignee = assigneeDetails[assigneeId];
+                  return assignee ? (
+                    <Image
+                      key={id}
+                      source={{uri: assignee.photoURL}}
+                      style={styles.profileImage}
+                    />
+                  ) : (
+                    <Image
+                      key={id}
+                      source={require('../assets/profile.jpg')}
+                      style={styles.profileImage}
+                    />
+                  );
+                })}
                 {task.assignees.length > 3 && (
                   <View style={styles.moreParticipantsContainer}>
                     <Text style={styles.moreParticipantsText}>

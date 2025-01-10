@@ -32,7 +32,7 @@ const ProjectDetailPage = ({route}) => {
   const {tasksByProject} = useProjects();
   const {getUserDetail} = useUsersData();
   const [teamMemberDetails, setTeamMemberDetails] = useState([]);
-
+  const [assigneeDetails, setAssigneeDetails] = useState({});
   const [tasks, setTasks] = useState({});
   useEffect(() => {
     const tasksForProject = tasksByProject[project.projectName] || [];
@@ -57,6 +57,25 @@ const ProjectDetailPage = ({route}) => {
     }
   }, [project, getUserDetail]);
 
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      const users = {};
+      const promises = tasks.map(async task => {
+        for (const assigneeId of task.assignees) {
+          if (!users[assigneeId]) {
+            users[assigneeId] = await getUserDetail(assigneeId);
+          }
+        }
+      });
+      await Promise.all(promises);
+      setAssigneeDetails(users); // Ensure this is used later in your component
+    };
+
+    if (tasks.length > 0) {
+      fetchUserDetails();
+    }
+  }, [tasks, getUserDetail]);
+
   const textColor = theme == 'dark' ? 'white' : 'black';
 
   return (
@@ -71,7 +90,7 @@ const ProjectDetailPage = ({route}) => {
         <View style={styles.topNavigation}>
           <TouchableOpacity
             style={styles.backButton}
-            onPress={() => navigation.navigate('MyProjects')}>
+            onPress={() => navigation.navigate('HomePage')}>
             <ChevronLeftIcon color={'white'} size={30} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
@@ -88,17 +107,22 @@ const ProjectDetailPage = ({route}) => {
         </View>
 
         <View style={styles.imageContainer}>
-          {project.teamMembers
-            .slice(0, 3)
-            .map((member, index) =>
-              teamMemberDetails[member] ? (
-                <Image
-                  key={index}
-                  source={{uri: teamMemberDetails[member]?.photoURL}}
-                  style={styles.profileImage}
-                />
-              ) : null,
-            )}
+          {project.teamMembers.slice(0, 3).map((member, index) => {
+            const photoURL = teamMemberDetails[member];
+            return photoURL ? (
+              <Image
+                key={index}
+                source={{uri: photoURL.photoURL}}
+                style={styles.profileImage}
+              />
+            ) : (
+              <Image
+                key={index}
+                source={require('../assets/profile.jpg')}
+                style={styles.profileImage}
+              />
+            );
+          })}
 
           {project.teamMembers.length > 3 && (
             <View
@@ -164,17 +188,22 @@ const ProjectDetailPage = ({route}) => {
               </View>
               <View style={styles.taskDetails}>
                 <View style={styles.imageContainer}>
-                  {task.assignees.slice(0, 3).map((member, index) => (
-                    <Image
-                      key={index}
-                      source={
-                        teamMemberDetails[member]?.photoURL
-                          ? {uri: teamMemberDetails[member]?.photoURL}
-                          : require('../assets/profile.jpg') // Fallback image
-                      }
-                      style={styles.profileImage}
-                    />
-                  ))}
+                  {task.assignees.slice(0, 3).map((member, index) => {
+                    const photoURL = assigneeDetails[member];
+                    return photoURL ? (
+                      <Image
+                        key={index}
+                        source={{uri: photoURL.photoURL}}
+                        style={styles.profileImage}
+                      />
+                    ) : (
+                      <Image
+                        key={index}
+                        source={require('../assets/profile.jpg')}
+                        style={styles.profileImage}
+                      />
+                    );
+                  })}
 
                   {task.assignees.length > 3 && (
                     <View

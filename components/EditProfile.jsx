@@ -70,12 +70,8 @@ const EditProfile = ({visible, onClose}) => {
   };
 
   const handleSave = async () => {
-    if (userDetails.fullName === fullName) {
-      Alert.alert('no chenge');
-    } else {
-      await editProfile(fullName, photoURL);
-      onClose();
-    }
+    await editProfile(fullName, photoURL);
+    onClose();
   };
 
   return (
@@ -130,11 +126,12 @@ const EditProfile = ({visible, onClose}) => {
               editable={false}
             />
           </View>
-
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.button} onPress={handleSave}>
-              <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
+            {!imageUrlLoading && (
+              <TouchableOpacity style={styles.button} onPress={handleSave}>
+                <Text style={styles.buttonText}>Save</Text>
+              </TouchableOpacity>
+            )}
 
             <TouchableOpacity
               style={[styles.button, styles.cancelButton]}

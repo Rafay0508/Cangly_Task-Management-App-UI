@@ -682,18 +682,20 @@ const CustomTimeline = () => {
                             <View style={{flexDirection: 'row'}}>
                               {task.assignees
                                 .slice(0, 3)
-                                .map((assignee, index) => (
-                                  <Image
-                                    key={assignee.id || index}
-                                    source={require('../assets/profile.jpg')}
-                                    style={{
-                                      width: hp(3),
-                                      height: hp(3),
-                                      borderRadius: 100,
-                                      marginLeft: -wp(1),
-                                    }}
-                                  />
-                                ))}
+                                .map((assignee, index) => {
+                                  return (
+                                    <Image
+                                      key={assignee.id || index}
+                                      source={require('../assets/profile.jpg')}
+                                      style={{
+                                        width: hp(3),
+                                        height: hp(3),
+                                        borderRadius: 100,
+                                        marginLeft: -wp(1),
+                                      }}
+                                    />
+                                  );
+                                })}
 
                               {task.assignees.length > 3 && (
                                 <View

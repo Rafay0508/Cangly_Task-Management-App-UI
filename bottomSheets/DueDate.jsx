@@ -10,13 +10,28 @@ import {
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
 import DateTimePicker from 'react-native-ui-datepicker';
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'; // Import dayjs
+import {useProjects} from '../context/ProjectsContext';
 
 // Forward the ref directly to ActionSheet component
 const DueDate = forwardRef((props, ref) => {
+  const {project} = props;
   const {theme} = useTheme();
-  const [date, setDate] = useState(dayjs());
+  const {updateProjectDueDate} = useProjects();
+  const [date, setDate] = useState(project.dueDate);
   const textColor = theme == 'dark' ? 'white' : 'black';
+
+  const changeHandler = newDate => {
+    const formattedDate = dayjs(newDate);
+    const year = formattedDate.year();
+    const month = formattedDate.month() + 1;
+    const date = formattedDate.date();
+    const selectedDate = year + '-' + month + '-' + date;
+    setDate(selectedDate);
+    updateProjectDueDate(project.projectName, selectedDate);
+    ref.current?.hide();
+  };
+
   return (
     <ActionSheet
       ref={ref}
@@ -40,7 +55,7 @@ const DueDate = forwardRef((props, ref) => {
           <DateTimePicker
             mode="single"
             date={date}
-            onChange={params => setDate(params.date)}
+            onChange={params => changeHandler(params.date)}
             headerButtonColor={'white'}
             headerButtonStyle={{backgroundColor: Color.firstColor}}
             weekDaysTextStyle={{color: textColor}}
@@ -70,7 +85,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-
     marginTop: hp(3),
   },
   headerText: {
@@ -89,7 +103,3 @@ const styles = StyleSheet.create({
 });
 
 export default DueDate;
-
-//  {
-//    /* Date Picker Section */
-//  }

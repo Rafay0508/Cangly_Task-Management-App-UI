@@ -20,51 +20,6 @@ const MyProjectPage = () => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {projects} = useProjects();
-  // Array of project data
-  // const projects = [
-  //   {
-  //     id: 1,
-  //     title: 'Pintap Project',
-  //     date: 'Wednesday 30 Nov, 2022',
-  //     description: 'Website | Mobile App Design',
-  //     progress: 40,
-  //     comments: 5,
-  //     timeAgo: '4 Days ago',
-  //     teamMembers: [
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //     ],
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'HealthApp',
-  //     date: 'Monday 5 Dec, 2023',
-  //     description: 'Mobile App Design for Healthcare',
-  //     progress: 60,
-  //     comments: 12,
-  //     timeAgo: '2 Days ago',
-  //     teamMembers: [
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //     ],
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'E-Commerce Platform',
-  //     date: 'Friday 2 Dec, 2023',
-  //     description: 'E-Commerce Website and Mobile App',
-  //     progress: 25,
-  //     comments: 2,
-  //     timeAgo: '1 Week ago',
-  //     teamMembers: [
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //       {imageUrl: '../assets/profile.jpg'},
-  //     ],
-  //   },
-  // ];
 
   const textColor = theme == 'dark' ? 'white' : 'black';
   return (

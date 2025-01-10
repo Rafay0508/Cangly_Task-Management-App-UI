@@ -1,5 +1,4 @@
 import {
-  Button,
   Image,
   SafeAreaView,
   ScrollView,
@@ -39,55 +38,79 @@ import DueDate from '../bottomSheets/DueDate';
 import {BlurView} from '@react-native-community/blur';
 import {useProjects} from '../context/ProjectsContext';
 import {useUsersData} from '../context/UsersData';
+import {set} from 'date-fns';
 const ProjectAbout = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {project} = route.params;
 
-  const [isSheetOpen, setIsSheetOpen] = useState(false); // State to track if sheet is open
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const textColor = theme == 'dark' ? 'white' : 'black';
-  const {tasksByProject} = useProjects();
+  const {tasksByProject, getProjectDetail} = useProjects();
   const {getUserDetail} = useUsersData();
+  const [ProjectDetails, setProjectDetails] = useState(project);
   const [tasksForProject, setTasksForProject] = useState([]);
   const [projectManagerDetails, setProjectManagerDetails] = useState(null);
   const [teamMemberDetails, setTeamMemberDetails] = useState([]);
-  useEffect(() => {
-    if (!tasksByProject || !project || !project.projectName) {
-      return;
-    }
-    const tasksForProject = tasksByProject[project.projectName] || []; // Access tasks for the specific project
-
-    setTasksForProject(tasksForProject);
-  }, [project, tasksByProject]);
+  const [assigneeDetails, setAssigneeDetails] = useState({});
 
   useEffect(() => {
-    const fetchProjectManagerDetails = async () => {
-      if (project.projectManager) {
-        const details = await getUserDetail(project.projectManager);
-        setProjectManagerDetails(details);
-      }
-    };
-    fetchProjectManagerDetails();
-  }, [project.projectManager]);
+    const fetchData = async () => {
+      try {
+        // Fetch project details
+        const projectDetail = await getProjectDetail(project.projectName);
+        setProjectDetails(projectDetail);
 
-  useEffect(() => {
-    const fetchUserDetails = async () => {
-      const users = {};
+        // Fetch tasks for project
+        const tasks = tasksByProject[project.projectName] || [];
+        setTasksForProject(tasks);
 
-      for (const member of project.teamMembers) {
-        // Directly iterate through teamMembers
-        if (!users[member]) {
-          const userDetail = await getUserDetail(member);
-          users[member] = userDetail;
+        // Fetch project manager details
+        if (project.projectManager) {
+          const projectManager = await getUserDetail(project.projectManager);
+          setProjectManagerDetails(projectManager);
         }
+
+        // Fetch assignee details
+        const assignees = {};
+        for (const task of tasks) {
+          for (const assigneeId of task.assignees) {
+            if (!assignees[assigneeId]) {
+              const assignee = await getUserDetail(assigneeId);
+              assignees[assigneeId] = assignee;
+            }
+          }
+        }
+        setAssigneeDetails(assignees);
+      } catch (error) {
+        console.error('Error fetching data: ', error);
+      } finally {
       }
-      setTeamMemberDetails(users);
     };
-    if (project) {
-      fetchUserDetails();
+
+    fetchData();
+  }, [project, tasksByProject, getUserDetail, getProjectDetail]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const teamMembers = {};
+        for (const member of ProjectDetails.teamMembers) {
+          const userDetails = await getUserDetail(member);
+          teamMembers[member] = userDetails;
+        }
+
+        setTeamMemberDetails(teamMembers);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    };
+
+    if (ProjectDetails?.teamMembers?.length > 0) {
+      fetchUsers();
     }
-  }, [project, getUserDetail]);
+  }, [ProjectDetails]);
 
   const updateStatusActionSheetRef = useRef(null);
   const fileAttachActionSheetRef = useRef(null);
@@ -139,7 +162,7 @@ const ProjectAbout = ({route}) => {
         </View>
         <View>
           <Text style={[styles.detailedDescription, {color: textColor}]}>
-            {project.description}
+            {ProjectDetails.description}
           </Text>
           <View>
             <View style={styles.rowContainer}>
@@ -147,20 +170,32 @@ const ProjectAbout = ({route}) => {
                 <UserGroupIcon size={30} color={textColor} />
                 <Text style={[styles.text, {color: textColor}]}>Team</Text>
               </View>
-              <View style={styles.teamImagesContainer}>
-                {project.teamMembers
-                  .slice(0, 3)
-                  .map((member, index) =>
-                    teamMemberDetails[member] ? (
-                      <Image
-                        key={index}
-                        source={{uri: teamMemberDetails[member]?.photoURL}}
-                        style={styles.teamMemberImage}
-                      />
-                    ) : null,
-                  )}
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('TeamMember', {
+                    projectDetail: ProjectDetails,
+                  })
+                }
+                style={styles.teamImagesContainer}>
+                {ProjectDetails.teamMembers.slice(0, 3).map((member, index) => {
+                  const photoURL = teamMemberDetails[member];
 
-                {project.teamMembers.length > 3 && (
+                  return photoURL ? (
+                    <Image
+                      key={index}
+                      source={{uri: photoURL.photoURL}}
+                      style={styles.teamMemberImage}
+                    />
+                  ) : (
+                    <Image
+                      key={index}
+                      source={require('../assets/profile.jpg')}
+                      style={styles.profileImage}
+                    />
+                  );
+                })}
+
+                {ProjectDetails.teamMembers.length > 3 && (
                   <View
                     style={{
                       backgroundColor: 'white',
@@ -176,11 +211,11 @@ const ProjectAbout = ({route}) => {
                           fontFamily: Fonts.regular,
                         },
                       ]}>
-                      +{project.teamMembers.length - 3}
+                      +{ProjectDetails.teamMembers.length - 3}
                     </Text>
                   </View>
                 )}
-              </View>
+              </TouchableOpacity>
             </View>
             <View style={styles.rowContainer}>
               <View style={styles.info}>
@@ -194,7 +229,10 @@ const ProjectAbout = ({route}) => {
                     style={styles.teamMemberImage}
                   />
                 ) : (
-                  <Text> 'Loading...'</Text>
+                  <Image
+                    source={require('../assets/profile.jpg')}
+                    style={styles.profileImage}
+                  />
                 )}
 
                 <Text style={{color: Color.firstColor}}>
@@ -217,7 +255,7 @@ const ProjectAbout = ({route}) => {
                       fontSize: wp(3),
                       color: 'white',
                     }}>
-                    {project.status}
+                    {ProjectDetails.status}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -231,7 +269,7 @@ const ProjectAbout = ({route}) => {
                 style={styles.teamImagesContainer}
                 onPress={openDueDateActionSheet}>
                 <Text style={{fontFamily: Fonts.regular, color: textColor}}>
-                  {project.dueDate}
+                  {ProjectDetails.dueDate}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -322,34 +360,25 @@ const ProjectAbout = ({route}) => {
                     {task.timeline.startTime} - {task.timeline.endTime}
                   </Text>
                   <View style={{flexDirection: 'row'}}>
-                    {task.assignees.slice(0, 3).map((member, index) => {
-                      return (
+                    {task.assignees.slice(0, 3).map((assigneeId, id) => {
+                      const assignee = assigneeDetails[assigneeId];
+                      return assignee ? (
                         <Image
-                          key={index}
-                          source={{uri: member.photoURL}}
+                          key={id}
+                          source={{uri: assignee.photoURL}}
+                          style={styles.profileImage}
+                        />
+                      ) : (
+                        <Image
+                          key={id}
+                          source={require('../assets/profile.jpg')}
                           style={styles.profileImage}
                         />
                       );
                     })}
                     {task.assignees.length > 3 && (
-                      <View
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          backgroundColor: Color.borderBottomColor,
-                          padding: hp(0.5),
-                          borderRadius: 100,
-                          marginLeft: -wp(4),
-                        }}>
-                        <Text
-                          style={[
-                            styles.remainingText,
-                            {
-                              color: Color.firstColor,
-                              fontSize: hp(2),
-                              fontFamily: Fonts.regular,
-                            },
-                          ]}>
+                      <View style={styles.moreParticipantsContainer}>
+                        <Text style={styles.moreParticipantsText}>
                           +{task.assignees.length - 3}
                         </Text>
                       </View>
@@ -404,10 +433,14 @@ const ProjectAbout = ({route}) => {
       <UpdateStatus
         ref={updateStatusActionSheetRef}
         onClose={closeSheets}
-        status={project.status}
+        project={ProjectDetails}
       />
       <FileAttach ref={fileAttachActionSheetRef} onClose={closeSheets} />
-      <DueDate ref={dueDateActionSheetRef} onClose={closeSheets} />
+      <DueDate
+        ref={dueDateActionSheetRef}
+        onClose={closeSheets}
+        project={ProjectDetails}
+      />
     </GestureHandlerRootView>
   );
 };

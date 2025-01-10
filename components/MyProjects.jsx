@@ -16,10 +16,13 @@ import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
 import {useProjects} from '../context/ProjectsContext';
 import {useUsersData} from '../context/UsersData';
+import {useAuth} from '../context/AuthContext';
 
 const MyProjects = ({isHorizontal, project, index}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
+  const {editProfile} = useAuth();
+  const {projects} = useProjects();
   const {getUserDetail} = useUsersData();
   const [teamMemberDetails, setTeamMemberDetails] = useState({});
   const [loading, setLoading] = useState(false);
@@ -30,21 +33,6 @@ const MyProjects = ({isHorizontal, project, index}) => {
     const timeDifference = Math.abs(new Date(dueDate) - new Date(todayDate));
     return timeDifference / (1000 * 3600 * 24);
   };
-
-  // const fetchTeamMemberDetails = async userID => {
-  //   setLoading(true);
-  //   const details = await getUserDetail(userID);
-  //   const photoURL = details.photoURL;
-
-  //   if (photoURL) {
-  //     await Image.prefetch(photoURL); // Preload the image
-  //     setTeamMemberDetails(prevState => ({
-  //       ...prevState,
-  //       [userID]: photoURL,
-  //     }));
-  //   }
-  //   setLoading(false);
-  // };
 
   const fetchTeamMemberDetails = async userID => {
     setLoading(true);
@@ -62,11 +50,11 @@ const MyProjects = ({isHorizontal, project, index}) => {
         fetchTeamMemberDetails(member);
       }
     });
-  }, [project.teamMembers, teamMemberDetails]);
+  }, [project.teamMembers, teamMemberDetails, editProfile]);
 
   const progressBarColor = index === 0 ? 'white' : Color.firstColor;
   const isProject1 = index === 0 ? true : false;
-  const textColor = theme === 'dark' ? 'white' : 'black'; // Text color based on theme
+  const textColor = theme === 'dark' ? 'white' : 'black';
 
   return (
     <View
@@ -109,13 +97,22 @@ const MyProjects = ({isHorizontal, project, index}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.imageContainer}>
-        {project.teamMembers.slice(0, 3).map((member, index) => (
-          <Image
-            key={index}
-            source={{uri: teamMemberDetails[member]}}
-            style={styles.profileImage}
-          />
-        ))}
+        {project.teamMembers.slice(0, 3).map((member, index) => {
+          const photoURL = teamMemberDetails[member];
+          return photoURL ? (
+            <Image
+              key={index}
+              source={{uri: photoURL}}
+              style={styles.profileImage}
+            />
+          ) : (
+            <Image
+              key={index}
+              source={require('../assets/profile.jpg')}
+              style={styles.profileImage}
+            />
+          );
+        })}
         {project.teamMembers.length > 3 && (
           <View
             style={{backgroundColor: 'white', padding: 8, borderRadius: 100}}>

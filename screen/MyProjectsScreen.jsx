@@ -143,17 +143,22 @@ const MyProjectsScreen = ({placeholder = 'Search'}) => {
 
                   <View style={styles.bottomTextContainer}>
                     <View style={styles.imageContainer}>
-                      {project.teamMembers
-                        .slice(0, 3)
-                        .map((member, index) =>
-                          userDetails[member] ? (
-                            <Image
-                              key={index}
-                              source={{uri: userDetails[member]?.photoURL}}
-                              style={styles.profileImage}
-                            />
-                          ) : null,
-                        )}
+                      {project.teamMembers.slice(0, 3).map((member, index) => {
+                        const photoURL = userDetails[member];
+                        return photoURL ? (
+                          <Image
+                            key={index}
+                            source={{uri: photoURL.photoURL}}
+                            style={styles.profileImage}
+                          />
+                        ) : (
+                          <Image
+                            key={index}
+                            source={require('../assets/profile.jpg')}
+                            style={styles.profileImage}
+                          />
+                        );
+                      })}
 
                       {project.teamMembers.length > 3 && (
                         <View
