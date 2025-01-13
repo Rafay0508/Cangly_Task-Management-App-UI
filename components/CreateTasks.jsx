@@ -1,14 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {
+  Alert,
   Modal,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Alert,
-  Image,
-  ActivityIndicator,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -17,19 +15,65 @@ import {
 import {Color} from '../utils/colors';
 import {Fonts} from '../utils/fonts';
 import {useAuth} from '../context/AuthContext';
-import DocumentPicker from 'react-native-document-picker';
 import {useTheme} from '../context/ThemeContext';
 import {PlusCircleIcon} from 'react-native-heroicons/solid';
+import {useNavigation} from '@react-navigation/native';
+import DateTimePicker from 'react-native-ui-datepicker';
+import dayjs from 'dayjs';
 
-const CreateTasks = ({visible, onClose}) => {
+const CreateTasks = ({visible, onClose, project}) => {
   const {theme} = useTheme();
   const {userDetails} = useAuth();
+  const navigation = useNavigation();
 
-  const handleSave = async () => {
-    console.log('xxx');
-    // await editProfile(fullName, photoURL, userDetails.uid);
-    // onClose();
+  const [taskName, setTaskName] = useState('');
+  const [description, setDescription] = useState('');
+  const [dueDate, setDueDate] = useState(new Date()); // Ensure dueDate is a Date object
+  const [startTime, setStartTime] = useState('');
+  const [endTime, setEndTime] = useState('');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const descriptionRef = useRef(null);
+  const dueDateRef = useRef(null);
+  const startTimeRef = useRef(null);
+  const endTimeRef = useRef(null);
+
+  const handleAddAssignee = async () => {
+    if (!taskName || !description || !dueDate || !startTime || !endTime) {
+      Alert.alert('All fields are required');
+      return;
+    }
+
+    navigation.navigate('AddAssignees', {
+      projectName: project.projectName,
+      taskTitle: taskName,
+      description,
+      assignees: [userDetails.uid],
+      dueDate: dueDate,
+      status: 'todo',
+      timeline: {
+        startTime,
+        endTime,
+      },
+    });
+    onClose();
   };
+  const handleDateChange = params => {
+    const newDate = params.date;
+    const formattedDate = dayjs(newDate);
+    const year = formattedDate.year();
+    const month = formattedDate.month() + 1;
+    const date = formattedDate.date();
+    const selectedDate = year + '-' + month + '-' + date;
+    setDueDate(selectedDate);
+    setShowDatePicker(false);
+  };
+
+  const textColor = theme === 'dark' ? 'white' : 'black';
+  const bgColor = theme === 'dark' ? 'rgb(30,40,43)' : 'white';
+
+  // Format the date to a string (e.g., "2025-01-13")
+  const formattedDueDate = dayjs(dueDate).format('YYYY-MM-DD');
 
   return (
     <Modal
@@ -38,15 +82,11 @@ const CreateTasks = ({visible, onClose}) => {
       visible={visible}
       onRequestClose={onClose}>
       <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <View style={{flexDirection: 'row'}}>
+        <View style={[styles.modalView, {backgroundColor: bgColor}]}>
+          <View style={styles.headerContainer}>
             <Text style={styles.modalText}>Add Task</Text>
-            <TouchableOpacity
-              style={{marginHorizontal: 20}}
-              onPress={() => {
-                onClose();
-              }}>
-              <Text>X</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+              <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
           </View>
 
@@ -54,65 +94,66 @@ const CreateTasks = ({visible, onClose}) => {
             <Text style={styles.inputLabel}>Task Name</Text>
             <TextInput
               style={styles.input}
-              //   value={fullName}
-              //   onChangeText={setFullName}
+              value={taskName}
+              onChangeText={setTaskName}
+              placeholder="Enter task name"
+              placeholderTextColor={'gray'}
+              returnKeyType="next"
+              onSubmitEditing={() => descriptionRef.current.focus()}
             />
             <Text style={styles.inputLabel}>Description</Text>
             <TextInput
               style={styles.input}
-              //   value={userDetails.email}
-              editable={false}
+              value={description}
+              onChangeText={setDescription}
+              placeholder="Enter task description"
+              placeholderTextColor={'gray'}
+              returnKeyType="next"
+              onSubmitEditing={() => dueDateRef.current.focus()}
+              ref={descriptionRef}
             />
-            <Text style={styles.inputLabel}>Due Date</Text>
+            <TouchableOpacity
+              style={{marginVertical: hp(2)}}
+              onPress={() => setShowDatePicker(true)}>
+              <Text style={styles.inputLabel}>
+                Due Date: <Text>{formattedDueDate || 'select due Date'}</Text>
+              </Text>
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker
+                mode="single"
+                date={dueDate} // Pass the Date object
+                onChange={handleDateChange}
+              />
+            )}
+
             <TextInput
               style={styles.input}
-              placeholderTextColor="#888"
-              placeholder="Task Due Date"
-              //   value={new Date(userDetails.createdAt).toLocaleDateString()}
-              //   editable={false}
+              value={startTime}
+              onChangeText={setStartTime}
+              placeholderTextColor={'gray'}
+              placeholder={'Add Start Time. format : XX-XX AM'}
+              returnKeyType="next"
+              onSubmitEditing={() => endTimeRef.current.focus()}
+              ref={startTimeRef}
             />
             <TextInput
               style={styles.input}
-              placeholder="Start Time"
-              placeholderTextColor="#888"
-              //   value={new Date(userDetails.createdAt).toLocaleDateString()}
-              //   editable={false}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="End Time"
-              placeholderTextColor="#888"
-              //   value={new Date(userDetails.createdAt).toLocaleDateString()}
-              //   editable={false}
+              value={endTime}
+              onChangeText={setEndTime}
+              placeholder={'Add End Time. format : XX-XX AM'}
+              placeholderTextColor={'gray'}
+              returnKeyType="done"
+              onSubmitEditing={handleAddAssignee}
+              ref={endTimeRef}
             />
           </View>
+
           <TouchableOpacity
-            // disabled={
-            //   !projectName ||
-            //   !projectDescription ||
-            //   !projectType ||
-            //   !projectDueDate
-            // }
-            style={{
-              backgroundColor: theme === 'dark' ? '#222320' : 'white',
-              flexDirection: 'row',
-              width: '100%',
-              borderWidth: 1,
-              borderColor: Color.firstColor,
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: hp(1.5),
-              gap: wp(4),
-            }}>
+            onPress={handleAddAssignee}
+            style={styles.saveButton}>
             <PlusCircleIcon color={Color.firstColor} size={hp(3.5)} />
-            <Text
-              style={{
-                color: Color.firstColor,
-                fontSize: hp(2.3),
-                fontFamily: Fonts.regular,
-              }}>
-              Add Member
-            </Text>
+            <Text style={styles.saveButtonText}>Add Assignees</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -127,12 +168,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalView: {
     width: '90%',
     padding: 35,
-    backgroundColor: 'white',
     borderRadius: 10,
     alignItems: 'center',
     shadowColor: '#000',
@@ -141,12 +181,26 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    alignItems: 'center',
+  },
   modalText: {
     fontSize: hp(3),
     fontFamily: Fonts.heading,
     color: Color.firstColor,
     marginBottom: hp(2),
     textAlign: 'center',
+  },
+  closeButton: {
+    backgroundColor: 'gray',
+    padding: hp(1),
+    borderRadius: 100,
+  },
+  closeButtonText: {
+    color: 'white',
   },
   formContainer: {
     width: '100%',
@@ -167,25 +221,19 @@ const styles = StyleSheet.create({
     marginBottom: hp(1),
     fontFamily: Fonts.regular,
   },
-  buttonContainer: {
+  saveButton: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '100%',
-  },
-  button: {
-    backgroundColor: Color.firstColor,
-    paddingVertical: hp(1.5),
-    width: '48%',
-    borderRadius: 5,
-    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: Color.firstColor,
     alignItems: 'center',
+    justifyContent: 'center',
+    padding: hp(1.5),
+    gap: wp(4),
   },
-  cancelButton: {
-    backgroundColor: '#ccc', // Grey color for the cancel button
-  },
-  buttonText: {
-    fontSize: hp(2),
-    color: 'white',
+  saveButtonText: {
+    color: Color.firstColor,
+    fontSize: hp(2.3),
     fontFamily: Fonts.regular,
   },
 });

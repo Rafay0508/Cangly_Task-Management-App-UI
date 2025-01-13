@@ -115,6 +115,10 @@ const ProjectAbout = ({route}) => {
     }
   }, [ProjectDetails]);
 
+  const addTaskHandler = () => {
+    setModalVisible(true);
+  };
+
   const updateStatusActionSheetRef = useRef(null);
   const fileAttachActionSheetRef = useRef(null);
   const dueDateActionSheetRef = useRef(null);
@@ -305,7 +309,7 @@ const ProjectAbout = ({route}) => {
             </View>
           </View>
           <TouchableOpacity
-            onPress={() => setModalVisible(true)}
+            onPress={addTaskHandler}
             style={{
               width: '100%',
               borderWidth: 0.5,
@@ -451,6 +455,7 @@ const ProjectAbout = ({route}) => {
       />
       <CreateTasks
         visible={isModalVisible}
+        project={ProjectDetails}
         onClose={() => setModalVisible(false)}
       />
     </GestureHandlerRootView>

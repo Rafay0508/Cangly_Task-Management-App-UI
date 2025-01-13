@@ -19,10 +19,10 @@ import Messages from './pages/Messages';
 import Chat from './pages/Chat';
 import ProjectAbout from './pages/ProjectAbout';
 import TeamMemeber from './pages/TeamMemeber';
-import {Text} from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 import AddTeamMember from './pages/AddTeamMember';
 import AddTeamMemberWhenCreate from './pages/AddTeamMemberWhenCreate';
+import AddAssignees from './pages/AddAssignees';
 
 const Stack = createStackNavigator();
 
@@ -122,6 +122,11 @@ const MainStackContainer = () => (
     <Stack.Screen
       name="AddTeamMemberWhenCreate"
       component={AddTeamMemberWhenCreate}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="AddAssignees"
+      component={AddAssignees}
       options={{headerShown: false}}
     />
   </Stack.Navigator>
