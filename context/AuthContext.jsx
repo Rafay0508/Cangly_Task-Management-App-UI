@@ -61,7 +61,7 @@ export const AuthProvider = ({children}) => {
         }
       } else {
         setUserDetails(null);
-        await removeFromStorage(); // Remove user details from AsyncStorage if logged out
+        await removeFromStorage();
       }
       setLoading(false);
     });
@@ -127,7 +127,6 @@ export const AuthProvider = ({children}) => {
       if (signinMethod === 'emailPassword') {
         await auth().signOut();
       } else if (signinMethod === 'google') {
-        await auth().signOut();
         await GoogleSignin.signOut();
       }
       await AsyncStorage.removeItem('signinMethod');
@@ -148,45 +147,64 @@ export const AuthProvider = ({children}) => {
     });
   }, []);
 
-  const loginWithGoogle = async () => {
+  const signupWithGoogle = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const response = await GoogleSignin.signIn();
-      setSigninMethod('google');
-      const snapshot = await database()
-        .ref(`users/${response.user.uid}`)
-        .once('value');
-      if (snapshot.exists()) {
+      await AsyncStorage.setItem('signinMethod', 'google');
+
+      const userId = response.data.user.id;
+      const snapshot = await database().ref(`users/${userId}`).once('value');
+
+      if (!snapshot.exists()) {
+        const newUser = {
+          createdAt: Date.now(),
+          uid: userId,
+          fullName: response.data.user.name,
+          email: response.data.user.email,
+          photoURL: response.data.user.photo,
+        };
+
+        await database().ref(`users/${newUser.uid}`).set(newUser);
+        setUserDetails(newUser);
+        await saveUserToStorage(newUser);
+        console.log('New user created:', newUser);
+      } else {
         const userData = snapshot.val();
         setUserDetails(userData);
         await saveUserToStorage(userData);
-      } else {
-        console.log('No user data available for this UID');
+        console.log('User already exists, signed in:', userData);
       }
     } catch (error) {
-      console.log('Google Sign-in error:', error);
+      console.log('Google Sign-up error:', error.message || error);
     }
   };
 
-  const editProfile = async (fullName, photoURL) => {
+  const editProfile = async (fullName, photoURL, uid) => {
     try {
       const user = auth().currentUser;
+      const signinMethod = await AsyncStorage.getItem('signinMethod');
 
-      await database().ref(`/users/${user.uid}`).update({
-        photoURL,
-        fullName,
-      });
+      const updateProfile = async uid => {
+        await database().ref(`/users/${uid}`).update({
+          photoURL,
+          fullName,
+        });
 
-      const updatedUserDetails = {
-        ...userDetails,
-        fullName,
-        photoURL,
+        const updatedUserDetails = {
+          ...userDetails,
+          fullName,
+          photoURL,
+        };
+        setUserDetails(updatedUserDetails);
+        await saveUserToStorage(updatedUserDetails);
       };
-      setUserDetails(updatedUserDetails);
 
-      await saveUserToStorage(updatedUserDetails);
-
-      console.log('Profile updated successfully.');
+      if (signinMethod === 'google' || signinMethod === 'emailPassword') {
+        const targetUid = signinMethod === 'google' ? uid : user.uid;
+        await updateProfile(targetUid);
+        console.log('Profile updated successfully.');
+      }
     } catch (error) {
       console.error('Error editing profile:', error);
     }
@@ -198,7 +216,7 @@ export const AuthProvider = ({children}) => {
         login,
         Register,
         logOut,
-        loginWithGoogle,
+        signupWithGoogle,
         userDetails,
         loading,
         editProfile,

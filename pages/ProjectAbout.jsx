@@ -39,13 +39,14 @@ import {BlurView} from '@react-native-community/blur';
 import {useProjects} from '../context/ProjectsContext';
 import {useUsersData} from '../context/UsersData';
 import {set} from 'date-fns';
+import {useAuth} from '../context/AuthContext';
+import CreateTasks from '../components/CreateTasks';
 const ProjectAbout = ({route}) => {
   const navigation = useNavigation();
   const {theme} = useTheme();
   const {project} = route.params;
-
+  const {userDetails} = useAuth();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-
   const textColor = theme == 'dark' ? 'white' : 'black';
   const {tasksByProject, getProjectDetail} = useProjects();
   const {getUserDetail} = useUsersData();
@@ -54,6 +55,8 @@ const ProjectAbout = ({route}) => {
   const [projectManagerDetails, setProjectManagerDetails] = useState(null);
   const [teamMemberDetails, setTeamMemberDetails] = useState([]);
   const [assigneeDetails, setAssigneeDetails] = useState({});
+  const [isSwitchOn, setIsSwitchOn] = useState(theme === 'dark');
+  const [isModalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -171,6 +174,7 @@ const ProjectAbout = ({route}) => {
                 <Text style={[styles.text, {color: textColor}]}>Team</Text>
               </View>
               <TouchableOpacity
+                disabled={userDetails.uid != ProjectDetails.projectManager}
                 onPress={() =>
                   navigation.navigate('TeamMember', {
                     projectDetail: ProjectDetails,
@@ -247,6 +251,7 @@ const ProjectAbout = ({route}) => {
               </View>
               <View style={styles.teamImagesContainer}>
                 <TouchableOpacity
+                  disabled={userDetails.uid != ProjectDetails.projectManager}
                   style={styles.button}
                   onPress={openUpdateStatusActionSheet}>
                   <Text
@@ -266,6 +271,7 @@ const ProjectAbout = ({route}) => {
                 <Text style={[styles.text, {color: textColor}]}>Due Date</Text>
               </View>
               <TouchableOpacity
+                disabled={userDetails.uid != ProjectDetails.projectManager}
                 style={styles.teamImagesContainer}
                 onPress={openDueDateActionSheet}>
                 <Text style={{fontFamily: Fonts.regular, color: textColor}}>
@@ -282,6 +288,7 @@ const ProjectAbout = ({route}) => {
               </View>
               <View style={styles.teamImagesContainer}>
                 <TouchableOpacity
+                  disabled={userDetails.uid != ProjectDetails.projectManager}
                   style={styles.button}
                   onPress={openFileAttachActionSheet}>
                   <Text
@@ -298,6 +305,7 @@ const ProjectAbout = ({route}) => {
             </View>
           </View>
           <TouchableOpacity
+            onPress={() => setModalVisible(true)}
             style={{
               width: '100%',
               borderWidth: 0.5,
@@ -315,7 +323,7 @@ const ProjectAbout = ({route}) => {
 
                 color: Color.firstColor,
               }}>
-              Add Property
+              Add Tasks
             </Text>
           </TouchableOpacity>
         </View>
@@ -440,6 +448,10 @@ const ProjectAbout = ({route}) => {
         ref={dueDateActionSheetRef}
         onClose={closeSheets}
         project={ProjectDetails}
+      />
+      <CreateTasks
+        visible={isModalVisible}
+        onClose={() => setModalVisible(false)}
       />
     </GestureHandlerRootView>
   );

@@ -8,10 +8,7 @@ import {
   View,
 } from 'react-native';
 import React, {useState} from 'react';
-import {
-  ChevronLeftIcon,
-  MagnifyingGlassIcon,
-} from 'react-native-heroicons/solid';
+import {MagnifyingGlassIcon} from 'react-native-heroicons/solid';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -20,17 +17,21 @@ import {Fonts} from '../utils/fonts';
 import {useNavigation} from '@react-navigation/native';
 import {useTheme} from '../context/ThemeContext';
 import {useUsersData} from '../context/UsersData';
-import {useAuth} from '../context/AuthContext';
 import {Color} from '../utils/colors';
+import {useAuth} from '../context/AuthContext';
 import {useProjects} from '../context/ProjectsContext';
 
-const AddTeamMember = ({route}) => {
-  const {project, teamMembers} = route.params;
+const AddTeamMemberWhenCreate = ({route}) => {
+  const {projectName, projectDescription, projectType, projectDueDate} =
+    route.params;
+  const {userDetails} = useAuth();
   const {theme} = useTheme();
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const {usersData} = useUsersData();
-  const {addTeamMemberByNameAndId} = useProjects();
+  const {createProject} = useProjects();
+  const [addedMembers, setAddedMembers] = useState([userDetails.uid]);
+
   const textColor = theme === 'dark' ? 'white' : 'black';
   const borderColor = theme === 'dark' ? '#2b2a2a' : '#f7efef';
 
@@ -39,34 +40,42 @@ const AddTeamMember = ({route}) => {
     user.fullName.toLowerCase().includes(search.toLowerCase()),
   );
 
-  const isInvited = user => {
-    return teamMembers.some(member => member.uid === user.uid);
+  const addMember = uid => {
+    setAddedMembers(prev => [...prev, uid]); // Add member to the state
   };
 
-  const addMember = member => {
-    addTeamMemberByNameAndId(project.projectName, member);
-    navigation.goBack();
+  const removeMember = uid => {
+    setAddedMembers(prev => prev.filter(id => id !== uid)); // Remove member from the state
   };
+  const createProjectHandler = () => {
+    const tasks = [];
+    const projectManager = userDetails.uid;
+    const status = 'todo';
+    try {
+      createProject(
+        projectName,
+        projectDescription,
+        projectType,
+        projectDueDate,
+        addedMembers,
+        tasks,
+        projectManager,
+        status,
+      );
 
+      navigation.navigate('HomePage');
+    } catch (error) {}
+  };
   return (
     <View
       style={[
         styles.container,
-        theme === 'dark'
-          ? {backgroundColor: 'black'}
-          : {backgroundColor: 'white'},
+        {backgroundColor: theme === 'dark' ? 'black' : 'white'},
       ]}>
       <View style={styles.topNavigation}>
-        <TouchableOpacity>
-          <ChevronLeftIcon
-            color={textColor}
-            size={wp(7)}
-            onPress={() => navigation.navigate('HomePage')}
-          />
-        </TouchableOpacity>
         <Text
           style={{
-            width: '80%',
+            width: '100%',
             textAlign: 'center',
             fontFamily: Fonts.subHeading,
             fontSize: wp(5),
@@ -87,7 +96,7 @@ const AddTeamMember = ({route}) => {
           style={[styles.input, {color: textColor}]}
           placeholder={'Search'}
           placeholderTextColor={textColor}
-          onChangeText={setSearch} // Update search state
+          onChangeText={setSearch}
         />
       </View>
 
@@ -109,7 +118,22 @@ const AddTeamMember = ({route}) => {
                 </View>
               </View>
               <View>
-                {!isInvited(user) ? (
+                {addedMembers.includes(user.uid) ? ( // Check if user is already added
+                  <TouchableOpacity
+                    onPress={() => removeMember(user.uid)} // Remove member on press
+                    style={{backgroundColor: 'transparent', padding: hp(2)}}>
+                    <Text
+                      style={{
+                        borderWidth: 1,
+                        padding: wp(1),
+                        borderColor: Color.firstColor,
+                        color: Color.firstColor,
+                        fontFamily: Fonts.regular,
+                      }}>
+                      Remove
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
                   <TouchableOpacity
                     onPress={() => addMember(user.uid)}
                     style={{backgroundColor: 'transparent', padding: hp(2)}}>
@@ -121,15 +145,7 @@ const AddTeamMember = ({route}) => {
                         color: Color.firstColor,
                         fontFamily: Fonts.regular,
                       }}>
-                      Invite
-                    </Text>
-                  </TouchableOpacity>
-                ) : (
-                  <TouchableOpacity
-                    disabled
-                    style={{backgroundColor: Color.firstColor, padding: hp(2)}}>
-                    <Text style={{color: 'white', fontFamily: Fonts.regular}}>
-                      Invited
+                      Add
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -140,11 +156,32 @@ const AddTeamMember = ({route}) => {
           <Text>No users found</Text>
         )}
       </ScrollView>
+
+      <TouchableOpacity
+        onPress={createProjectHandler}
+        style={{
+          flexDirection: 'row',
+          width: '100%',
+          backgroundColor: Color.firstColor,
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: hp(1.5),
+          gap: wp(4),
+        }}>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: hp(2.3),
+            fontFamily: Fonts.regular,
+          }}>
+          Create Project
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default AddTeamMember;
+export default AddTeamMemberWhenCreate;
 
 const styles = StyleSheet.create({
   container: {flex: 1, padding: hp(3)},

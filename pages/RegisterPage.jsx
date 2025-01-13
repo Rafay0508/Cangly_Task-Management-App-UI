@@ -24,7 +24,7 @@ import {useAuth} from '../context/AuthContext';
 const RegisterPage = () => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-  const {Register} = useAuth();
+  const {Register, signupWithGoogle} = useAuth();
 
   const [fname, setFname] = useState('');
   const [sname, setSname] = useState('');
@@ -93,12 +93,8 @@ const RegisterPage = () => {
   const handleSigninWithGoogle = async () => {
     if (confirmCondition) {
       try {
-        await signInWithGoogle();
-
-        if (user) {
-          Alert.alert('Login Successful', 'Welcome back!');
-        }
-        navigation.navigate('HomePage');
+        await signupWithGoogle();
+        Alert.alert('Login Successful', 'Welcome back!');
       } catch (error) {
         Alert.alert('SignIn Error', error.message);
       }

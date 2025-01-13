@@ -1,4 +1,3 @@
-teammember delete and add
-social login
+facebook login
 forget password
 create project

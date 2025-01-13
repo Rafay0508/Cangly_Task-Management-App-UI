@@ -26,7 +26,7 @@ import {useAuth} from '../context/AuthContext';
 const LoginPage = () => {
   const {theme} = useTheme();
   const navigation = useNavigation();
-  const {login, loginWithGoogle, userDetails} = useAuth();
+  const {login, userDetails, signupWithGoogle} = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [secureText, setSecureText] = useState(false);
@@ -88,7 +88,7 @@ const LoginPage = () => {
 
   const handleSigninWithGoogle = () => {
     try {
-      loginWithGoogle();
+      signupWithGoogle();
     } catch (error) {
       Alert.alert('Login Failed', 'Invalid Credentials. Please try again');
     }
@@ -96,7 +96,7 @@ const LoginPage = () => {
 
   const handleSigninWithFacebook = () => {
     try {
-      loginWithGoogle();
+      signupWithGoogle();
     } catch (error) {
       Alert.alert('Login Failed', 'Invalid Credentials. Please try again');
     }

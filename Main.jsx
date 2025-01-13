@@ -22,6 +22,7 @@ import TeamMemeber from './pages/TeamMemeber';
 import {Text} from 'react-native';
 import LoadingScreen from './components/LoadingScreen';
 import AddTeamMember from './pages/AddTeamMember';
+import AddTeamMemberWhenCreate from './pages/AddTeamMemberWhenCreate';
 
 const Stack = createStackNavigator();
 
@@ -118,6 +119,11 @@ const MainStackContainer = () => (
       component={TeamMemeber}
       options={{headerShown: false}}
     />
+    <Stack.Screen
+      name="AddTeamMemberWhenCreate"
+      component={AddTeamMemberWhenCreate}
+      options={{headerShown: false}}
+    />
   </Stack.Navigator>
 );
 
@@ -129,10 +135,9 @@ const App = () => {
     const checkUser = async () => {
       const storedDetails = await AsyncStorage.getItem('userDetails');
       if (storedDetails) {
-        // console.log(storedDetails);
-        // This could be used to set user details in context
+        console.log(storedDetails);
       }
-      setLoading(false); // Finished loading
+      setLoading(false);
     };
     checkUser();
   }, []);

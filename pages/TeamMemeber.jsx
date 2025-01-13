@@ -1,6 +1,7 @@
 import {
   ActivityIndicator,
   Image,
+  Modal,
   ScrollView,
   StyleSheet,
   Text,
@@ -27,6 +28,7 @@ import {
   ArchiveBoxIcon,
   PaperAirplaneIcon,
 } from 'react-native-heroicons/outline';
+import {useProjects} from '../context/ProjectsContext';
 
 const TeamMemeber = ({route}) => {
   const {projectDetail} = route.params;
@@ -34,23 +36,31 @@ const TeamMemeber = ({route}) => {
   const navigation = useNavigation();
   const [search, setSearch] = useState('');
   const {userDetails} = useAuth();
-  const {usersData} = useUsersData();
   const {getUserDetail} = useUsersData();
+  const {projects} = useProjects();
+  const [ProjectDetails, setProjectDetails] = useState({});
+  const {deleteTeamMemberByNameAndId} = useProjects();
   const [teamMemberDetails, setTeamMemberDetails] = useState([]);
   const textColor = theme == 'dark' ? 'white' : 'black';
   const borderColor = theme === 'dark' ? '#2b2a2a' : '#f7efef';
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    const foundProject = projects.find(
+      project => project.projectName === projectDetail.projectName,
+    );
+    setProjectDetails(foundProject);
+  }, [projects, projectDetail]);
+
+  useEffect(() => {
     setIsLoading(true);
     const fetchUsers = async () => {
       try {
         const teamMembers = {};
-        for (const member of projectDetail.teamMembers) {
+        for (const member of ProjectDetails.teamMembers) {
           const userDetails = await getUserDetail(member);
           teamMembers[member] = userDetails;
         }
-        console.log(teamMembers);
         setTeamMemberDetails(teamMembers);
         setIsLoading(false);
       } catch (error) {
@@ -58,14 +68,18 @@ const TeamMemeber = ({route}) => {
       }
     };
 
-    if (projectDetail?.teamMembers?.length > 0) {
+    if (ProjectDetails?.teamMembers?.length > 0) {
       fetchUsers();
     }
-  }, [projectDetail]);
+  }, [ProjectDetails]);
 
   const filteredUsers = Object.values(teamMemberDetails).filter(user =>
     user?.fullName?.toLowerCase().includes(search.toLowerCase()),
   );
+
+  const deleteMember = member => {
+    deleteTeamMemberByNameAndId(projectDetail.projectName, member);
+  };
 
   const getUserName = email => {
     const username = email.slice(0, email.indexOf('@'));
@@ -161,7 +175,7 @@ const TeamMemeber = ({route}) => {
                       <PaperAirplaneIcon color={textColor} />
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => deleteMember(user.uid)}>
                       <ArchiveBoxIcon color={'red'} />
                     </TouchableOpacity>
                   </View>
@@ -172,7 +186,12 @@ const TeamMemeber = ({route}) => {
             )}
           </ScrollView>
           <TouchableOpacity
-            onPress={() => navigation.navigate('AddTeamMember')}
+            onPress={() =>
+              navigation.navigate('AddTeamMember', {
+                teamMembers: filteredUsers,
+                project: projectDetail,
+              })
+            }
             style={{backgroundColor: Color.firstColor, paddingVertical: hp(2)}}>
             <Text
               style={{

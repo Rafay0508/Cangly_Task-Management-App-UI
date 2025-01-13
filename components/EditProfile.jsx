@@ -70,7 +70,7 @@ const EditProfile = ({visible, onClose}) => {
   };
 
   const handleSave = async () => {
-    await editProfile(fullName, photoURL);
+    await editProfile(fullName, photoURL, userDetails.uid);
     onClose();
   };
 

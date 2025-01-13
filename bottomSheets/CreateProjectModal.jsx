@@ -16,28 +16,48 @@ import {
 } from 'react-native-responsive-screen';
 import {Fonts} from '../utils/fonts';
 import {Color} from '../utils/colors';
-import {Picker} from '@react-native-picker/picker';
 import {useNavigation} from '@react-navigation/native';
+
 const CreateProjectModal = ({isModalOpen, onClose}) => {
   const {theme} = useTheme();
   const navigation = useNavigation();
   const [isModalVisible, setModalVisible] = useState(isModalOpen);
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [projectName, setProjectName] = useState();
+  const [projectDescription, setProjectDescription] = useState();
+  const [projectType, setProjectType] = useState();
+  const [projectDueDate, setProjectDueDate] = useState();
 
-  // Sync the modal state with the prop `isModalOpen`
   useEffect(() => {
     setModalVisible(isModalOpen);
   }, [isModalOpen]);
 
   const bgColor = theme === 'dark' ? 'black' : 'white';
   const textColor = theme === 'dark' ? 'white' : 'black';
-  const toggleModal = () => {
-    setModalVisible(prev => !prev); // Toggle the modal state
+
+  const handleCreateProject = () => {
+    // Perform validation here if necessary
+    if (projectName && projectDescription && projectType && projectDueDate) {
+      navigation.navigate('AddTeamMemberWhenCreate', {
+        projectName,
+        projectDescription,
+        projectType,
+        projectDueDate,
+      });
+    }
   };
+
+  const inputStyle = {
+    color: textColor,
+    borderWidth: 1,
+    borderColor: Color.borderBottomColor,
+    padding: wp(3),
+    fontSize: wp(4),
+  };
+
   return (
     <Modal
       isVisible={isModalVisible}
-      onBackdropPress={null}
+      onBackdropPress={onClose}
       onBackButtonPress={onClose}
       style={styles.modal}
       swipeDirection="down"
@@ -46,60 +66,51 @@ const CreateProjectModal = ({isModalOpen, onClose}) => {
       animationOut="slideOutDown">
       <KeyboardAvoidingView
         style={[
-          theme == 'dark'
-            ? {backgroundColor: 'rgb(30,40,43)'}
-            : {backgroundColor: 'white'},
+          {backgroundColor: theme === 'dark' ? 'rgb(30,40,43)' : 'white'},
         ]}>
-        {/* Header Section */}
-
         <View style={styles.headerContainer}>
-          <Text style={[styles.headerText, {color: textColor}]} disabled>
+          <Text style={[styles.headerText, {color: textColor}]}>
             Create New Project
           </Text>
           <TouchableOpacity style={{padding: 10}} onPress={onClose}>
             <XCircleIcon style={styles.icon} size={hp(3)} color={textColor} />
           </TouchableOpacity>
         </View>
-        {/* To Do Section */}
         <View style={styles.listContainer}>
           <TextInput
             placeholder="Enter Project Name"
             placeholderTextColor="gray"
-            style={{
-              color: textColor,
-              borderWidth: 1,
-              borderColor: Color.borderBottomColor,
-              padding: wp(3),
-              fontSize: wp(4),
-            }}
+            onChangeText={setProjectName}
+            style={inputStyle}
           />
-          <View
-            style={{
-              color: textColor,
-              borderWidth: 1,
-              borderColor: Color.borderBottomColor,
-              // padding: wp(3),
-              fontSize: wp(4),
-            }}>
-            <Picker
-              selectedValue={selectedLanguage}
-              style={{
-                color: 'gray',
-              }}
-              placeholder="Select Visibility"
-              dropdownIconColor={textColor}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedLanguage(itemValue)
-              }>
-              <Picker.Item label="Select Visibility" value="" enabled={false} />
-              <Picker.Item label="Public" value="Public" />
-              <Picker.Item label="Private" value="Private" />
-            </Picker>
-          </View>
+          <TextInput
+            placeholder="Add Description"
+            onChangeText={setProjectDescription}
+            placeholderTextColor="gray"
+            style={inputStyle}
+          />
+          <TextInput
+            placeholder="Add Project Type"
+            onChangeText={setProjectType}
+            placeholderTextColor="gray"
+            style={inputStyle}
+          />
+          <TextInput
+            placeholder="Enter Due Date (eg: YYYY-MM-DD)"
+            placeholderTextColor="gray"
+            onChangeText={setProjectDueDate}
+            style={inputStyle}
+          />
 
           <TouchableOpacity
+            disabled={
+              !projectName ||
+              !projectDescription ||
+              !projectType ||
+              !projectDueDate
+            }
             style={{
-              backgroundColor: theme == 'dark' ? '#222320' : 'white',
+              backgroundColor: theme === 'dark' ? '#222320' : 'white',
               flexDirection: 'row',
               width: '100%',
               borderWidth: 1,
@@ -109,7 +120,14 @@ const CreateProjectModal = ({isModalOpen, onClose}) => {
               padding: hp(1.5),
               gap: wp(4),
             }}
-            onPress={() => navigation.navigate('TeamMember')}>
+            onPress={() =>
+              navigation.navigate('AddTeamMemberWhenCreate', {
+                projectName,
+                projectDescription,
+                projectType,
+                projectDueDate,
+              })
+            }>
             <PlusCircleIcon color={Color.firstColor} size={hp(3.5)} />
             <Text
               style={{
@@ -118,26 +136,6 @@ const CreateProjectModal = ({isModalOpen, onClose}) => {
                 fontFamily: Fonts.regular,
               }}>
               Add Member
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-
-              backgroundColor: Color.firstColor,
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: hp(1.5),
-              gap: wp(4),
-            }}>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: hp(2.3),
-                fontFamily: Fonts.regular,
-              }}>
-              Create Project
             </Text>
           </TouchableOpacity>
         </View>
@@ -157,7 +155,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-
     marginTop: hp(3),
   },
   headerText: {
@@ -172,19 +169,6 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: hp(2),
     gap: hp(3),
-  },
-  listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#ddd',
-    paddingVertical: hp(2),
-    paddingHorizontal: 10,
-  },
-  listText: {
-    fontSize: hp(2),
-    fontFamily: Fonts.regular,
   },
 });
 
