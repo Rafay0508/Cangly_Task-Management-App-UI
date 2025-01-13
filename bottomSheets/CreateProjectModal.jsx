@@ -64,8 +64,10 @@ const CreateProjectModal = ({isModalOpen, onClose}) => {
     const formattedDate = dayjs(newDate);
     const year = formattedDate.year();
     const month = formattedDate.month() + 1;
+    const paddedMonth = month < 10 ? '0' + month : month;
     const date = formattedDate.date();
-    const selectedDate = year + '-' + month + '-' + date;
+    const paddedDate = date < 10 ? '0' + date : date;
+    const selectedDate = year + '-' + paddedMonth + '-' + paddedDate;
     setProjectDueDate(selectedDate);
     setShowDatePicker(false);
   };

@@ -133,7 +133,7 @@ const MainStackContainer = () => (
 );
 
 const App = () => {
-  const {userDetails} = useAuth(); // Using AuthContext to get userDetails
+  const {userDetails} = useAuth();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

@@ -12,6 +12,15 @@
       android:allowBackup="false"
       android:theme="@style/AppTheme"
       android:supportsRtl="true">
+
+
+
+<meta-data
+    android:name="com.google.android.gms.signin.INTERNAL_CLIENT_ID"
+    android:value="538825766481-e74doh2qha5o0ttk3f4m28kb7lgfmk8c.apps.googleusercontent.com" />
+
+
+
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

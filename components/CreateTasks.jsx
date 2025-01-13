@@ -20,6 +20,7 @@ import {PlusCircleIcon} from 'react-native-heroicons/solid';
 import {useNavigation} from '@react-navigation/native';
 import DateTimePicker from 'react-native-ui-datepicker';
 import dayjs from 'dayjs';
+import RNPickerSelect from 'react-native-picker-select';
 
 const CreateTasks = ({visible, onClose, project}) => {
   const {theme} = useTheme();
@@ -43,7 +44,6 @@ const CreateTasks = ({visible, onClose, project}) => {
       Alert.alert('All fields are required');
       return;
     }
-
     navigation.navigate('AddAssignees', {
       projectName: project.projectName,
       taskTitle: taskName,
@@ -63,8 +63,10 @@ const CreateTasks = ({visible, onClose, project}) => {
     const formattedDate = dayjs(newDate);
     const year = formattedDate.year();
     const month = formattedDate.month() + 1;
+    const paddedMonth = month < 10 ? '0' + month : month;
     const date = formattedDate.date();
-    const selectedDate = year + '-' + month + '-' + date;
+    const paddedDate = date < 10 ? '0' + date : date;
+    const selectedDate = year + '-' + paddedMonth + '-' + paddedDate;
     setDueDate(selectedDate);
     setShowDatePicker(false);
   };
@@ -74,7 +76,32 @@ const CreateTasks = ({visible, onClose, project}) => {
 
   // Format the date to a string (e.g., "2025-01-13")
   const formattedDueDate = dayjs(dueDate).format('YYYY-MM-DD');
-
+  const timeOptions = [
+    {label: '12:00 AM', value: '12:00 AM'},
+    {label: '01:00 AM', value: '01:00 AM'},
+    {label: '02:00 AM', value: '02:00 AM'},
+    {label: '03:00 AM', value: '03:00 AM'},
+    {label: '04:00 AM', value: '04:00 AM'},
+    {label: '05:00 AM', value: '05:00 AM'},
+    {label: '06:00 AM', value: '06:00 AM'},
+    {label: '07:00 AM', value: '07:00 AM'},
+    {label: '08:00 AM', value: '08:00 AM'},
+    {label: '09:00 AM', value: '09:00 AM'},
+    {label: '10:00 AM', value: '10:00 AM'},
+    {label: '11:00 AM', value: '11:00 AM'},
+    {label: '12:00 PM', value: '12:00 PM'},
+    {label: '01:00 PM', value: '01:00 PM'},
+    {label: '02:00 PM', value: '02:00 PM'},
+    {label: '03:00 PM', value: '03:00 PM'},
+    {label: '04:00 PM', value: '04:00 PM'},
+    {label: '05:00 PM', value: '05:00 PM'},
+    {label: '06:00 PM', value: '06:00 PM'},
+    {label: '07:00 PM', value: '07:00 PM'},
+    {label: '08:00 PM', value: '08:00 PM'},
+    {label: '09:00 PM', value: '09:00 PM'},
+    {label: '10:00 PM', value: '10:00 PM'},
+    {label: '11:00 PM', value: '11:00 PM'},
+  ];
   return (
     <Modal
       animationType="slide"
@@ -126,26 +153,19 @@ const CreateTasks = ({visible, onClose, project}) => {
                 onChange={handleDateChange}
               />
             )}
-
-            <TextInput
-              style={styles.input}
+            <Text style={styles.inputLabel}>Start Time: </Text>
+            <RNPickerSelect
+              onValueChange={value => setStartTime(value)}
+              items={timeOptions}
+              placeholder={{label: 'Select start time', value: startTime}}
               value={startTime}
-              onChangeText={setStartTime}
-              placeholderTextColor={'gray'}
-              placeholder={'Add Start Time. format : XX-XX AM'}
-              returnKeyType="next"
-              onSubmitEditing={() => endTimeRef.current.focus()}
-              ref={startTimeRef}
             />
-            <TextInput
-              style={styles.input}
+            <Text style={styles.inputLabel}>End Time: </Text>
+            <RNPickerSelect
+              onValueChange={value => setEndTime(value)}
+              items={timeOptions}
+              placeholder={{label: 'Select end time', value: endTime}}
               value={endTime}
-              onChangeText={setEndTime}
-              placeholder={'Add End Time. format : XX-XX AM'}
-              placeholderTextColor={'gray'}
-              returnKeyType="done"
-              onSubmitEditing={handleAddAssignee}
-              ref={endTimeRef}
             />
           </View>
 
@@ -207,10 +227,10 @@ const styles = StyleSheet.create({
     marginBottom: hp(2),
   },
   inputLabel: {
-    textAlign: 'center',
+    // textAlign: 'center',
     fontFamily: Fonts.heading,
     fontSize: hp(2),
-    marginTop: hp(2),
+    // marginTop: hp(1),
   },
   input: {
     height: hp(6),
