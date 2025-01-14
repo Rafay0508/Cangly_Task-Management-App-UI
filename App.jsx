@@ -8,6 +8,7 @@ import {UsersDataProvider} from './context/UsersData';
 import {NavigationContainer} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ProjectsProvider} from './context/ProjectsContext';
+import AppStateProvider from './context/AppStateContext';
 
 const App = () => {
   useEffect(() => {
@@ -21,21 +22,23 @@ const App = () => {
     fetchUserDetails();
   }, []);
   return (
-    <NavigationContainer>
-      <AuthProvider>
-        <UsersDataProvider>
-          <ProjectsProvider>
-            <ThemeProvider>
-              <DateProvider>
-                <TaskLengthProvider>
-                  <Main />
-                </TaskLengthProvider>
-              </DateProvider>
-            </ThemeProvider>
-          </ProjectsProvider>
-        </UsersDataProvider>
-      </AuthProvider>
-    </NavigationContainer>
+    <AppStateProvider>
+      <NavigationContainer>
+        <AuthProvider>
+          <UsersDataProvider>
+            <ProjectsProvider>
+              <ThemeProvider>
+                <DateProvider>
+                  <TaskLengthProvider>
+                    <Main />
+                  </TaskLengthProvider>
+                </DateProvider>
+              </ThemeProvider>
+            </ProjectsProvider>
+          </UsersDataProvider>
+        </AuthProvider>
+      </NavigationContainer>
+    </AppStateProvider>
   );
 };
 

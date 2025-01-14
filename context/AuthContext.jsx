@@ -1,11 +1,14 @@
-import {createContext, useContext, useEffect, useState} from 'react';
+import {createContext, useContext, useEffect, useRef, useState} from 'react';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {AppState} from 'react-native';
+import {useAppState} from './AppStateContext';
 const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
+  const {appStateVisible} = useAppState(); // provide active or background
   const [userDetails, setUserDetails] = useState(null);
   const [loading, setLoading] = useState(true); // Add a loading state
 
@@ -68,6 +71,37 @@ export const AuthProvider = ({children}) => {
 
     return () => unsubscribe();
   }, []);
+  useEffect(() => {
+    if (userDetails) {
+      const userRef = database().ref(`/users/${userDetails.uid}`);
+
+      // Update `isOnline` based on app state (active / background)
+      const handleAppStateChange = nextAppState => {
+        const isOnline = nextAppState === 'active'; // Active means online
+        userRef
+          .update({isOnline: isOnline})
+          .then(() => {
+            console.log(
+              `User ${userDetails.uid} is now ${
+                isOnline ? 'online' : 'offline'
+              }`,
+            );
+          })
+          .catch(error => {
+            console.error('Error updating isOnline status:', error);
+          });
+      };
+
+      const appStateListener = AppState.addEventListener(
+        'change',
+        handleAppStateChange,
+      );
+
+      return () => {
+        appStateListener.remove(); // Cleanup the event listener on unmount
+      };
+    }
+  }, [userDetails]);
 
   const login = async (email, password) => {
     try {
@@ -122,6 +156,7 @@ export const AuthProvider = ({children}) => {
   };
 
   const logOut = async () => {
+    const userRef = database().ref(`/users/${userDetails.uid}`);
     const signinMethod = await AsyncStorage.getItem('signinMethod');
     try {
       if (signinMethod === 'emailPassword') {
@@ -129,6 +164,7 @@ export const AuthProvider = ({children}) => {
       } else if (signinMethod === 'google') {
         await GoogleSignin.signOut();
       }
+      userRef.update({isOnline: false});
       await AsyncStorage.removeItem('signinMethod');
       setUserDetails(null);
       await removeFromStorage();
